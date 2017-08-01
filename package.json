@@ -1,0 +1,40 @@
+{
+  "name": "proyecto-plataforma-semard",
+  "version": "1.0.0",
+  "description": "proyecto de plataforma de servicios de IOT para el semillero de arduino usando el MEAN STACK.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pombodaniel10/proyecto-plataforma-semard.git"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.3",
+    "jsonwebtoken": "^7.4.1",
+    "mongoose": "^4.11.5",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1"
+  },
+  "keywords": [
+    "platform",
+    "IOT",
+    "esp8266",
+    "mqtt",
+    "MEAN",
+    "angular",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "semard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pombodaniel10/proyecto-plataforma-semard/issues"
+  },
+  "homepage": "https://github.com/pombodaniel10/proyecto-plataforma-semard#readme"
+}
