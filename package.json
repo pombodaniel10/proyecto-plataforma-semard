@@ -36,5 +36,8 @@
   "bugs": {
     "url": "https://github.com/pombodaniel10/proyecto-plataforma-semard/issues"
   },
-  "homepage": "https://github.com/pombodaniel10/proyecto-plataforma-semard#readme"
+  "homepage": "https://github.com/pombodaniel10/proyecto-plataforma-semard#readme",
+  "devDependencies": {
+    "@angular/cli": "^1.2.6"
+  }
 }
