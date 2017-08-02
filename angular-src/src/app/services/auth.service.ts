@@ -49,6 +49,16 @@ export class AuthService {
     return tokenNotExpired('id_token');
   }
 
+  adminAccess(){
+    if(this.user){
+      if(this.user.isAdmin){
+        return true;
+      }
+    } else {
+      return false;
+    }
+  }
+
   logout(){
     this.authToken = null;
     this.user = null;
