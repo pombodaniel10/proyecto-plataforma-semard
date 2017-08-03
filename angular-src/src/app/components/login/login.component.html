@@ -1,16 +1,26 @@
-<h2 class="page-header">Iniciar sesión</h2>
-<div class="col-md-6 remove-float center-block  big-top-space">
-  <form (submit)="onLoginSubmit()">
-    <div class="form-group">
-      <label for="username">Nombre de usuario</label>
-      <input class="form-control" [(ngModel)]="username" name="username" type="text" placeholder="Nombre de usuario"/>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <div class="login-panel panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Iniciar sesión</h3>
+        </div>
+        <div class="panel-body">
+          <form role="form" (submit)="onLoginSubmit()">
+            <fieldset>
+              <div class="form-group">
+                <label for="username">Nombre de usuario</label>
+                <input class="form-control" [(ngModel)]="username" name="username" type="text" placeholder="Nombre de usuario" autofocus>
+              </div>
+              <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input class="form-control" type="password" [(ngModel)]="password" name="password" placeholder="Contraseña"/>
+              </div>
+              <input class="btn btn-lg btn-success btn-block" type="submit" value="Entrar"/>
+            </fieldset>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="password">Contraseña</label>
-      <input class="form-control" type="password" [(ngModel)]="password" name="password" placeholder="Contraseña"/>
-    </div>
-    <div class="top-space form-group text-center">
-      <input class="btn btn-primary" type="submit" value="Entrar"/>
-    </div>
-  </form>
+  </div>
 </div>
