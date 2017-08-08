@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ValidateService} from '../../../app/services/validate.service';
-import {AuthService} from '../../../app/services/auth.service';
+import {ValidateService} from '../../../../app/services/validate.service';
+import {AuthService} from '../../../../app/services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {Router} from '@angular/router';
 
@@ -50,10 +50,10 @@ export class RegisterComponent implements OnInit {
     //Register user
     this.authService.registerUser(user).subscribe(data => {
       if(data.success){
-        this.flashMessage.show("You're now registered and can log in",{cssClass: 'alert-success', timeout:3000});
-        this.router.navigate(['login']);
+        this.flashMessage.show("The user is now registered and can log in",{cssClass: 'alert-success', timeout:3000});
+        this.router.navigate(['admin']);
       }else{
-        this.flashMessage.show("Something went wrong",{cssClass: 'alert-danger', timeout:3000});
+        this.flashMessage.show(data.msg,{cssClass: 'alert-danger', timeout:3000});
         this.router.navigate(['register']);
       }
     });

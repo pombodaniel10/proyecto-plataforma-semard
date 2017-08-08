@@ -15,7 +15,6 @@
         <li *ngIf="authService.adminAccess() && authService.loggedIn()" [routerLinkActive]= "['active']" [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/admin']">Admin</a></li>
 
         <li *ngIf="!authService.loggedIn()" [routerLinkActive]= "['active']" [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/login']">Login</a></li>
-        <li *ngIf="!authService.loggedIn()" [routerLinkActive]= "['active']" [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/register']">Register</a></li>
         <li *ngIf="authService.loggedIn()" class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>

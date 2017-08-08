@@ -12,6 +12,8 @@ export class AuthService {
 
   registerUser(user){
     let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization',this.authToken);
     headers.append('Content-Type','application/json');
     return this.http.post('http://localhost:4000/users/register', user,{headers:headers})
       .map(res => res.json());
@@ -70,5 +72,11 @@ export class AuthService {
     this.authToken = null;
     this.user = null;
     localStorage.clear();
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization',this.authToken);
+    headers.append('Content-Type','application/json');
+    return this.http.get('http://localhost:4000/users/logout',{headers:headers})
+      .map(res => res.json());
   }
 }

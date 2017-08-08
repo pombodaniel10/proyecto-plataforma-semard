@@ -7,24 +7,6 @@ const config = require('../config/database');
 
 const User = require('../models/user');
 
-//Register
-router.post('/register', (req,res,next) => {
-  let newUser = new User({
-    name: req.body.name,
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-    isAdmin: req.body.isAdmin
-  });
-
-  User.addUser(newUser, (err,user) => {
-    if(err){
-      res.json({"success":false, "msg":'Failed to register user'});
-    }else{
-      res.json({"success":true, "msg":'User registered'});
-    }
-  });
-});
 
 //Authenticate
 router.post('/authenticate', (req,res,next) => {
@@ -60,12 +42,12 @@ router.post('/authenticate', (req,res,next) => {
 });
 
 //Profile
-router.get('/profile', passport.authenticate('jwt', {session:false}), (req,res,next) => {
+router.get('/profile', passport.authenticate('jwt',{ session: false }),(req,res,next) => {
   res.json({user: req.user});
 });
 
 //Get users
-router.get('/admin',  passport.authenticate('jwt', {session:false}), (req,res,next) => {
+router.get('/admin',  passport.authenticate('jwt',{ session: false }), (req,res,next) => {
   User.getUsers((err,users) => {
       if(err) throw err;
       if(!users){
@@ -74,6 +56,39 @@ router.get('/admin',  passport.authenticate('jwt', {session:false}), (req,res,ne
         return res.json({"success":true, "users": users});
       }
   });
+});
+
+//logout
+router.get('/logout',  passport.authenticate('jwt',{ session: false }), (req,res,next) => {
+  return res.json({"success":true, "msg": 'Logout'});
+});
+
+//Register
+router.post('/register', passport.authenticate('jwt',{ session: false }),(req,res,next) => {
+  if(req.user){
+    if(req.user.isAdmin){
+      let newUser = new User({
+        name: req.body.name,
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        isAdmin: req.body.isAdmin
+      });
+
+      User.addUser(newUser, (err,user) => {
+        if(err){
+          res.json({"success":false, "msg":'Failed to register user'});
+        }else{
+          res.json({"success":true, "msg":'User registered'});
+        }
+      });
+    } else {
+      res.json({"success":false, "msg":'Unathorized action for current user'});
+    }
+
+  } else {
+    res.json({"success":false, "msg":'Unathorized, login first'});
+  }
 });
 
 module.exports = router;
