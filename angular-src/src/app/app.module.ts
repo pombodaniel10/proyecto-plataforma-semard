@@ -19,6 +19,9 @@ import {FlashMessagesModule} from 'angular2-flash-messages';
 import {AuthGuard} from './guards/auth.guard';
 import {AuthAdminGuard} from './guards/auth-admin.guard';
 import { ErrorComponent } from './components/error/error.component';
+import { BlackoutComponent } from './components/dashboard/blackout/blackout.component';
+
+import {YesNoPipe} from './components/admin/admin.pipe';
 
 
 const appRoutes: Routes = [
@@ -28,6 +31,7 @@ const appRoutes: Routes = [
   {path:'dashboard',component:DashboardComponent,canActivate:[AuthGuard]},
   {path:'profile',component:ProfileComponent,canActivate:[AuthGuard]},
   {path:'admin',component:AdminComponent,canActivate:[AuthAdminGuard]},
+  {path:'dashboard/blackout',component:BlackoutComponent, canActivate:[AuthGuard]},
   {path: '**' ,  component: ErrorComponent}
 ];
 
@@ -41,7 +45,9 @@ const appRoutes: Routes = [
     DashboardComponent,
     ProfileComponent,
     AdminComponent,
-    ErrorComponent
+    ErrorComponent,
+    BlackoutComponent,
+    YesNoPipe
   ],
   imports: [
     BrowserModule,
