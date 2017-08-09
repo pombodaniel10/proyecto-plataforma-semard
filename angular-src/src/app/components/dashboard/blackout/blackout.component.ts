@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BlackoutComponent implements OnInit {
 
+  vueltas: number;
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  onBlackoutSubmit(){
+    
+  }
 }

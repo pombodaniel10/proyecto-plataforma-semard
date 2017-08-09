@@ -8,7 +8,7 @@ var client  = mqtt.connect('mqtt://192.168.0.200',{
 });
 
 client.on('connect', function () {
-  client.subscribe('presence');
+  client.subscribe('outStepper');
 })
 
 client.on('message', function (topic, message) {
