@@ -1,3 +1,12 @@
-<p>
-  blackout works!
-</p>
+<h1 class="pacifico big blue text-center">Stepper</h1>
+<div class="col-md-3 remove-float center-block top-space text-center">
+  <form action="/app/blackout" method="POST">
+    <div class="form-group ">
+      <label for="vueltas">Número de vueltas</label>
+      <input class="form-control" type="number" name="vueltas" placeholder="Vueltas"/>
+    </div>
+    <input class="right-space" type="submit" name="clockwise" value="clockwise"/>
+    <input type="submit" name="counterclockwise" value="counterclockwise"/>
+  </form>
+  <h3 class="top-space">Estado: </h3>
+</div>
