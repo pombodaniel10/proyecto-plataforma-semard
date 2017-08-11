@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MqttService} from '../../../../app/services/mqtt.service';
 
 @Component({
   selector: 'app-blackout',
@@ -8,13 +9,27 @@ import { Component, OnInit } from '@angular/core';
 export class BlackoutComponent implements OnInit {
 
   vueltas: number;
+  sentido: String;
 
-  constructor() { }
+  constructor(
+    private mqttService: MqttService,
+  ) { }
 
   ngOnInit() {
   }
 
   onBlackoutSubmit(){
-    
+    const blackout = {
+      vueltas: this.vueltas,
+      sentido: this.sentido
+    }
+
+    this.mqttService.sendBlackout(blackout).subscribe(data => {
+      if(data.sucess){
+
+      }else {
+        
+      }
+    });
   }
 }
