@@ -5,8 +5,8 @@
       <label for="vueltas">Número de vueltas</label>
       <input class="form-control" [(ngModel)]="vueltas" type="number" name="vueltas" placeholder="Vueltas"/>
     </div>
-    <input class="right-space" [(ngModel)]="sentido"type="submit" name="clockwise" value="clockwise"/>
-    <input type="submit"  [(ngModel)]="sentido" name="counterclockwise" value="counterclockwise"/>
+    <input class="right-space" type="submit" [(ngModel)]="sentido" value="clockwise"/>
+    <input type="submit" value="counterclockwise"/>
   </form>
-  <h3 class="top-space">Estado: </h3>
+  <h3 class="top-space">Estado: {{estado}}</h3>
 </div>

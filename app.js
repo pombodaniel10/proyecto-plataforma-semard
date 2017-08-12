@@ -47,7 +47,7 @@ app.use(passport.session());
 require('./config/passport')(passport);
 
 app.use('/users', users);
-app.use('dashboard',mqtt);
+app.use('/dashboard',mqtt);
 
 //Index page
 app.get('/', (req,res) => {

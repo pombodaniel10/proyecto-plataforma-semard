@@ -15,6 +15,7 @@ import { AdminComponent } from './components/admin/admin.component';
 
 import {AuthService} from './services/auth.service';
 import {ValidateService} from '../app/services/validate.service';
+import {MqttService} from '../app/services/mqtt.service';
 import {FlashMessagesModule} from 'angular2-flash-messages';
 import {AuthGuard} from './guards/auth.guard';
 import {AuthAdminGuard} from './guards/auth-admin.guard';
@@ -56,7 +57,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard],
+  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,MqttService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

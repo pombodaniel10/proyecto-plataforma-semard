@@ -10,14 +10,14 @@ router.post('/blackout', passport.authenticate('jwt',{ session: false }), (req,r
   var sen = req.body.sentido;
   var vue = req.body.vueltas;
 
-  var stepper = {"vueltas": parseInt(vue), "sentido":sen};
+  var stepper = {"sentido":sen,"vueltas":vue};
   var myJSON = JSON.stringify(stepper);
 
   clientMQTT.publish('inStepper',myJSON, (err) => {
     if(err){
       return res.json({"success":false, "msg": 'Error al enviar el mensaje'});
     } else {
-      return res.json({"success":false, "msg": 'JSON enviado'});
+      return res.json({"success":true, "msg": 'JSON enviado'});
     }
   });
 
