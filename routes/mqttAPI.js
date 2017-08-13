@@ -15,12 +15,11 @@ router.post('/blackout', passport.authenticate('jwt',{ session: false }), (req,r
 
   clientMQTT.publish('inStepper',myJSON, (err) => {
     if(err){
-      return res.json({"success":false, "msg": 'Error al enviar el mensaje'});
+      return res.json({"success":false, "msg": err});
     } else {
       return res.json({"success":true, "msg": 'JSON enviado'});
-    }
+    }  
   });
-
 });
 
 //Blackout recibir

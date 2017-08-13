@@ -1,12 +1,16 @@
 <h1 class="pacifico big blue text-center">Stepper</h1>
 <div class="col-md-3 remove-float center-block top-space text-center">
-  <form (submit)="onBlackoutSubmit()" >
+  <form (submit)="onBlackoutSubmit()" id="prueba">
     <div class="form-group ">
       <label for="vueltas">Número de vueltas</label>
       <input class="form-control" [(ngModel)]="vueltas" type="number" name="vueltas" placeholder="Vueltas"/>
+      <br>
+      <input type="radio" name="sentidoGiro"  [(ngModel)]="sentidoGiro" value="clokwise"> Clockwise
+      <input type="radio" name="sentidoGiro" [(ngModel)]="sentidoGiro"  value="counterclockwise"> Counter Clockwise
+      <br>
+      <br>
+      <input class="btn btn-info" type="submit" value="Enviar"/>
     </div>
-    <input class="right-space" type="submit" [(ngModel)]="sentido" value="clockwise"/>
-    <input type="submit" value="counterclockwise"/>
   </form>
-  <h3 class="top-space">Estado: {{estado}}</h3>
+  <h3 class="top-space">Estado: {{sentidoGiro}}</h3>
 </div>

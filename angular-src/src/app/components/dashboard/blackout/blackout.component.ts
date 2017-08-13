@@ -10,8 +10,8 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 export class BlackoutComponent implements OnInit {
 
   vueltas: number;
-  sentido: String;
-  estado: String = "hola";
+  estado: String;
+  sentidoGiro: String;
 
   constructor(
     private mqttService: MqttService,
@@ -24,12 +24,12 @@ export class BlackoutComponent implements OnInit {
   onBlackoutSubmit(){
     const blackout = {
       vueltas: this.vueltas,
-      sentido: this.sentido
+      sentido: this.sentidoGiro
     }
 
     this.mqttService.sendBlackout(blackout).subscribe(data => {
-      if(data.sucess){
-          this.flashMessage.show(data.msg,{cssClass: 'alert-success', timeout:3000});
+      if(data.success){
+          this.flashMessage.show(data.msg,{cssClass:'alert-success', timeout:3000});
       }else {
           this.flashMessage.show(data.msg,{cssClass: 'alert-danger', timeout:3000});
       }
