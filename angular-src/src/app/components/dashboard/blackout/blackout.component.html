@@ -5,12 +5,12 @@
       <label for="vueltas">Número de vueltas</label>
       <input class="form-control" [(ngModel)]="vueltas" type="number" name="vueltas" placeholder="Vueltas"/>
       <br>
-      <input type="radio" name="sentidoGiro"  [(ngModel)]="sentidoGiro" value="clokwise"> Clockwise
-      <input type="radio" name="sentidoGiro" [(ngModel)]="sentidoGiro"  value="counterclockwise"> Counter Clockwise
+      <input type="radio" value="clockwise" name="sentidoGiro" [(ngModel)]="sentidoGiro"> Clockwise
+      <input type="radio" value="counterclockwise" name="sentidoGiro" [(ngModel)]="sentidoGiro"> Counter Clockwise
       <br>
       <br>
       <input class="btn btn-info" type="submit" value="Enviar"/>
     </div>
   </form>
-  <h3 class="top-space">Estado: {{sentidoGiro}}</h3>
+  <h1>Estado: {{estado}}</h1>
 </div>

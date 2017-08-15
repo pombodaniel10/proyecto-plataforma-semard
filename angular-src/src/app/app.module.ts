@@ -15,7 +15,7 @@ import { AdminComponent } from './components/admin/admin.component';
 
 import {AuthService} from './services/auth.service';
 import {ValidateService} from '../app/services/validate.service';
-import {MqttService} from '../app/services/mqtt.service';
+import {MqttSErvice} from '../app/services/mqtt.service';
 import {FlashMessagesModule} from 'angular2-flash-messages';
 import {AuthGuard} from './guards/auth.guard';
 import {AuthAdminGuard} from './guards/auth-admin.guard';
@@ -23,7 +23,6 @@ import { ErrorComponent } from './components/error/error.component';
 import { BlackoutComponent } from './components/dashboard/blackout/blackout.component';
 
 import {YesNoPipe} from './components/admin/admin.pipe';
-
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -57,7 +56,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,MqttService],
+  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,MqttSErvice],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

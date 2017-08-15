@@ -18,13 +18,9 @@ router.post('/blackout', passport.authenticate('jwt',{ session: false }), (req,r
       return res.json({"success":false, "msg": err});
     } else {
       return res.json({"success":true, "msg": 'JSON enviado'});
-    }  
+    }
   });
 });
 
-//Blackout recibir
-router.get('/blackout', passport.authenticate('jwt',{ session: false }), (req,res,next) => {
-
-});
 
 module.exports = router;

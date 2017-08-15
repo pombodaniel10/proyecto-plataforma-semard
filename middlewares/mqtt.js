@@ -11,10 +11,4 @@ client.on('connect', function () {
   client.subscribe('outStepper');
 });
 
-client.on('message', function (topic, message) {
-
-    console.log(message.toString());
-
-});
-
 module.exports = client;

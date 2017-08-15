@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {MqttService} from '../../../../app/services/mqtt.service';
+import {MqttSErvice} from '../../../../app/services/mqtt.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
+
+
 
 @Component({
   selector: 'app-blackout',
@@ -14,9 +16,13 @@ export class BlackoutComponent implements OnInit {
   sentidoGiro: String;
 
   constructor(
-    private mqttService: MqttService,
-    private flashMessage: FlashMessagesService
-  ) { }
+    private mqttService: MqttSErvice,
+    private flashMessage: FlashMessagesService,
+
+  ) {
+
+  }
+
 
   ngOnInit() {
   }

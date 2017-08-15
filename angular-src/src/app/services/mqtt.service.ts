@@ -4,12 +4,12 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 
-export class MqttService {
+export class MqttSErvice {
 
   constructor(
     private http:Http,
   ) { }
-  
+
   sendBlackout(blackout){
     let headers = new Headers();
     headers.append('Authorization',localStorage.getItem('id_token'));
