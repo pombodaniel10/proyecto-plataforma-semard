@@ -20,7 +20,9 @@
     "mongoose": "^4.11.5",
     "mqtt": "^2.11.0",
     "passport": "^0.3.2",
-    "passport-jwt": "^2.2.1"
+    "passport-jwt": "^2.2.1",
+    "socket.io": "^2.0.3",
+    "ws": "^3.1.0"
   },
   "keywords": [
     "platform",

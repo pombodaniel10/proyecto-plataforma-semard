@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule, Routes} from '@angular/router';
+import {FlashMessagesModule} from 'angular2-flash-messages';
+import { Observable, Subject } from 'rxjs/Rx';
+
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -12,15 +15,18 @@ import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { ErrorComponent } from './components/error/error.component';
+import { BlackoutComponent } from './components/dashboard/blackout/blackout.component';
 
 import {AuthService} from './services/auth.service';
 import {ValidateService} from '../app/services/validate.service';
 import {MqttSErvice} from '../app/services/mqtt.service';
-import {FlashMessagesModule} from 'angular2-flash-messages';
+import { WebsocketService } from '../app/services/websocket.service';
+import { ChatService } from '../app/services/chat.service';
+
 import {AuthGuard} from './guards/auth.guard';
 import {AuthAdminGuard} from './guards/auth-admin.guard';
-import { ErrorComponent } from './components/error/error.component';
-import { BlackoutComponent } from './components/dashboard/blackout/blackout.component';
+
 
 import {YesNoPipe} from './components/admin/admin.pipe';
 
@@ -56,7 +62,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,MqttSErvice],
+  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,MqttSErvice,WebsocketService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy  } from '@angular/core';
 import {MqttSErvice} from '../../../../app/services/mqtt.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
-
-
+import { ChatService } from '../../../../app/services/chat.service';
+import {IBlackout} from './blackout';
 
 @Component({
   selector: 'app-blackout',
@@ -12,19 +12,25 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 export class BlackoutComponent implements OnInit {
 
   vueltas: number;
-  estado: String;
-  sentidoGiro: String;
+  estado: string;
+  sentidoGiro: string;
+  messages: IBlackout[];
+
+  connection;
 
   constructor(
     private mqttService: MqttSErvice,
     private flashMessage: FlashMessagesService,
-
+    private chatService: ChatService
   ) {
-
   }
 
 
   ngOnInit() {
+    this.connection = this.chatService.getMessages().subscribe(message => {
+      console.log(message);
+      this.estado = message.toString();
+    });
   }
 
   onBlackoutSubmit(){
@@ -33,6 +39,8 @@ export class BlackoutComponent implements OnInit {
       sentido: this.sentidoGiro
     }
 
+    this.chatService.sendMessage(blackout);
+
     this.mqttService.sendBlackout(blackout).subscribe(data => {
       if(data.success){
           this.flashMessage.show(data.msg,{cssClass:'alert-success', timeout:3000});
@@ -40,5 +48,9 @@ export class BlackoutComponent implements OnInit {
           this.flashMessage.show(data.msg,{cssClass: 'alert-danger', timeout:3000});
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.connection.unsubscribe();
   }
 }

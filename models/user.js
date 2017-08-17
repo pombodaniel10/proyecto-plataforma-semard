@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   name:{
     type: String
   },
-  username: {
+  username: { 
     type: String,
     required: true,
     maxlength:[20,'Nombre usuario muy grande.']
