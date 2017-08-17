@@ -1,6 +1,6 @@
 var mqtt = require('mqtt');
 
-var client  = mqtt.connect('mqtt://192.168.0.200',{
+var client  = mqtt.connect('mqtt://127.0.0.1',{
   port: 1883,
   clientId: "Severo perro pirobo",
   username: "semard",

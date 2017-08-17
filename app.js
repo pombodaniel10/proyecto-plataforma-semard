@@ -4,12 +4,9 @@ const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
-const WebSocketServer = require('ws').Server
-const wss = new WebSocketServer({port: 8080});
-const WebSocket = require('ws');
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+const app = require('express')();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 //Port number
 const PORT = 4000;
@@ -20,13 +17,18 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
+
   socket.on('mqtt message', function(msg){
     io.emit('mqtt message', msg);
     console.log(msg);
   });
-});
 
-io.emit('some event', { for: 'everyone' });
+  socket.on('blackout message', function(msg){
+    io.emit('blackout message', msg);
+    console.log(msg);
+  });
+  
+});
 
 http.listen(PORT, function(){
   console.log('listening on *:'+PORT);

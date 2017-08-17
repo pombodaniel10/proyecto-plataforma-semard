@@ -4,6 +4,8 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const clientMQTT = require('../middlewares/mqtt');
+const io = require('socket.io-client');
+const socket = io('http://localhost:4000');
 
 //Blackout enviar
 router.post('/blackout', passport.authenticate('jwt',{ session: false }), (req,res,next) => {
@@ -22,5 +24,12 @@ router.post('/blackout', passport.authenticate('jwt',{ session: false }), (req,r
   });
 });
 
+clientMQTT.on('message', function (topic, message) {
+
+  if(topic="outStepper"){
+    console.log(message.toString());
+    socket.emit('blackout message', JSON.parse(message.toString()));
+  }
+});
 
 module.exports = router;

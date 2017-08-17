@@ -13,7 +13,7 @@ export class ChatService {
   getMessages() {
     let observable = new Observable(observer => {
       this.socket = io(this.url);
-      this.socket.on('mqtt message', (data) => {
+      this.socket.on('blackout message', (data) => {
         observer.next(data);
       });
       return () => {

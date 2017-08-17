@@ -12,9 +12,9 @@ import {IBlackout} from './blackout';
 export class BlackoutComponent implements OnInit {
 
   vueltas: number;
-  estado: string;
+  estado: any;
   sentidoGiro: string;
-  messages: IBlackout[];
+  messages: any = {};
 
   connection;
 
@@ -29,12 +29,12 @@ export class BlackoutComponent implements OnInit {
   ngOnInit() {
     this.connection = this.chatService.getMessages().subscribe(message => {
       console.log(message);
-      this.estado = message.toString();
+      this.messages = message;
     });
   }
 
   onBlackoutSubmit(){
-    const blackout = {
+    let blackout: IBlackout = {
       vueltas: this.vueltas,
       sentido: this.sentidoGiro
     }
