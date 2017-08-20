@@ -12,7 +12,6 @@ import {IBlackout} from './blackout';
 export class BlackoutComponent implements OnInit {
 
   vueltas: number;
-  estado: any;
   sentidoGiro: string;
   messages: any = {};
 
@@ -24,7 +23,6 @@ export class BlackoutComponent implements OnInit {
     private chatService: ChatService
   ) {
     chatService.messages.subscribe(msg => {
-      console.log("Response from websocket: " + msg.message.vueltas);
       if(msg.type=="blackout"){
         this.messages = msg;
       }
