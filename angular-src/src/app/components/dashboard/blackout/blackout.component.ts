@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy  } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {MqttSErvice} from '../../../../app/services/mqtt.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import { ChatService } from '../../../../app/services/chat.service';
@@ -23,34 +23,37 @@ export class BlackoutComponent implements OnInit {
     private flashMessage: FlashMessagesService,
     private chatService: ChatService
   ) {
+    chatService.messages.subscribe(msg => {
+      console.log("Response from websocket: " + msg.message.vueltas);
+      if(msg.type=="blackout"){
+        this.messages = msg;
+      }
+		});
   }
 
 
   ngOnInit() {
-    this.connection = this.chatService.getMessages().subscribe(message => {
-      console.log(message);
-      this.messages = message;
-    });
   }
 
   onBlackoutSubmit(){
     let blackout: IBlackout = {
+      type: "blackout",
+      message: {vueltas:this.vueltas,sentido:this.sentidoGiro}
+    }
+
+    let blackout2 = {
       vueltas: this.vueltas,
       sentido: this.sentidoGiro
     }
 
-    this.chatService.sendMessage(blackout);
+    //this.chatService.messages.next(blackout);
 
-    this.mqttService.sendBlackout(blackout).subscribe(data => {
+    this.mqttService.sendBlackout(blackout2).subscribe(data => {
       if(data.success){
           this.flashMessage.show(data.msg,{cssClass:'alert-success', timeout:3000});
       }else {
           this.flashMessage.show(data.msg,{cssClass: 'alert-danger', timeout:3000});
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.connection.unsubscribe();
   }
 }

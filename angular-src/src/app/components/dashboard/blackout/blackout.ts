@@ -1,4 +1,7 @@
 export interface IBlackout {
-  vueltas: number;
-  sentido: string;
+  type: string;
+  message: {
+    vueltas: number;
+    sentido: string;
+  }
 }

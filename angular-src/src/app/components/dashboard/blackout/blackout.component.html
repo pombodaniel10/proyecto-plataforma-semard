@@ -14,8 +14,8 @@
   </form>
   <div class="messages">
 			<h3>Estado</h3>
-			<strong *ngIf="messages.sentido">Sentido: {{messages.sentido}}</strong>
+			<strong *ngIf="messages.message">Sentido: {{messages.message.sentido}}</strong>
       <br>
-      <strong *ngIf="messages.vueltas">Vueltas: {{messages.vueltas}}</strong>
+      <strong *ngIf="messages.message">Vueltas: {{messages.message.vueltas}}</strong>
 		</div>
 </div>

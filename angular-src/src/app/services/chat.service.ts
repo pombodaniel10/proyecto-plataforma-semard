@@ -1,25 +1,27 @@
-import { Observable } from 'rxjs/Observable';
-import * as io from 'socket.io-client';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs/Rx';
+import { WebsocketService } from './websocket.service';
 
+const CHAT_URL = 'ws://localhost:8080';
+
+export interface Message {
+	type: string,
+	message: any
+}
+
+@Injectable()
 export class ChatService {
-  private url = 'http://localhost:4000';
-  private socket;
+	public messages: Subject<Message>;
 
-  sendMessage(message) {
-    this.socket.emit('mqtt message', message);
-    console.log("MESSAGE SENT");
-  }
-
-  getMessages() {
-    let observable = new Observable(observer => {
-      this.socket = io(this.url);
-      this.socket.on('blackout message', (data) => {
-        observer.next(data);
-      });
-      return () => {
-        this.socket.disconnect();
-      }
-    })
-    return observable;
-  }
+	constructor(wsService: WebsocketService) {
+		this.messages = <Subject<Message>>wsService
+			.connect(CHAT_URL)
+			.map((response: MessageEvent): Message => {
+				let data = JSON.parse(response.data);
+				return {
+					type: data.type,
+					message: data.message
+				}
+			});
+	}
 }
