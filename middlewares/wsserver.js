@@ -9,7 +9,6 @@ wss.broadcast = function broadcast(data) {
 };
 
 wss.on('connection', function(ws) {
-    console.log("ws server ok");
     ws.on('message', function(msg) {
         wss.broadcast(msg);
     });
