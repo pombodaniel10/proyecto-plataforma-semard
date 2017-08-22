@@ -44,8 +44,6 @@ export class BlackoutComponent implements OnInit {
       sentido: this.sentidoGiro
     }
 
-    //this.chatService.messages.next(blackout);
-
     this.mqttService.sendBlackout(blackout2).subscribe(data => {
       if(data.success){
           this.flashMessage.show(data.msg,{cssClass:'alert-success', timeout:3000});
