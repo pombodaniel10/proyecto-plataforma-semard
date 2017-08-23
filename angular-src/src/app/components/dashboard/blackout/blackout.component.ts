@@ -14,6 +14,7 @@ export class BlackoutComponent implements OnInit {
   vueltas: number;
   sentidoGiro: string;
   messages: any = {};
+  progress: number = 0;
 
   connection;
 
@@ -25,6 +26,7 @@ export class BlackoutComponent implements OnInit {
     chatService.messages.subscribe(msg => {
       if(msg.type=="blackout"){
         this.messages = msg;
+        this.progress = msg.message.progreso;
       }
 		});
   }
