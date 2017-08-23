@@ -1,6 +1,6 @@
 var mqtt = require('mqtt');
 
-var client  = mqtt.connect('mqtt://127.0.0.1',{
+var client  = mqtt.connect('mqtt://192.168.0.200',{
   port: 1883,
   clientId: "Severo perro pirobo",
   username: "semard",
@@ -8,7 +8,7 @@ var client  = mqtt.connect('mqtt://127.0.0.1',{
 });
 
 client.on('connect', function () {
-  client.subscribe('outStepper');
+  client.subscribe('prrito');
 });
 
 module.exports = client;
