@@ -27,6 +27,10 @@ export class BlackoutComponent implements OnInit {
       if(msg.type=="blackout"){
         this.messages = msg;
         this.progress = msg.message.progreso;
+        if(msg.message.estado=="finalizado"){
+          this.messages = {};
+          this.progress = 0;
+        }
       }
 		});
   }

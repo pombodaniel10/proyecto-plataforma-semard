@@ -28,7 +28,7 @@ router.post('/blackout', passport.authenticate('jwt',{ session: false }), (req,r
 clientMQTT.on('message', function (topic, message) {
     try{
       if(topic="outStepper"){
-      var data = {
+      let data = {
         'type': "blackout",
         'message': JSON.parse(message.toString())
       }
@@ -47,8 +47,10 @@ clientMQTT.on('message', function (topic, message) {
       }
 
   } catch (e) {
-    if(e instanceof SyntaxError)
-    console.log("Error al procesar el JSON.");
+    if(e instanceof SyntaxError){
+      console.log("Error al procesar el JSON.");
+    }
+
   }
 
 });
