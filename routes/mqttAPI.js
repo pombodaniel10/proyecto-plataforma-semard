@@ -29,7 +29,7 @@ router.post('/blackout', passport.authenticate('jwt',{ session: false }), (req,r
 });
 
 clientMQTT.on('message', function (topic, message) {
-  if(topic="outStepper"){
+  if(topic="prrito"){
     var data = {
       'type': "blackout",
       'message': JSON.parse(message.toString())

@@ -1,4 +1,4 @@
 module.exports = {
-  database: 'mongodb://127.0.0.1:27017/semard',
+  database: 'mongodb://192.168.0.200:27017/semard',
   secret: 'yoursecret'
 }
