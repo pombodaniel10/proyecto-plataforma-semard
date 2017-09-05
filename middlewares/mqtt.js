@@ -8,7 +8,8 @@ var client  = mqtt.connect('mqtt://192.168.0.200',{
 });
 
 client.on('connect', function () {
-  client.subscribe('prrito');
+  client.subscribe('outStepper');
+  client.subscribe('inStepper');
 });
 
 module.exports = client;

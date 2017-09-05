@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const clientMQTT = require('../middlewares/mqtt');
 const WebSocket = require('ws');
 const ws = new WebSocket('ws://localhost:8080');
+const Blackout = require('../models/blackout');
 
 //Blackout enviar
 router.post('/blackout', passport.authenticate('jwt',{ session: false }), (req,res,next) => {
@@ -25,13 +26,31 @@ router.post('/blackout', passport.authenticate('jwt',{ session: false }), (req,r
 });
 
 clientMQTT.on('message', function (topic, message) {
-  if(topic="prrito"){
-    var data = {
-      'type': "blackout",
-      'message': JSON.parse(message.toString())
-    }
-    ws.send(JSON.stringify(data));
+    try{
+      if(topic="outStepper"){
+      var data = {
+        'type': "blackout",
+        'message': JSON.parse(message.toString())
+      }
+      ws.send(JSON.stringify(data));
+      }
+
+      if(topic="inStepper"){
+        let blackout = new Blackout({
+          'username': "default",
+          'estado': "Blackout en movimiento",
+          'time': new Date().toUTCString()
+        });
+        blackout.save(function (err){
+          if (err) return handleError(err);  // saved!
+        });
+      }
+
+  } catch (e) {
+    if(e instanceof SyntaxError)
+    console.log("Error al procesar el JSON.");
   }
+
 });
 
 module.exports = router;

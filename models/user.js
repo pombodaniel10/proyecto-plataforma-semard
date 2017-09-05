@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const config = require('../config/database');
 
 //User Schema
 const userSchema = new mongoose.Schema({
   name:{
     type: String
   },
-  username: { 
+  username: {
     type: String,
     required: true,
     maxlength:[20,'Nombre usuario muy grande.']

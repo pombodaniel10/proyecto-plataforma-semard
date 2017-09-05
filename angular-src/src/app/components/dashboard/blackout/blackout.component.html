@@ -23,7 +23,7 @@
       <strong *ngIf="messages.message">progeso: {{messages.message.progreso}}</strong>
       <br>
       <strong *ngIf="messages.message">estado: {{messages.message.estado}}</strong>
-      <div *ngIf="messages.message" class="progress">
+      <div *ngIf="messages.message" class="progress progress-striped active">
         <div class="progress-bar" [style.width.%]="progress"></div>
       </div>
 		</div>
