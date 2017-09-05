@@ -12,9 +12,9 @@ import {IBlackout} from './blackout';
 export class BlackoutComponent implements OnInit {
 
   vueltas: number;
-  estado: any;
   sentidoGiro: string;
   messages: any = {};
+  progress: number = 0;
 
   connection;
 
@@ -24,9 +24,9 @@ export class BlackoutComponent implements OnInit {
     private chatService: ChatService
   ) {
     chatService.messages.subscribe(msg => {
-      console.log("Response from websocket: " + msg.message.vueltas);
       if(msg.type=="blackout"){
         this.messages = msg;
+        this.progress = msg.message.progreso;
       }
 		});
   }
@@ -45,8 +45,6 @@ export class BlackoutComponent implements OnInit {
       vueltas: this.vueltas,
       sentido: this.sentidoGiro
     }
-
-    //this.chatService.messages.next(blackout);
 
     this.mqttService.sendBlackout(blackout2).subscribe(data => {
       if(data.success){

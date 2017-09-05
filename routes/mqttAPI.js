@@ -7,10 +7,6 @@ const clientMQTT = require('../middlewares/mqtt');
 const WebSocket = require('ws');
 const ws = new WebSocket('ws://localhost:8080');
 
-ws.on('open', function open() {
-  console.log("ws ok");
-});
-
 //Blackout enviar
 router.post('/blackout', passport.authenticate('jwt',{ session: false }), (req,res,next) => {
   var sen = req.body.sentido;
