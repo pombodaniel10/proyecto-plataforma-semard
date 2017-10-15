@@ -4,3 +4,9 @@
 .big-top-space{
   margin-top: 80px;
 }
+.remove-float{
+  float: none;
+}
+.no-float{
+	float: none !important;
+}

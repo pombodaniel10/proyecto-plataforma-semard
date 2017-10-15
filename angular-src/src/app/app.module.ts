@@ -17,6 +17,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ErrorComponent } from './components/error/error.component';
 import { BlackoutComponent } from './components/dashboard/blackout/blackout.component';
+import { LucesComponent } from './components/dashboard/luces/luces.component';
 
 import {AuthService} from './services/auth.service';
 import {ValidateService} from '../app/services/validate.service';
@@ -30,6 +31,7 @@ import {AuthAdminGuard} from './guards/auth-admin.guard';
 
 import {YesNoPipe} from './components/admin/admin.pipe';
 
+
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'register', component: RegisterComponent,canActivate:[AuthAdminGuard]},
@@ -38,6 +40,7 @@ const appRoutes: Routes = [
   {path:'profile',component:ProfileComponent,canActivate:[AuthGuard]},
   {path:'admin',component:AdminComponent,canActivate:[AuthAdminGuard]},
   {path:'dashboard/blackout',component:BlackoutComponent, canActivate:[AuthGuard]},
+  {path:'dashboard/luces',component:LucesComponent},
   {path: '**' ,  component: ErrorComponent}
 ];
 
@@ -53,7 +56,8 @@ const appRoutes: Routes = [
     AdminComponent,
     ErrorComponent,
     BlackoutComponent,
-    YesNoPipe
+    YesNoPipe,
+    LucesComponent
   ],
   imports: [
     BrowserModule,
