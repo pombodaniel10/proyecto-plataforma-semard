@@ -16,7 +16,7 @@ router.post('/authenticate', (req,res,next) => {
   User.getUserByUsername(username, (err, user) => {
     if(err) throw err;
     if(!user){
-      return res.json({"success":false, "msg": 'User not found'});
+      return res.json({"success":false, "msg": 'Usuario incorrecto o inexistente'});
     }
 
     User.comparePassword(password, user.password, (err,isMatch) => {
@@ -35,7 +35,7 @@ router.post('/authenticate', (req,res,next) => {
           }
         });
       } else {
-        return res.json({"success":false, "msg": 'Wrong password'});
+        return res.json({"success":false, "msg": 'Contraseña incorrecta'});
       }
     });
   });
@@ -77,18 +77,39 @@ router.post('/register', passport.authenticate('jwt',{ session: false }),(req,re
 
       User.addUser(newUser, (err,user) => {
         if(err){
-          res.json({"success":false, "msg":'Failed to register user'});
+          res.json({"success":false, "msg":'Error al intentar registrar al usuario'});
         }else{
-          res.json({"success":true, "msg":'User registered'});
+          res.json({"success":true, "msg":'Registro exitoso!'});
         }
       });
     } else {
-      res.json({"success":false, "msg":'Unathorized action for current user'});
+      res.json({"success":false, "msg":'Acción no autorizada para el usuario actual'});
     }
 
   } else {
-    res.json({"success":false, "msg":'Unathorized, login first'});
+    res.json({"success":false, "msg":'No autorizado'});
   }
 });
+
+//Elminiar
+router.delete('/deleteuser', passport.authenticate('jwt',{ session: false }),(req,res,next) => {
+  if(req.user){
+    if(req.user.isAdmin){
+      User.deleteUser(req.body._id,(err,user) => {
+        if(err){
+          res.json({"success":false, "msg":'Error al intentar eliminar al usuario'});
+        }if(user){
+          res.json({"success":true,"msg":"Usuario eliminado."});
+        }
+      });
+
+    } else {
+      res.json({"success":false, "msg":'Acción no autorizada para el usuario actual'});
+    }
+  } else {
+    res.json({"success":false, "msg":'No autorizado'});
+  }
+});
+
 
 module.exports = router;

@@ -19,7 +19,10 @@ const userSchema = new mongoose.Schema({
     required:true,
     minlength:[8,'La contraseña es muy corta.']
   },
-  isAdmin: Boolean,
+  isAdmin: {
+    type: Boolean,
+    required: true
+  },
 });
 
 const User = module.exports = mongoose.model('User',userSchema);
@@ -52,4 +55,8 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
 
 module.exports.getUsers = function(callback){
   User.find(callback);
+}
+
+module.exports.deleteUser = function(id,callback){
+  User.deleteOne({"_id":id},callback);
 }

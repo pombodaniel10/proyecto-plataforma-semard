@@ -1,30 +1,77 @@
-<!-- Main jumbotron for a primary marketing message or call to action -->
-   <div class="jumbotron">
-     <div class="container">
-       <h1>Plataforma Semard</h1>
-       <p class="lead">Plataforma para controlar los servicios IOT del laboratorio de Semard.</p>
-     </div>
-     <div class="text-center">
-       <a class="btn btn-primary btn-lg" [routerLink]="['/login']">Login</a>
-       <a class="btn btn-primary btn-lg" [routerLink]="['/register']">Register</a>
-     </div>
-
-   <div class="container text-center">
-      <!-- Example row of columns -->
+<div class="jumbotron text-center">
+  <h1>Plataforma Semard</h1>
+  <p class="lead">Plataforma para controlar los servicios IOT del laboratorio de Semard.</p>
+  <a *ngIf="authService.loggedIn()" class="btn btn-default btn-lg text-center" [routerLink]="['/login']">Iniciar sesión</a>
+</div>
+<div id="services" class="container-fluid text-center">
+  <h2>Servicios</h2>
+  <br>
+  <div class="row">
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-off"></span>
+      <h4>Control</h4>
+      <p>Desde el sitio web usted puede controlar sus dispostivos IoT.</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-wrench"></span>
+      <h4>Gestión</h4>
+      <p>Maneje los usuarios que pueden hacer a la plataforma.</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-list-alt"></span>
+      <h4>Informes</h4>
+      <p>Obtenga informes de uso de sus dispostivos en tiempo real.</p>
+    </div>
+    </div>
+    <br><br>
+  <div class="row">
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-globe"></span>
+      <h4>Multiplataforma</h4>
+      <p>Acceda a la plataforma desde su movil, tablet o ordenador.</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-lock"></span>
+      <h4>Seguro</h4>
+      <p>Solo personal autorizado podrá acceder a controlar los dispostivos.</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-user"></span>
+      <h4>Facil manejo</h4>
+      <p>Solo clique y acción a realizar y la plataforma hará todas las comunicaciones.</p>
+    </div>
+  </div>
+</div>
+<div id="about" class="container-fluid bg-grey">
+  <h2 class="text-center">CONTACT</h2>
+  <div class="row">
+    <div class="col-sm-5">
+      <p>Contactenos y en menos de 24 horas, estaremos dandole ayudandole.</p>
+      <p><span class="glyphicon glyphicon-map-marker"></span> Cartagena, CO</p>
+      <p><span class="glyphicon glyphicon-phone"></span> +57 1234567890</p>
+      <p><span class="glyphicon glyphicon-envelope"></span> soporteiotctg@iotcartagena.com</p>
+    </div>
+    <div class="col-sm-7">
       <div class="row">
-        <div class="col-md-4">
-          <h2>Interesante</h2>
-          <p>Interesante</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="name" name="name" placeholder="Nombre" type="text" required>
         </div>
-        <div class="col-md-4">
-          <h2>Angular</h2>
-          <p>Angular </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Rocks</h2>
-          <p>Rocks</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
         </div>
       </div>
+      <textarea class="form-control" id="comments" name="comments" placeholder="Preguntas" rows="5"></textarea><br>
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <button class="btn btn-default pull-right" type="submit">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="container-fluid text-center">
+  <a href="#top" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+  <p>Bootstrap Theme Made By <a href="https://www.w3schools.com" title="Visit w3schools">www.w3schools.com</a></p>
+</footer>

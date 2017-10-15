@@ -19,6 +19,14 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  deleteUser(user){
+    let headers = new Headers();
+    headers.append('Authorization',this.authToken);
+    headers.append('Content-Type','application/json');
+    return this.http.delete('http://localhost:4000/users/deleteuser',{headers:headers,body:user})
+      .map(res => res.json());
+  }
+
   authenticateUser(user){
     let headers = new Headers();
     headers.append('Content-Type','application/json');

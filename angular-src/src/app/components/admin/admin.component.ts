@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../../app/services/auth.service';
 import {Router} from '@angular/router';
+import {FlashMessagesService} from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-admin',
@@ -11,8 +12,7 @@ export class AdminComponent implements OnInit {
 
   users:Object;
 
-
-  constructor(private authService: AuthService, private router:Router) { }
+  constructor(private authService: AuthService, private router:Router,private flashMessage: FlashMessagesService,) { }
 
   ngOnInit() {
     this.authService.getUsers().subscribe(users => {
@@ -24,4 +24,12 @@ export class AdminComponent implements OnInit {
       } );
   }
 
+  deleteUser(user){
+    this.authService.deleteUser(user).subscribe(data => {
+      if(data.success){
+        this.flashMessage.show(data.msg,{cssClass: 'alert-success', timeout:3000});
+        window.location.reload();
+      }
+    });
+  }
 }

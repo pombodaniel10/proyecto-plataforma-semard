@@ -1,0 +1,17 @@
+.jumbotron {
+    background-color: #2C3E50;
+    color: #ffffff;
+}
+.logo-small {
+    color: #f4511e;
+    font-size: 50px;
+}
+
+.logo {
+    color: #f4511e;
+    font-size: 200px;
+}
+.bg-grey {
+      background-color: #2C3E50;
+      color: #ffffff;
+  }
