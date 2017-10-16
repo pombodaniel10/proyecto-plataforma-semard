@@ -18,11 +18,9 @@ export class LucesComponent implements OnInit {
     wsService.messages.subscribe(msg => {
     if(msg.type=="luces"){
       if(msg.message.status==true){
-        this.link = "https://www.w3schools.com/js/pic_bulbon.gif";
-        this.estado = "encedido";
+        this.focoOn();
       }else {
-        this.link = "https://www.w3schools.com/js/pic_bulboff.gif";
-        this.estado = "apagado";
+        this.focoOff();
       }
     }else if(msg.type=="error"){
       this.flashMessage.show("Error al comunicarse con el dispostivo", {
@@ -31,24 +29,31 @@ export class LucesComponent implements OnInit {
     }
     });}
 
-  ngOnInit() {
-  }
+    ngOnInit(){
 
-  changeImage(){
-    if (this.link=="https://www.w3schools.com/js/pic_bulboff.gif") {
-        this.link = "https://www.w3schools.com/js/pic_bulbon.gif";
-        this.estado = "encedido";
-        this.status = true;
-    } else {
-        this.link = "https://www.w3schools.com/js/pic_bulboff.gif";
-        this.estado = "apagado";
-        this.status = false;
     }
-    let luces:ILuces = {
-      type: "luces",
-      message: {status:this.status}
+
+    changeImage(){
+      if (this.status==false) {
+          this.focoOn();
+      } else {
+          this.focoOff();
+      }
+      this.status = !this.status;
+      let luces:ILuces = {
+        type: "luces",
+        message: {status:this.status}
+      }
+      this.wsService.messages.next(luces);
     }
-    this.wsService.messages.next(luces);
-  }
+
+    focoOn(){
+      this.link = "https://www.w3schools.com/js/pic_bulbon.gif";
+      this.estado = "encedido";
+    }
+    focoOff(){
+      this.link = "https://www.w3schools.com/js/pic_bulboff.gif";
+      this.estado = "apagado";
+    }
 
 }
