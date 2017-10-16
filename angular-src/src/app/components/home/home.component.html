@@ -1,7 +1,53 @@
 <div class="jumbotron text-center">
   <h1>Plataforma Semard</h1>
   <p class="lead">Plataforma para controlar los servicios IOT del laboratorio de Semard.</p>
-  <a *ngIf="authService.loggedIn()" class="btn btn-default btn-lg text-center" [routerLink]="['/login']">Iniciar sesión</a>
+  <a *ngIf="!authService.loggedIn()" class="btn btn-default btn-lg text-center" [routerLink]="['/login']">Iniciar sesión</a>
+  <a *ngIf="authService.loggedIn()" class="btn btn-default btn-lg text-center" [routerLink]="['/dashboard']">Ingresar al dashboard</a>
+</div>
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="https://www.w3schools.com/bootstrap/ny.jpg" alt="New York" width="1200" height="700">
+      <div class="carousel-caption">
+        <h3>New York</h3>
+        <p>The atmosphere in New York is lorem ipsum.</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="http://www.ejemplos.co/wp-content/uploads/2016/11/domotica-hogar-inteligente-min-e1478021817861.jpg" alt="Chicago" width="1200" height="700">
+      <div class="carousel-caption">
+        <h3>Chicago</h3>
+        <p>Thank you, Chicago - A night we won't forget.</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img src="http://conceptodefinicion.de/wp-content/uploads/2015/09/domotica-e1443200088612.jpg" alt="Los Angeles" width="1200" height="700">
+      <div class="carousel-caption">
+        <h3>LA</h3>
+        <p>Even though the traffic was a mess, we had the best time.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
 </div>
 <div id="services" class="container-fluid text-center">
   <h2>Servicios</h2>
@@ -43,7 +89,7 @@
   </div>
 </div>
 <div id="about" class="container-fluid bg-grey">
-  <h2 class="text-center">CONTACT</h2>
+  <h2 class="text-center">Contacto</h2>
   <div class="row">
     <div class="col-sm-5">
       <p>Contactenos y en menos de 24 horas, estaremos dandole ayudandole.</p>

@@ -1,4 +1,6 @@
+<hr><hr><hr>
 <h1>Panel de administración</h1>
+<hr>
 <div class="table-responsive">
   <table class="table">
     <caption>Cuentas activas</caption>
@@ -18,9 +20,26 @@
           <td>{{user.email}}</td>
           <td>{{user.isAdmin | yesNo }}</td>
           <td>
-            <a href="">Editar</a>
+            <button class="btn btn-primary btn-xs" (click)="editUser(user)">Editar</button>
             {{" - "}}
-            <button (click)="deleteUser(user)">Eliminar</button>
+            <button class="btn btn-primary btn-xs"  (click)="temporal(user)" data-toggle="modal" data-target="#myModal">Eliminar</button>
+            <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Eliminar</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>¿Está seguro de eliminar al usuario <strong>{{usert.username}}</strong>?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button (click)="deleteUser(usert)" type="button" class="btn btn-primary">Eliminar usuario</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>

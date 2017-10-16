@@ -11,6 +11,7 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 export class AdminComponent implements OnInit {
 
   users:Object;
+  usert: Object = {name: String, username:String, email:String, password:String, isAdmin: Boolean};
 
   constructor(private authService: AuthService, private router:Router,private flashMessage: FlashMessagesService,) { }
 
@@ -24,6 +25,10 @@ export class AdminComponent implements OnInit {
       } );
   }
 
+  temporal(user){
+    this.usert = user;
+  }
+
   deleteUser(user){
     this.authService.deleteUser(user).subscribe(data => {
       if(data.success){
@@ -31,5 +36,9 @@ export class AdminComponent implements OnInit {
         window.location.reload();
       }
     });
+  }
+
+  editUser(user){
+
   }
 }
