@@ -8,22 +8,37 @@ const WebSocket = require('ws');
 const ws = new WebSocket('ws://localhost:8080');
 const Blackout = require('../models/blackout');
 
-//Blackout enviar
-router.post('/blackout', passport.authenticate('jwt',{ session: false }), (req,res,next) => {
-  var sen = req.body.sentido;
-  var vue = req.body.vueltas;
-
-  var stepper = {"sentido":sen,"vueltas":vue};
-  var myJSON = JSON.stringify(stepper);
-
-  clientMQTT.publish('inStepper',myJSON, (err) => {
-    if(err){
-      return res.json({"success":false, "msg": err});
-    } else {
-      return res.json({"success":true, "msg": 'JSON enviado'});
-    }
-  });
+ws.on('message', function incoming(message) {
+  var json = JSON.parse(message);
+  if(json.type=="blackout"){
+    var stepper = {"sentido":json.message.vueltas,"vueltas":json.message.sentido};
+    clientMQTT.publish('inStepper',stepper, (err) => {
+      if(err){
+        console.log("error");
+        let dataError = {
+          'type': "error",
+          'message': err
+        }
+        ws.send(JSON.stringify(dataError));
+      }
+    });
+  }
+  if(json.type=="luces"){
+    var luces = {"status":json.message.status};
+    console.log(luces);
+    clientMQTT.publish('encenderFoco',luces, (err) => {
+      if(err){
+        console.log("error");
+        let dataError = {
+          'type': "error",
+          'message': err
+        }
+        ws.send(JSON.stringify(dataError));
+      }
+    });
+  }
 });
+
 
 clientMQTT.on('message', function (topic, message) {
     try{
@@ -44,6 +59,9 @@ clientMQTT.on('message', function (topic, message) {
         blackout.save(function (err){
           if (err) return handleError(err);  // saved!
         });
+      }
+      if(topic="encenderFoco"){
+        
       }
 
   } catch (e) {

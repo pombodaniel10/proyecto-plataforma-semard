@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
-import {MqttSErvice} from '../../../../app/services/mqtt.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
-import { ChatService } from '../../../../app/services/chat.service';
+import { WsService } from '../../../../app/services/ws.service';
 import {IBlackout} from './blackout';
 
 @Component({
@@ -16,14 +15,11 @@ export class BlackoutComponent implements OnInit {
   messages: any = {};
   progress: number = 0;
 
-  connection;
-
   constructor(
-    private mqttService: MqttSErvice,
     private flashMessage: FlashMessagesService,
-    private chatService: ChatService
+    private wsService: WsService
   ) {
-    chatService.messages.subscribe(msg => {
+    wsService.messages.subscribe(msg => {
       if(msg.type=="blackout"){
         this.messages = msg;
         this.progress = msg.message.progreso;
@@ -31,6 +27,10 @@ export class BlackoutComponent implements OnInit {
           this.messages = {};
           this.progress = 0;
         }
+      }else if(msg.type=="error"){
+        this.flashMessage.show("Error al comunicarse con el dispostivo", {
+          cssClass: 'alert-warning',
+          timeout:5000});
       }
 		});
   }
@@ -40,22 +40,10 @@ export class BlackoutComponent implements OnInit {
   }
 
   onBlackoutSubmit(){
-    let blackout: IBlackout = {
+    let blackout:IBlackout = {
       type: "blackout",
       message: {vueltas:this.vueltas,sentido:this.sentidoGiro}
     }
-
-    let blackout2 = {
-      vueltas: this.vueltas,
-      sentido: this.sentidoGiro
-    }
-
-    this.mqttService.sendBlackout(blackout2).subscribe(data => {
-      if(data.success){
-          this.flashMessage.show(data.msg,{cssClass:'alert-success', timeout:3000});
-      }else {
-          this.flashMessage.show(data.msg,{cssClass: 'alert-danger', timeout:3000});
-      }
-    });
+    this.wsService.messages.next(blackout);
   }
 }

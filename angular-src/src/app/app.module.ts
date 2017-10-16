@@ -21,9 +21,8 @@ import { LucesComponent } from './components/dashboard/luces/luces.component';
 
 import {AuthService} from './services/auth.service';
 import {ValidateService} from '../app/services/validate.service';
-import {MqttSErvice} from '../app/services/mqtt.service';
 import { WebsocketService } from '../app/services/websocket.service';
-import { ChatService } from '../app/services/chat.service';
+import { WsService } from '../app/services/ws.service';
 
 import {AuthGuard} from './guards/auth.guard';
 import {AuthAdminGuard} from './guards/auth-admin.guard';
@@ -66,7 +65,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,MqttSErvice,WebsocketService, ChatService],
+  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,WebsocketService, WsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
