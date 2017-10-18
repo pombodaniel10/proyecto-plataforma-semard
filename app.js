@@ -12,8 +12,6 @@ const users = require("./routes/users");
 const mqtt =  require("./routes/mqttAPI");
 const mongodb = require("./middlewares/mongodb");
 
-//const wsserver = require("./middlewares/wsserver");
-
 const WebSocketServer = require('ws').Server;
 const wss = new WebSocketServer({ server });
 
