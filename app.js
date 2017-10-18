@@ -13,9 +13,11 @@ const wsserver = require("./middlewares/wsserver");
 //Port number
 const PORT = process.env.PORT || 8080;
 
-http.listen(PORT, function(){
+const server = http.listen(PORT, function(){
   console.log('listening on *:'+PORT);
 });
+
+module.exports = server;
 
 app.use(express.static('public'));
 
