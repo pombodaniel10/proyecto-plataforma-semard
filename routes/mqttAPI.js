@@ -43,13 +43,12 @@ ws.on('message', function incoming(message) {
 clientMQTT.on('message', function (topic, message) {
     try{
       if(topic="outStepper"){
-      let data = {
-        'type': "blackout",
-        'message': JSON.parse(message.toString())
+        let data = {
+          'type': "blackout",
+          'message': JSON.parse(message.toString())
+        }
+        ws.send(JSON.stringify(data));
       }
-      ws.send(JSON.stringify(data));
-      }
-
       if(topic="inStepper"){
         let blackout = new Blackout({
           'username': "default",
@@ -63,14 +62,11 @@ clientMQTT.on('message', function (topic, message) {
       if(topic="encenderFoco"){
 
       }
-
   } catch (e) {
     if(e instanceof SyntaxError){
       console.log("Error al procesar el JSON.");
     }
-
   }
-
 });
 
 module.exports = router;
