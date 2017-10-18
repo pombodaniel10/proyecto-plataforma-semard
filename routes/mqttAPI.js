@@ -5,10 +5,8 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const clientMQTT = require('../middlewares/mqtt');
 const WebSocket = require('ws');
-const HOST = location.origin.replace(/^http/, 'ws');
-const ws = new WebSocket(HOST);
+const ws = new WebSocket('ws://localhost:5000');
 const Blackout = require('../models/blackout');
-
 
 ws.on('message', function incoming(message) {
   var json = JSON.parse(message);
