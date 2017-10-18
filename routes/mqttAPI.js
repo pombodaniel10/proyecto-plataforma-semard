@@ -10,6 +10,7 @@ const Blackout = require('../models/blackout');
 
 ws.on('message', function incoming(message) {
   var json = JSON.parse(message);
+  console.log(json);
   if(json.type=="blackout"){
     var stepper = {"sentido":json.message.vueltas,"vueltas":json.message.sentido};
     clientMQTT.publish('inStepper',stepper, (err) => {
