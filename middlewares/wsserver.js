@@ -1,6 +1,6 @@
-const WebSocketServer = require('ws').Server;
-const server = require('../app');
-const wss = new WebSocketServer({server});
+/*const WebSocketServer = require('ws').Server;
+const server = require('./httpServer').Server;
+const wss = new WebSocketServer({'ws:localhost:8080'});
 
 
 //WebSocket

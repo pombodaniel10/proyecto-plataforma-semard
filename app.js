@@ -2,22 +2,32 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
-const express = require('express'),
-    app = express(),
-    http = require('http').Server(app);
+
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 8080;
+const server = app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+
 const users = require("./routes/users");
 const mqtt =  require("./routes/mqttAPI");
 const mongodb = require("./middlewares/mongodb");
-const wsserver = require("./middlewares/wsserver");
 
-//Port number
-const PORT = process.env.PORT || 8080;
+//const wsserver = require("./middlewares/wsserver");
 
-const server = http.listen(PORT, function(){
-  console.log('listening on *:'+PORT);
+const WebSocketServer = require('ws').Server;
+const wss = new WebSocketServer({ server });
+
+wss.broadcast = function broadcast(data) {
+    wss.clients.forEach(function each(client) {
+        client.send(data);
+    });
+};
+
+wss.on('connection', function(ws) {
+    ws.on('message', function(msg) {
+        wss.broadcast(msg);
+    });
 });
-
-module.exports = server;
 
 app.use(express.static('public'));
 
