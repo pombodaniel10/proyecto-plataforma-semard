@@ -5,7 +5,7 @@ const passport = require('passport');
 
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 const server = app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 const users = require("./routes/users");
