@@ -1388,7 +1388,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var WS_URL = 'ws://localhost:8080';
+var WS_URL = location.origin.replace(/^http/, 'ws');
 var WsService = (function () {
     function WsService(wsService) {
         this.messages = wsService
