@@ -11,7 +11,7 @@ const mongodb = require("./middlewares/mongodb");
 const wsserver = require("./middlewares/wsserver");
 
 //Port number
-const PORT = 4000;
+const PORT = process.env.PORT || 8080;
 
 http.listen(PORT, function(){
   console.log('listening on *:'+PORT);
