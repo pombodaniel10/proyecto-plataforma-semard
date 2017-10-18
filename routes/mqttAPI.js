@@ -25,7 +25,6 @@ ws.on('message', function incoming(message) {
   }
   if(json.type=="luces"){
     var luces = {"status":json.message.status};
-    console.log(luces);
     clientMQTT.publish('encenderFoco',luces, (err) => {
       if(err){
         console.log("error");
@@ -61,7 +60,7 @@ clientMQTT.on('message', function (topic, message) {
         });
       }
       if(topic="encenderFoco"){
-        
+
       }
 
   } catch (e) {

@@ -11,8 +11,6 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="isHome()"><a href="#services">Servicios</a></li>
-        <li *ngIf="isHome()" style="border-right: 1px solid #bbb"><a href="#about">Contacto</a></li>
         <li *ngIf="authService.loggedIn()" [routerLinkActive]= "['active']" [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/dashboard']">Dashboard</a></li>
         <li *ngIf="authService.adminAccess() && authService.loggedIn()" [routerLinkActive]= "['active']" [routerLinkActiveOptions] = "{exact:true}"><a  [routerLink]="['/admin']">Admin</a></li>
 
@@ -32,6 +30,10 @@
             <li><a (click)="onLogoutClick()" href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
           </ul>
         </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-left">
+        <li *ngIf="isHome()"><a href="#services">Servicios</a></li>
+        <li *ngIf="isHome()"><a href="#about">Contacto</a></li>
       </ul>
     </div>
   </div>

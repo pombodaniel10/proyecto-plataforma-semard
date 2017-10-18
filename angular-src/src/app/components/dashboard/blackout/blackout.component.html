@@ -1,23 +1,29 @@
 <hr><hr><hr>
 <h1 class="pacifico big blue text-center">Stepper</h1>
 <hr>
-<div class="col-md-3 remove-float center-block big-top-space text-center">
+<div class="col-md-6 col-md-offset-6 remove-float center-block top-space text-center">
   <form (submit)="onBlackoutSubmit()">
-    <div class="form-group ">
-      <label for="vueltas">Número de vueltas</label>
-      <input class="form-control" [(ngModel)]="vueltas" type="number" name="vueltas" placeholder="Vueltas"/>
-      <br>
+    <div class="form-group">
+        <label for="vueltas">Número de vueltas</label>
+        <div class="row">
+          <div class="col-md-4 col-sm-offset-4">
+            <input class="form-control" [(ngModel)]="vueltas" type="number" name="vueltas" placeholder="Vueltas"/>
+          </div>
+        </div>
+    </div>
+    <div class="form-group">
       <label for="sentidoGiro">Sentido del giro</label>
       <br>
-      <input type="radio" value="clockwise" name="sentidoGiro" [(ngModel)]="sentidoGiro"> Clockwise
-      <input type="radio" value="counterclockwise" name="sentidoGiro" [(ngModel)]="sentidoGiro"> Counter Clockwise
+      <input type="radio" value="clockwise" name="sentidoGiro" [(ngModel)]="sentidoGiro"> Manecillas del reloj
+      <br>
+      <input type="radio" value="counterclockwise" name="sentidoGiro" [(ngModel)]="sentidoGiro"> Contrario de las manecillas del reloj
       <br>
       <br>
       <input class="btn btn-primary" type="submit" value="Enviar"/>
     </div>
   </form>
   <div class="messages">
-			<h3>Estado</h3>
+			  <h3 *ngIf="messages.message">Estado</h3>
   			<strong *ngIf="messages.message">Sentido: {{messages.message.sentido}}</strong>
         <br>
         <strong *ngIf="messages.message">Vueltas: {{messages.message.vueltas}}</strong>
