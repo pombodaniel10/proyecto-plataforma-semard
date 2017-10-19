@@ -3,6 +3,7 @@ import {ValidateService} from '../../../../app/services/validate.service';
 import {AuthService} from '../../../../app/services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {Router} from '@angular/router';
+import {User} from './user';
 
 @Component({
   selector: 'app-register',
@@ -10,12 +11,14 @@ import {Router} from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  name: String;
-  username: String;
-  email: String;
-  password: String;
+  name: string;
+  username: string;
+  email: string;
+  password: string;
   isAdmin: boolean = false;
   users : any;
+  form_usuario: string = "form-group";
+  user: User = new User('','','','',false);
 
   constructor(
     private validateService: ValidateService,
@@ -37,35 +40,24 @@ export class RegisterComponent implements OnInit {
   usuarioExiste(){
     for(let user of this.users){
       if(user.username==this.username){
-        this.flashMessage.show("Nombre de usuario ya utlizado.",{cssClass: 'alert-danger', timeout:3000});
-        return false;
+        console.log("found")
+        //this.form_usuario = "form-group has-error";
+      } else {
+        //this.form_usuario = "form-group";
       }
     }
   }
 
   onRegisterSubmit(){
-    const user = {
-      name: this.name,
-      username: this.username,
-      email: this.email,
-      password: this.password,
-      isAdmin: this.isAdmin
-    }
-
-    //Required fields
-    if(!this.validateService.validateRegister(user)){
-      this.flashMessage.show("Por favor, llene todo los campos",{cssClass: 'alert-danger', timeout:3000});
-      return false;
-    }
 
     //Validate Email
-    if(!this.validateService.validateEmail(user.email)){
+    if(!this.validateService.validateEmail(this.user.email)){
       this.flashMessage.show("Por favor, ingrese un correo valido",{cssClass: 'alert-danger', timeout:3000});
       return false;
     }
 
     //Register user
-    this.authService.registerUser(user).subscribe(data => {
+    this.authService.registerUser(this.user).subscribe(data => {
       if(data.success){
         this.flashMessage.show("¡Registro exitoso!",{cssClass: 'alert-success', timeout:3000});
         this.router.navigate(['admin']);

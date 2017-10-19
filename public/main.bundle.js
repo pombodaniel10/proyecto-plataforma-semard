@@ -315,7 +315,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".ng-valid[required], .ng-valid.required  {\n  border-left: 5px solid #42A948; /* green */\n}\n\n.ng-invalid:not(form)  {\n  border-left: 5px solid #a94442; /* red */\n}\n", ""]);
 
 // exports
 
@@ -328,7 +328,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/admin/register/register.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<hr><hr>\n<h2 class=\"page-header text-center\">Registrar usuario</h2>\n<div class=\"col-md-4 col-md-offset-4 remove-float center-block form-horizontal top-space\">\n  <div class=\"login-panel panel panel-default\">\n    <div class=\"panel-body\">\n      <form role=\"form\" (submit)=\"onRegisterSubmit()\">\n        <fieldset>\n          <div class=\"form-group\">\n            <label for=\"name\">Nombre completo</label>\n            <input class=\"form-control\" [(ngModel)]=\"name\" name=\"name\" type=\"text\" placeholder=\"Ingrese el nombre completo\"/>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"username\">Nombre de usuario</label>\n            <input class=\"form-control\" [(ngModel)]=\"username\" (keyup)=\"usuarioExiste()\" name=\"username\" type=\"text\" placeholder=\"Ingrese el nombre de usuario\"/>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"email\">Email</label>\n            <input class=\"form-control\" [(ngModel)]=\"email\" name=\"email\" type=\"text\" placeholder=\"Ingrese el email\"/>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"password\">Contraseña</label>\n            <input class=\"form-control\" type=\"password\" [(ngModel)]=\"password\" name=\"password\" placeholder=\"Contraseña\"/>\n          </div>\n          <div class=\"form-group text-center\">\n            <label for=\"admin\">Permisos de administrador</label>\n            <input type=\"checkbox\" [(ngModel)]=\"isAdmin\" name=\"isAdmin\"/>\n          </div>\n          <div class=\"top-space form-group text-center\">\n            <input class=\"btn btn-primary\" type=\"submit\" value=\"Agregar usuario\"/>\n          </div>\n        </fieldset>\n      </form>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<hr><hr>\n<h2 class=\"page-header text-center\">Registrar usuario</h2>\n<div class=\"col-md-4 col-md-offset-4 remove-float center-block form-horizontal top-space\">\n  <div class=\"login-panel panel panel-default\">\n    <div class=\"panel-body\">\n      <form (ngSubmit)=\"onRegisterSubmit()\" #userForm=\"ngForm\">\n        <fieldset>\n          <div class=\"form-group\">\n            <label for=\"name\">Nombre completo</label>\n            <input class=\"form-control\" [(ngModel)]=\"user.name\" name=\"name\" required  required minlength=\"4\" forbiddenName=\"bob\"  placeholder=\"Ingrese el nombre completo\" #name=\"ngModel\">\n            <div *ngIf=\"name.invalid && (name.dirty || name.touched)\" class=\"alert alert-danger\">\n               <div *ngIf=\"name.errors.required\">\n                 Name is required.\n               </div>\n               <div *ngIf=\"name.errors.minlength\">\n                 Name must be at least 4 characters long.\n               </div>\n               <div *ngIf=\"name.errors.forbiddenName\">\n                 Name cannot be Bob.\n               </div>\n             </div>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"username\">Nombre de usuario</label>\n            <input id=\"name\" name=\"username\" type=\"text\" class=\"form-control\" [(ngModel)]=\"user.username\" (keyup)=\"usuarioExiste()\" required minlength=\"4\" forbiddenName=\"bob\" placeholder=\"Ingrese el nombre de usuario\" #username=\"ngModel\"/>\n            <div *ngIf=\"username.invalid && (username.dirty || username.touched)\" class=\"alert alert-danger\">\n              <div *ngIf=\"username.errors.required\">\n                Name is required.\n              </div>\n              <div *ngIf=\"username.errors.minlength\">\n                Name must be at least 4 characters long.\n              </div>\n              <div *ngIf=\"username.errors.forbiddenName\">\n                Name cannot be Bob.\n              </div>\n            </div>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"email\">Email</label>\n            <input class=\"form-control\" [(ngModel)]=\"user.email\" name=\"email\" required type=\"text\" placeholder=\"Ingrese el email\" #email=\"ngModel\">\n            <div [hidden]=\"email.valid || email.pristine\" class=\"alert alert-danger\">Debe ingresar un correo</div>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"password\">Contraseña</label>\n            <input class=\"form-control\" [(ngModel)]=\"user.password\" name=\"password\" type=\"password\" required  placeholder=\"Contraseña \"#password=\"ngModel\">\n            <div [hidden]=\"password.valid || password.pristine\" class=\"alert alert-danger\">Debe ingresar una contraseña</div>\n          </div>\n          <div class=\"form-group text-center\">\n            <label for=\"admin\">Permisos de administrador</label>\n            <input type=\"checkbox\" [(ngModel)]=\"user.isAdmin\"name=\"isAdmin\"/>\n          </div>\n          <div class=\"top-space form-group text-center\">\n            <input [disabled]=\"!userForm.form.valid\" class=\"btn btn-primary\" type=\"submit\" value=\"Agregar usuario\"/>\n          </div>\n        </fieldset>\n      </form>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -342,6 +342,7 @@ module.exports = "<hr><hr>\n<h2 class=\"page-header text-center\">Registrar usua
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__("../../../../angular2-flash-messages/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__user__ = __webpack_require__("../../../../../src/app/components/admin/register/user.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -357,6 +358,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var RegisterComponent = (function () {
     function RegisterComponent(validateService, flashMessage, authService, router) {
         this.validateService = validateService;
@@ -364,6 +366,8 @@ var RegisterComponent = (function () {
         this.authService = authService;
         this.router = router;
         this.isAdmin = false;
+        this.form_usuario = "form-group";
+        this.user = new __WEBPACK_IMPORTED_MODULE_5__user__["a" /* User */]('', '', '', '', false);
     }
     RegisterComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -378,32 +382,23 @@ var RegisterComponent = (function () {
         for (var _i = 0, _a = this.users; _i < _a.length; _i++) {
             var user = _a[_i];
             if (user.username == this.username) {
-                this.flashMessage.show("Nombre de usuario ya utlizado.", { cssClass: 'alert-danger', timeout: 3000 });
-                return false;
+                console.log("found");
+                //this.form_usuario = "form-group has-error";
+            }
+            else {
+                //this.form_usuario = "form-group";
             }
         }
     };
     RegisterComponent.prototype.onRegisterSubmit = function () {
         var _this = this;
-        var user = {
-            name: this.name,
-            username: this.username,
-            email: this.email,
-            password: this.password,
-            isAdmin: this.isAdmin
-        };
-        //Required fields
-        if (!this.validateService.validateRegister(user)) {
-            this.flashMessage.show("Por favor, llene todo los campos", { cssClass: 'alert-danger', timeout: 3000 });
-            return false;
-        }
         //Validate Email
-        if (!this.validateService.validateEmail(user.email)) {
+        if (!this.validateService.validateEmail(this.user.email)) {
             this.flashMessage.show("Por favor, ingrese un correo valido", { cssClass: 'alert-danger', timeout: 3000 });
             return false;
         }
         //Register user
-        this.authService.registerUser(user).subscribe(function (data) {
+        this.authService.registerUser(this.user).subscribe(function (data) {
             if (data.success) {
                 _this.flashMessage.show("¡Registro exitoso!", { cssClass: 'alert-success', timeout: 3000 });
                 _this.router.navigate(['admin']);
@@ -427,6 +422,26 @@ RegisterComponent = __decorate([
 
 var _a, _b, _c, _d;
 //# sourceMappingURL=register.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/admin/register/user.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
+var User = (function () {
+    function User(name, username, email, password, isAdmin) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+    return User;
+}());
+
+//# sourceMappingURL=user.js.map
 
 /***/ }),
 
@@ -1208,20 +1223,20 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.post('users/register', user, { headers: headers })
+        return this.http.post('http://localhost:8080/users/register', user, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.deleteUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.delete('users/deleteuser', { headers: headers, body: user })
+        return this.http.delete('http://localhost:8080/users/deleteuser', { headers: headers, body: user })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('users/authenticate', user, { headers: headers })
+        return this.http.post('http://localhost:8080/users/authenticate', user, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.getProfile = function () {
@@ -1229,7 +1244,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('users/profile', { headers: headers })
+        return this.http.get('http://localhost:8080/users/profile', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.storeUserData = function (token, user) {
@@ -1243,7 +1258,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('users/admin', { headers: headers })
+        return this.http.get('http://localhost:8080/users/admin', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.loadToken = function () {
@@ -1272,7 +1287,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('users/logout', { headers: headers })
+        return this.http.get('http://localhost:8080/users/logout', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     return AuthService;
@@ -1306,14 +1321,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ValidateService = (function () {
     function ValidateService() {
     }
-    ValidateService.prototype.validateRegister = function (user) {
-        if (user.name == undefined || user.username == undefined || user.email == undefined || user.password == undefined) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    };
     ValidateService.prototype.validateEmail = function (email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
