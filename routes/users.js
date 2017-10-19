@@ -74,7 +74,6 @@ router.post('/register', passport.authenticate('jwt',{ session: false }),(req,re
         password: req.body.password,
         isAdmin: req.body.isAdmin
       });
-
       User.addUser(newUser, (err,user) => {
         if(err){
           res.json({"success":false, "msg":'Error al intentar registrar al usuario'});

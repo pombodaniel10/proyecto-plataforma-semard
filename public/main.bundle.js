@@ -328,7 +328,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/admin/register/register.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<hr><hr>\n<h2 class=\"page-header text-center\">Registrar usuario</h2>\n<div class=\"col-md-4 col-md-offset-4 remove-float center-block form-horizontal top-space\">\n  <div class=\"login-panel panel panel-default\">\n    <div class=\"panel-body\">\n      <form role=\"form\" (submit)=\"onRegisterSubmit()\">\n        <fieldset>\n          <div class=\"form-group\">\n            <label for=\"name\">Nombre completo</label>\n            <input class=\"form-control\" [(ngModel)]=\"name\" name=\"name\" type=\"text\" placeholder=\"Ingrese el nombre completo\"/>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"username\">Nombre de usuario</label>\n            <input class=\"form-control\" [(ngModel)]=\"username\" name=\"username\" type=\"text\" placeholder=\"Ingrese el nombre de usuario\"/>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"email\">Email</label>\n            <input class=\"form-control\" [(ngModel)]=\"email\" name=\"email\" type=\"text\" placeholder=\"Ingrese el email\"/>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"password\">Contraseña</label>\n            <input class=\"form-control\" type=\"password\" [(ngModel)]=\"password\" name=\"password\" placeholder=\"Contraseña\"/>\n          </div>\n          <div class=\"form-group text-center\">\n            <label for=\"admin\">Permisos de administrador</label>\n            <input type=\"checkbox\" [(ngModel)]=\"isAdmin\" name=\"isAdmin\"/>\n          </div>\n          <div class=\"top-space form-group text-center\">\n            <input class=\"btn btn-primary\" type=\"submit\" value=\"Agregar usuario\"/>\n          </div>\n        </fieldset>\n      </form>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<hr><hr>\n<h2 class=\"page-header text-center\">Registrar usuario</h2>\n<div class=\"col-md-4 col-md-offset-4 remove-float center-block form-horizontal top-space\">\n  <div class=\"login-panel panel panel-default\">\n    <div class=\"panel-body\">\n      <form role=\"form\" (submit)=\"onRegisterSubmit()\">\n        <fieldset>\n          <div class=\"form-group\">\n            <label for=\"name\">Nombre completo</label>\n            <input class=\"form-control\" [(ngModel)]=\"name\" name=\"name\" type=\"text\" placeholder=\"Ingrese el nombre completo\"/>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"username\">Nombre de usuario</label>\n            <input class=\"form-control\" [(ngModel)]=\"username\" (keyup)=\"usuarioExiste()\" name=\"username\" type=\"text\" placeholder=\"Ingrese el nombre de usuario\"/>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"email\">Email</label>\n            <input class=\"form-control\" [(ngModel)]=\"email\" name=\"email\" type=\"text\" placeholder=\"Ingrese el email\"/>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"password\">Contraseña</label>\n            <input class=\"form-control\" type=\"password\" [(ngModel)]=\"password\" name=\"password\" placeholder=\"Contraseña\"/>\n          </div>\n          <div class=\"form-group text-center\">\n            <label for=\"admin\">Permisos de administrador</label>\n            <input type=\"checkbox\" [(ngModel)]=\"isAdmin\" name=\"isAdmin\"/>\n          </div>\n          <div class=\"top-space form-group text-center\">\n            <input class=\"btn btn-primary\" type=\"submit\" value=\"Agregar usuario\"/>\n          </div>\n        </fieldset>\n      </form>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -366,6 +366,22 @@ var RegisterComponent = (function () {
         this.isAdmin = false;
     }
     RegisterComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.authService.getUsers().subscribe(function (users) {
+            _this.users = users.users;
+        }, function (err) {
+            console.log(err);
+            return false;
+        });
+    };
+    RegisterComponent.prototype.usuarioExiste = function () {
+        for (var _i = 0, _a = this.users; _i < _a.length; _i++) {
+            var user = _a[_i];
+            if (user.username == this.username) {
+                this.flashMessage.show("Nombre de usuario ya utlizado.", { cssClass: 'alert-danger', timeout: 3000 });
+                return false;
+            }
+        }
     };
     RegisterComponent.prototype.onRegisterSubmit = function () {
         var _this = this;

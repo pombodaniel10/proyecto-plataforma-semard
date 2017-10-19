@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
   email: String;
   password: String;
   isAdmin: boolean = false;
+  users : any;
 
   constructor(
     private validateService: ValidateService,
@@ -24,6 +25,22 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.authService.getUsers().subscribe(users => {
+      this.users = users.users;
+    },
+      err => {
+      console.log(err);
+      return false;
+      } );
+  }
+
+  usuarioExiste(){
+    for(let user of this.users){
+      if(user.username==this.username){
+        this.flashMessage.show("Nombre de usuario ya utlizado.",{cssClass: 'alert-danger', timeout:3000});
+        return false;
+      }
+    }
   }
 
   onRegisterSubmit(){
