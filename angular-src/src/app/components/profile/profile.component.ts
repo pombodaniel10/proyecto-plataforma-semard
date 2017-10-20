@@ -16,11 +16,12 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit() {
-
       this.authService
       .getUser()
       .then((user: User) => {
+        console.log(user);
         this.user = user;
+        console.log(this.user);
       });
   }
 

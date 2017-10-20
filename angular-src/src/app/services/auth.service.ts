@@ -8,29 +8,20 @@ import {User} from  '../.././app/components/admin/register/user';
 @Injectable()
 export class AuthService {
   authToken: any;
-  user: any = JSON.parse(localStorage.getItem('user'));
+  user: User = JSON.parse(localStorage.getItem('user'));
 
   constructor(private http:Http) { }
 
-    getUser(): Promise<void | User> {
-      let headers = new Headers();
-      this.loadToken();
-      headers.append('Authorization',this.authToken);
-      headers.append('Content-Type','application/json');
-       return this.http.get('users/profile',{headers:headers})
-                  .toPromise()
-                  .then(response => response.json() as User)
-                  .catch(this.handleError);
-     }
-
-     getProfile(){
-       let headers = new Headers();
-       this.loadToken();
-       headers.append('Authorization',this.authToken);
-       headers.append('Content-Type','application/json');
-       return this.http.get('users/profile',{headers:headers})
-         .map(res => res.json());
-     }
+  getUser(): Promise<void | User> {
+    let headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization',this.authToken);
+    headers.append('Content-Type','application/json');
+    return this.http.get('users/profile',{headers:headers})
+      .toPromise()
+      .then(response => response.json() as User)
+      .catch(this.handleError);
+  }
 
   registerUser(user){
     let headers = new Headers();

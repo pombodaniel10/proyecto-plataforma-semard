@@ -342,7 +342,6 @@ module.exports = "<h2 class=\"page-header text-center\">Registrar usuario</h2>\n
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__("../../../../angular2-flash-messages/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__user__ = __webpack_require__("../../../../../src/app/components/admin/register/user.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -358,7 +357,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var RegisterComponent = (function () {
     function RegisterComponent(validateService, flashMessage, authService, router) {
         this.validateService = validateService;
@@ -367,7 +365,6 @@ var RegisterComponent = (function () {
         this.router = router;
         this.isAdmin = false;
         this.form_usuario = "form-group";
-        this.user = new __WEBPACK_IMPORTED_MODULE_5__user__["a" /* User */]('', '', '', '', false);
     }
     RegisterComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -422,26 +419,6 @@ RegisterComponent = __decorate([
 
 var _a, _b, _c, _d;
 //# sourceMappingURL=register.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/components/admin/register/user.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
-var User = (function () {
-    function User(name, username, email, password, isAdmin) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.isAdmin = isAdmin;
-    }
-    return User;
-}());
-
-//# sourceMappingURL=user.js.map
 
 /***/ }),
 
@@ -1061,7 +1038,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/profile/profile.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col-md-4 col-md-offset-6 remove-float center-block top-space text-center\" *ngIf=\"user\">\n  <div class=\"panel panel-primary\">\n  <div class=\"panel-heading\">\n    <h3 class=\"panel-title\">Perfil</h3>\n  </div>\n  <div class=\"panel-body\">\n    <h2 class=\"page-header\"> {{user.name}}</h2>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\">Nombre de usario: {{user.username}}</li>\n      <li class=\"list-group-item\">Email: {{user.email}}</li>\n    </ul>\n  </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"col-md-4 col-md-offset-6 remove-float center-block top-space text-center\" *ngIf=\"user\">\n  <div class=\"panel panel-primary\">\n  <div class=\"panel-heading\">\n    <h3 class=\"panel-title\">Perfil</h3>\n  </div>\n  <div class=\"panel-body\">\n    <h2 class=\"page-header\"> {{user.user.name}}</h2>\n    <ul class=\"list-group\">\n      <li class=\"list-group-item\">Nombre de usario: {{user.user.username}}</li>\n      <li class=\"list-group-item\">Email: {{user.user.email}}</li>\n    </ul>\n  </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1095,7 +1072,9 @@ var ProfileComponent = (function () {
         this.authService
             .getUser()
             .then(function (user) {
+            console.log(user);
             _this.user = user;
+            console.log(_this.user);
         });
     };
     return ProfileComponent;
