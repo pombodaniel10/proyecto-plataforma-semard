@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
   isAdmin: boolean = false;
   users : any;
   form_usuario: string = "form-group";
-  user: User;
+  user: User = new User('','','','',false);
 
   constructor(
     private validateService: ValidateService,
