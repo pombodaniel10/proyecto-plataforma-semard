@@ -33,7 +33,7 @@ export class AdminComponent implements OnInit {
     this.authService.deleteUser(user).subscribe(data => {
       if(data.success){
         this.flashMessage.show(data.msg,{cssClass: 'alert-success', timeout:3000});
-        window.location.reload();
+        this.router.navigate(['admin']);
       }
     });
   }

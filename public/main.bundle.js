@@ -249,7 +249,7 @@ var AdminComponent = (function () {
         this.authService.deleteUser(user).subscribe(function (data) {
             if (data.success) {
                 _this.flashMessage.show(data.msg, { cssClass: 'alert-success', timeout: 3000 });
-                window.location.reload();
+                _this.router.navigate(['admin']);
             }
         });
     };
