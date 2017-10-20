@@ -23,28 +23,34 @@ export class AuthService {
       .catch(this.handleError);
   }
 
-  registerUser(user){
+  registerUser(newUser: User){
     let headers = new Headers();
     this.loadToken();
     headers.append('Authorization',this.authToken);
     headers.append('Content-Type','application/json');
-    return this.http.post('users/register', user,{headers:headers})
-      .map(res => res.json());
+    return this.http.post('users/register', newUser,{headers:headers})
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
   }
 
-  deleteUser(user){
+  deleteUser(deleteUser:User){
     let headers = new Headers();
     headers.append('Authorization',this.authToken);
     headers.append('Content-Type','application/json');
-    return this.http.delete('users/deleteuser',{headers:headers,body:user})
-      .map(res => res.json());
+    return this.http.delete('users/deleteuser',{headers:headers,body:deleteUser})
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
   }
 
   authenticateUser(user){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     return this.http.post('users/authenticate', user,{headers:headers})
-      .map(res => res.json());
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
   }
 
   storeUserData(token,user){
@@ -54,13 +60,15 @@ export class AuthService {
     this.user = user;
   }
 
-  getUsers(){
+  getUsers(): Promise<void | User[]>{
     let headers = new Headers();
     this.loadToken();
     headers.append('Authorization',this.authToken);
     headers.append('Content-Type','application/json');
     return this.http.get('users/admin',{headers:headers})
-      .map(res => res.json());
+    .toPromise()
+    .then(response => response.json() as User[])
+    .catch(this.handleError);
   }
 
   loadToken(){

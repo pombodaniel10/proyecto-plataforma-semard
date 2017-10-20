@@ -28,8 +28,10 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.getUsers().subscribe(users => {
-      this.users = users.users;
+    this.authService.getUsers().then((users: User[]) =>{
+      this.users = users.map((user) => {
+          return user;
+        });
     },
       err => {
       console.log(err);
@@ -57,7 +59,8 @@ export class RegisterComponent implements OnInit {
     }
 
     //Register user
-    this.authService.registerUser(this.user).subscribe(data => {
+    this.authService.registerUser(this.user)
+      .then((data: any) => {
       if(data.success){
         this.flashMessage.show("¡Registro exitoso!",{cssClass: 'alert-success', timeout:3000});
         this.router.navigate(['admin']);

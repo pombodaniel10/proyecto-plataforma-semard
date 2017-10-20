@@ -234,8 +234,10 @@ var AdminComponent = (function () {
     }
     AdminComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.authService.getUsers().subscribe(function (users) {
-            _this.users = users.users;
+        this.authService.getUsers().then(function (users) {
+            _this.users = users.map(function (user) {
+                return user;
+            });
         }, function (err) {
             console.log(err);
             return false;
@@ -246,7 +248,7 @@ var AdminComponent = (function () {
     };
     AdminComponent.prototype.deleteUser = function (user) {
         var _this = this;
-        this.authService.deleteUser(user).subscribe(function (data) {
+        this.authService.deleteUser(user).then(function (data) {
             if (data.success) {
                 _this.flashMessage.show(data.msg, { cssClass: 'alert-success', timeout: 3000 });
                 _this.router.navigate(['admin']);
@@ -371,8 +373,10 @@ var RegisterComponent = (function () {
     }
     RegisterComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.authService.getUsers().subscribe(function (users) {
-            _this.users = users.users;
+        this.authService.getUsers().then(function (users) {
+            _this.users = users.map(function (user) {
+                return user;
+            });
         }, function (err) {
             console.log(err);
             return false;
@@ -398,7 +402,8 @@ var RegisterComponent = (function () {
             return false;
         }
         //Register user
-        this.authService.registerUser(this.user).subscribe(function (data) {
+        this.authService.registerUser(this.user)
+            .then(function (data) {
             if (data.success) {
                 _this.flashMessage.show("¡Registro exitoso!", { cssClass: 'alert-success', timeout: 3000 });
                 _this.router.navigate(['admin']);
@@ -922,7 +927,7 @@ var LoginComponent = (function () {
             username: this.username,
             password: this.password
         };
-        this.authService.authenticateUser(user).subscribe(function (data) {
+        this.authService.authenticateUser(user).then(function (data) {
             if (data.success) {
                 _this.authService.storeUserData(data.token, data.user);
                 _this.flashMessage.show("You're now logged in", {
@@ -1254,26 +1259,32 @@ var AuthService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    AuthService.prototype.registerUser = function (user) {
+    AuthService.prototype.registerUser = function (newUser) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.post('users/register', user, { headers: headers })
-            .map(function (res) { return res.json(); });
+        return this.http.post('users/register', newUser, { headers: headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
     };
-    AuthService.prototype.deleteUser = function (user) {
+    AuthService.prototype.deleteUser = function (deleteUser) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.delete('users/deleteuser', { headers: headers, body: user })
-            .map(function (res) { return res.json(); });
+        return this.http.delete('users/deleteuser', { headers: headers, body: deleteUser })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
     };
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
         return this.http.post('users/authenticate', user, { headers: headers })
-            .map(function (res) { return res.json(); });
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
     };
     AuthService.prototype.storeUserData = function (token, user) {
         localStorage.setItem('id_token', token);
@@ -1287,7 +1298,9 @@ var AuthService = (function () {
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
         return this.http.get('users/admin', { headers: headers })
-            .map(function (res) { return res.json(); });
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
     };
     AuthService.prototype.loadToken = function () {
         var token = localStorage.getItem('id_token');
