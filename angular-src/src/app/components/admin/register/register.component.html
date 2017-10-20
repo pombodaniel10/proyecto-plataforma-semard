@@ -10,10 +10,10 @@
             <input class="form-control" [(ngModel)]="user.name" name="name" required  required minlength="4" forbiddenName="bob"  placeholder="Ingrese el nombre completo" #name="ngModel">
             <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
                <div *ngIf="name.errors.required">
-                 Name is required.
+                 Debe ingresar un nombre
                </div>
                <div *ngIf="name.errors.minlength">
-                 Name must be at least 4 characters long.
+                 Minimo 4 caracteres
                </div>
                <div *ngIf="name.errors.forbiddenName">
                  Name cannot be Bob.
@@ -22,13 +22,13 @@
           </div>
           <div class="form-group">
             <label for="username">Nombre de usuario</label>
-            <input id="name" name="username" type="text" class="form-control" [(ngModel)]="user.username" (keyup)="usuarioExiste()" required minlength="4" forbiddenName="bob" placeholder="Ingrese el nombre de usuario" #username="ngModel"/>
+            <input id="name" name="username" type="text" class="form-control" [(ngModel)]="user.username" (keyup)="usuarioExiste()" required minlength="8" forbiddenName="bob" placeholder="Ingrese el nombre de usuario" #username="ngModel"/>
             <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
               <div *ngIf="username.errors.required">
-                Name is required.
+                El nombre de usuario es requerido
               </div>
               <div *ngIf="username.errors.minlength">
-                Name must be at least 4 characters long.
+                Debe contener al menos 8 caracteres
               </div>
               <div *ngIf="username.errors.forbiddenName">
                 Name cannot be Bob.
