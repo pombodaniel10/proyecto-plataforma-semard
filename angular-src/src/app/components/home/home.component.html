@@ -1,6 +1,6 @@
 <div class="jumbotron text-center">
-  <h1>SMART HOME</h1>
-  <p class="lead">Plataforma para controlar dispositivos en el hogar.</p>
+  <h1>Smart Home</h1>
+  <p class="lead">Controle sus dispostivos desde cualquier lugar, con solo un clic.</p>
   <a *ngIf="!authService.loggedIn()" class="btn btn-default btn-lg text-center" [routerLink]="['/login']">Iniciar sesión</a>
   <a *ngIf="authService.loggedIn()" class="btn btn-default btn-lg text-center" [routerLink]="['/dashboard']">Ingresar al dashboard</a>
 </div>

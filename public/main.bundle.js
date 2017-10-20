@@ -466,7 +466,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/dashboard/blackout/blackout.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<hr><hr><hr>\n<h1 class=\"pacifico big blue text-center\">Stepper</h1>\n<hr>\n<div class=\"col-md-6 col-md-offset-6 remove-float center-block top-space text-center\">\n  <form (submit)=\"onBlackoutSubmit()\">\n    <div class=\"form-group\">\n        <label for=\"vueltas\">Número de vueltas</label>\n        <div class=\"row\">\n          <div class=\"col-md-4 col-sm-offset-4\">\n            <input class=\"form-control\" [(ngModel)]=\"vueltas\" type=\"number\" name=\"vueltas\" placeholder=\"Vueltas\"/>\n          </div>\n        </div>\n    </div>\n    <div class=\"form-group\">\n      <label for=\"sentidoGiro\">Sentido del giro</label>\n      <br>\n      <input type=\"radio\" value=\"clockwise\" name=\"sentidoGiro\" [(ngModel)]=\"sentidoGiro\"> Manecillas del reloj\n      <br>\n      <input type=\"radio\" value=\"counterclockwise\" name=\"sentidoGiro\" [(ngModel)]=\"sentidoGiro\"> Contrario de las manecillas del reloj\n      <br>\n      <br>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Enviar\"/>\n    </div>\n  </form>\n  <div class=\"messages\">\n\t\t\t  <h3 *ngIf=\"messages.message\">Estado</h3>\n  \t\t\t<strong *ngIf=\"messages.message\">Sentido: {{messages.message.sentido}}</strong>\n        <br>\n        <strong *ngIf=\"messages.message\">Vueltas: {{messages.message.vueltas}}</strong>\n        <br>\n        <strong *ngIf=\"messages.message\">progeso: {{messages.message.progreso}}</strong>\n        <br>\n        <strong *ngIf=\"messages.message\">estado: {{messages.message.estado}}</strong>\n        <div *ngIf=\"messages.message\" class=\"progress progress-striped active\">\n          <div class=\"progress-bar\" [style.width.%]=\"progress\"></div>\n        </div>\n\t</div>\n</div>\n"
+module.exports = "<hr><hr><hr>\n<h1 class=\"pacifico big blue text-center\">Persianas</h1>\n<hr>\n<div class=\"col-md-6 col-md-offset-6 remove-float center-block top-space text-center\">\n  <div class=\"panel panel-default\">\n    <div class=\"panel-body\">\n      <strong>Presione el botón para realizar la acción.</strong><br><br>\n      <img type=\"image\" id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"100\" height=\"180\"><br><br>\n      <button type=\"buton\" (click)=\"bajarPersiana()\" class=\"btn btn-primary\">Bajar la persiana</button>\n      <button type=\"buton\" (click)=\"subirPersiana()\" class=\"btn btn-primary\">Subir la persiana</button><br>\n      <button type=\"button\" data-toggle=\"collapse\" data-target=\"#formAvanzado\" class=\"btn btn-danger top-space\">Avanzado</button>\n      <div id=\"formAvanzado\" class=\"collapse\">\n        <form  class=\"top-space\" (submit)=\"onBlackoutSubmit()\">\n          <div class=\"form-group\">\n              <label for=\"vueltas\">Número de vueltas</label>\n              <div class=\"row\">\n                <div class=\"col-md-4 col-sm-offset-4\">\n                  <input class=\"form-control\" [(ngModel)]=\"vueltas\" type=\"number\" name=\"vueltas\" placeholder=\"Vueltas\"/>\n                </div>\n              </div>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"sentidoGiro\">Sentido del giro</label>\n            <br>\n            <input type=\"radio\" value=\"clockwise\" name=\"sentidoGiro\" [(ngModel)]=\"sentidoGiro\"> Manecillas del reloj\n            <br>\n            <input type=\"radio\" value=\"counterclockwise\" name=\"sentidoGiro\" [(ngModel)]=\"sentidoGiro\"> Contrario de las manecillas del reloj\n            <br>\n            <br>\n            <input class=\"btn btn-primary\" type=\"submit\" value=\"Enviar\"/>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n  <div *ngIf=\"messages.message\" class=\"panel panel-primary messages\">\n        <div class=\"panel-heading\">\n          <h3 class=\"panel-title\">Información del dispostivo</h3>\n        </div>\n        <div class=\"panel-body\">\n        <div *ngIf=\"error\" class=\"alert alert-dismissible alert-danger\">\n          <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n          <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.\n          </strong>\n        </div>\n\t\t\t  <h3 *ngIf=\"messages.message\">Estado</h3>\n  \t\t\t<strong *ngIf=\"messages.message\">Sentido: {{messages.message.sentido}}</strong>\n        <br>\n        <strong *ngIf=\"messages.message\">Vueltas: {{messages.message.vueltas}}</strong>\n        <br>\n        <strong *ngIf=\"messages.message\">progeso: {{messages.message.progreso}}</strong>\n        <br>\n        <strong *ngIf=\"messages.message\">estado: {{messages.message.estado}}</strong>\n        <div *ngIf=\"messages.message\" class=\"progress progress-striped active\">\n          <div class=\"progress-bar\" [style.width.%]=\"progress\"></div>\n        </div>\n      </div>\n\t</div>\n</div>\n"
 
 /***/ }),
 
@@ -498,8 +498,11 @@ var BlackoutComponent = (function () {
         this.wsService = wsService;
         this.messages = {};
         this.progress = 0;
+        this.error = false;
+        this.link = "https://www.tenvinilo.com/vinilos-decorativos/img/preview/vinilo-decorativo-ventana-comic-cerrada-4631.png";
         wsService.messages.subscribe(function (msg) {
-            if (msg.type == "blackout") {
+            if (msg.type == "blackoutOut") {
+                _this.error = false;
                 _this.messages = msg;
                 _this.progress = msg.message.progreso;
                 if (msg.message.estado == "finalizado") {
@@ -508,14 +511,27 @@ var BlackoutComponent = (function () {
                 }
             }
             else if (msg.type == "error") {
-                _this.flashMessage.show("Error al comunicarse con el dispostivo", {
-                    cssClass: 'alert-warning',
-                    timeout: 5000
-                });
+                _this.error = true;
             }
         });
     }
     BlackoutComponent.prototype.ngOnInit = function () {
+    };
+    BlackoutComponent.prototype.subirPersiana = function () {
+        this.link = "https://www.tenvinilo.com/vinilos-decorativos/img/preview/vinilo-decorativo-ventana-comic-abierta-4630.png";
+        var blackout = {
+            type: "blackout",
+            message: { vueltas: 12, sentido: "clockwise" }
+        };
+        this.wsService.messages.next(blackout);
+    };
+    BlackoutComponent.prototype.bajarPersiana = function () {
+        this.link = "https://www.tenvinilo.com/vinilos-decorativos/img/preview/vinilo-decorativo-ventana-comic-cerrada-4631.png";
+        var blackout = {
+            type: "blackout",
+            message: { vueltas: 12, sentido: "counterclockwise" }
+        };
+        this.wsService.messages.next(blackout);
     };
     BlackoutComponent.prototype.onBlackoutSubmit = function () {
         var blackout = {
@@ -523,6 +539,9 @@ var BlackoutComponent = (function () {
             message: { vueltas: this.vueltas, sentido: this.sentidoGiro }
         };
         this.wsService.messages.next(blackout);
+    };
+    BlackoutComponent.prototype.refresh = function () {
+        window.location.reload();
     };
     return BlackoutComponent;
 }());
@@ -622,7 +641,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/dashboard/luces/luces.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<hr><hr><hr>\n<h1 class=\"pacifico big text-center\">Control de luces</h1>\n<hr>\n<div class=\"remove-float center-block big-top-space text-center\">\n    <img id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"100\" height=\"180\">\n    <hr>\n    <p>Foco 1 {{estado}}</p>\n</div>\n"
+module.exports = "<hr><hr><hr>\n<h1 class=\"pacifico big text-center\">Control de luces</h1>\n<hr>\n<div class=\"remove-float col-sm-4 col-sm-4-offset center-block big-top-space text-center\">\n  <div class=\"panel panel-primary\">\n    <div class=\"panel-heading\">\n      <h3 class=\"panel-title\">Bombillo 1</h3>\n    </div>\n    <div class=\"panel-body\">\n      <button data-toggle=\"tooltip\" data-placement=\"top\" title=\"\" data-original-title=\"Tooltip on top\" aria-describedby=\"tooltip858235\">\n      <img type=\"image\" id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"100\" height=\"180\">\n    </button>\n      <div class=\"tooltip fade top\" role=\"tooltip\" id=\"tooltip858235\" style=\"top: -34px; left: 44.7969px; display: block;\">\n        <div class=\"tooltip-arrow\" style=\"left: 50%;\"></div>\n        <div class=\"tooltip-inner\">Tooltip on top</div>\n      </div>\n      <div class=\"tooltip fade top\" role=\"tooltip\" id=\"tooltip858235\" style=\"top: -34px; left: 44.7969px; display: block;\">\n        <div class=\"tooltip-arrow\" style=\"left: 50%;\"></div>\n        <div class=\"tooltip-inner\">Tooltip on top</div>\n      </div>\n    </div>\n    <div class=\"panel-footer\">{{estado}}</div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -690,11 +709,11 @@ var LucesComponent = (function () {
     };
     LucesComponent.prototype.focoOn = function () {
         this.link = "https://www.w3schools.com/js/pic_bulbon.gif";
-        this.estado = "encedido";
+        this.estado = "Encedido";
     };
     LucesComponent.prototype.focoOff = function () {
         this.link = "https://www.w3schools.com/js/pic_bulboff.gif";
-        this.estado = "apagado";
+        this.estado = "Apagado";
     };
     return LucesComponent;
 }());
@@ -794,7 +813,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"jumbotron text-center\">\n  <h1>SMART HOME</h1>\n  <p class=\"lead\">Plataforma para controlar dispositivos en el hogar.</p>\n  <a *ngIf=\"!authService.loggedIn()\" class=\"btn btn-default btn-lg text-center\" [routerLink]=\"['/login']\">Iniciar sesión</a>\n  <a *ngIf=\"authService.loggedIn()\" class=\"btn btn-default btn-lg text-center\" [routerLink]=\"['/dashboard']\">Ingresar al dashboard</a>\n</div>\n<div id=\"services\" class=\"container-fluid text-center\">\n  <h2>Servicios</h2>\n  <br>\n  <div class=\"row\">\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-off\"></span>\n      <h4>Control</h4>\n      <p>Desde el sitio web usted puede controlar sus dispostivos IoT.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-wrench\"></span>\n      <h4>Gestión</h4>\n      <p>Maneje los usuarios que pueden hacer a la plataforma.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-list-alt\"></span>\n      <h4>Informes</h4>\n      <p>Obtenga informes de uso de sus dispostivos en tiempo real.</p>\n    </div>\n    </div>\n    <br><br>\n  <div class=\"row\">\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-globe\"></span>\n      <h4>Multiplataforma</h4>\n      <p>Acceda a la plataforma desde su movil, tablet o ordenador.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-lock\"></span>\n      <h4>Seguro</h4>\n      <p>Solo personal autorizado podrá acceder a controlar los dispostivos.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-user\"></span>\n      <h4>Facil manejo</h4>\n      <p>Solo clique y acción a realizar y la plataforma hará todas las comunicaciones.</p>\n    </div>\n  </div>\n</div>\n<div id=\"about\" class=\"container-fluid bg-grey\">\n  <h2 class=\"text-center\">Contacto</h2>\n  <div class=\"row\">\n    <div class=\"col-sm-5\">\n      <p>Contactenos y en menos de 24 horas, estaremos dandole ayudandole.</p>\n      <p><span class=\"glyphicon glyphicon-map-marker\"></span> Cartagena, CO</p>\n      <p><span class=\"glyphicon glyphicon-phone\"></span> +57 1234567890</p>\n      <p><span class=\"glyphicon glyphicon-envelope\"></span> soporteiotctg@iotcartagena.com</p>\n    </div>\n    <div class=\"col-sm-7\">\n      <div class=\"row\">\n        <div class=\"col-sm-6 form-group\">\n          <input class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"Nombre\" type=\"text\" required>\n        </div>\n        <div class=\"col-sm-6 form-group\">\n          <input class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"Email\" type=\"email\" required>\n        </div>\n      </div>\n      <textarea class=\"form-control\" id=\"comments\" name=\"comments\" placeholder=\"Preguntas\" rows=\"5\"></textarea><br>\n      <div class=\"row\">\n        <div class=\"col-sm-12 form-group\">\n          <button class=\"btn btn-default pull-right\" type=\"submit\">Send</button>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<footer class=\"container-fluid text-center\">\n  <a href=\"#top\" title=\"To Top\">\n    <span class=\"glyphicon glyphicon-chevron-up\"></span>\n  </a>\n  <p>Bootstrap Theme Made By <a href=\"https://www.w3schools.com\" title=\"Visit w3schools\">www.w3schools.com</a></p>\n</footer>\n"
+module.exports = "<div class=\"jumbotron text-center\">\n  <h1>Smart Home</h1>\n  <p class=\"lead\">Controle sus dispostivos desde cualquier lugar, con solo un clic.</p>\n  <a *ngIf=\"!authService.loggedIn()\" class=\"btn btn-default btn-lg text-center\" [routerLink]=\"['/login']\">Iniciar sesión</a>\n  <a *ngIf=\"authService.loggedIn()\" class=\"btn btn-default btn-lg text-center\" [routerLink]=\"['/dashboard']\">Ingresar al dashboard</a>\n</div>\n<div id=\"services\" class=\"container-fluid text-center\">\n  <h2>Servicios</h2>\n  <br>\n  <div class=\"row\">\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-off\"></span>\n      <h4>Control</h4>\n      <p>Desde el sitio web usted puede controlar sus dispostivos IoT.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-wrench\"></span>\n      <h4>Gestión</h4>\n      <p>Maneje los usuarios que pueden hacer a la plataforma.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-list-alt\"></span>\n      <h4>Informes</h4>\n      <p>Obtenga informes de uso de sus dispostivos en tiempo real.</p>\n    </div>\n    </div>\n    <br><br>\n  <div class=\"row\">\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-globe\"></span>\n      <h4>Multiplataforma</h4>\n      <p>Acceda a la plataforma desde su movil, tablet o ordenador.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-lock\"></span>\n      <h4>Seguro</h4>\n      <p>Solo personal autorizado podrá acceder a controlar los dispostivos.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-user\"></span>\n      <h4>Facil manejo</h4>\n      <p>Solo clique y acción a realizar y la plataforma hará todas las comunicaciones.</p>\n    </div>\n  </div>\n</div>\n<div id=\"about\" class=\"container-fluid bg-grey\">\n  <h2 class=\"text-center\">Contacto</h2>\n  <div class=\"row\">\n    <div class=\"col-sm-5\">\n      <p>Contactenos y en menos de 24 horas, estaremos dandole ayudandole.</p>\n      <p><span class=\"glyphicon glyphicon-map-marker\"></span> Cartagena, CO</p>\n      <p><span class=\"glyphicon glyphicon-phone\"></span> +57 1234567890</p>\n      <p><span class=\"glyphicon glyphicon-envelope\"></span> soporteiotctg@iotcartagena.com</p>\n    </div>\n    <div class=\"col-sm-7\">\n      <div class=\"row\">\n        <div class=\"col-sm-6 form-group\">\n          <input class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"Nombre\" type=\"text\" required>\n        </div>\n        <div class=\"col-sm-6 form-group\">\n          <input class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"Email\" type=\"email\" required>\n        </div>\n      </div>\n      <textarea class=\"form-control\" id=\"comments\" name=\"comments\" placeholder=\"Preguntas\" rows=\"5\"></textarea><br>\n      <div class=\"row\">\n        <div class=\"col-sm-12 form-group\">\n          <button class=\"btn btn-default pull-right\" type=\"submit\">Send</button>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<footer class=\"container-fluid text-center\">\n  <a href=\"#top\" title=\"To Top\">\n    <span class=\"glyphicon glyphicon-chevron-up\"></span>\n  </a>\n  <p>Bootstrap Theme Made By <a href=\"https://www.w3schools.com\" title=\"Visit w3schools\">www.w3schools.com</a></p>\n</footer>\n"
 
 /***/ }),
 
@@ -955,7 +974,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\" style=\"margin-bottom: 0\">\n  <div class=\"container\">\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n      <a [routerLink]=\"['/']\" class=\"navbar-brand\">SMART HOME</a>\n    </div>\n    <div id=\"navbar\" class=\"collapse navbar-collapse\">\n      <ul class=\"nav navbar-nav navbar-right\">\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\"><a  [routerLink]=\"['/dashboard']\">Dashboard</a></li>\n        <li *ngIf=\"authService.adminAccess() && authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\"><a  [routerLink]=\"['/admin']\">Admin</a></li>\n\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\"><a  [routerLink]=\"['/login']\">Login</a></li>\n        <li *ngIf=\"authService.loggedIn()\" class=\"dropdown\">\n          <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n            <i class=\"fa fa-user fa-fw\"></i> <i class=\"fa fa-caret-down\"></i>\n          </a>\n          <ul class=\"dropdown-menu dropdown-user\">\n            <li [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n              <a [routerLink]=\"['/profile']\">\n                <i class=\"fa fa-user fa-fw\"></i> User Profile\n              </a>\n            </li>\n            <li><a href=\"#\"><i class=\"fa fa-gear fa-fw\"></i> Settings</a></li>\n            <li class=\"divider\"></li>\n            <li><a (click)=\"onLogoutClick()\" href=\"#\"><i class=\"fa fa-sign-out fa-fw\"></i> Logout</a></li>\n          </ul>\n        </li>\n      </ul>\n      <ul class=\"nav navbar-nav navbar-left\">\n        <li *ngIf=\"isHome()\"><a href=\"#services\">Servicios</a></li>\n        <li *ngIf=\"isHome()\"><a href=\"#about\">Contacto</a></li>\n      </ul>\n    </div>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\" role=\"navigation\" style=\"margin-bottom: 0\">\n  <div class=\"container\">\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n      <a [routerLink]=\"['/']\" class=\"navbar-brand\">Smart home</a>\n    </div>\n    <div id=\"navbar\" class=\"collapse navbar-collapse\">\n      <ul class=\"nav navbar-nav navbar-right\">\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\"><a  [routerLink]=\"['/dashboard']\">Dashboard</a></li>\n        <li *ngIf=\"authService.adminAccess() && authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\"><a  [routerLink]=\"['/admin']\">Admin</a></li>\n\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\"><a  [routerLink]=\"['/login']\">Login</a></li>\n        <li *ngIf=\"authService.loggedIn()\" class=\"dropdown\">\n          <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n            <i class=\"fa fa-user fa-fw\"></i> <i class=\"fa fa-caret-down\"></i>\n          </a>\n          <ul class=\"dropdown-menu dropdown-user\">\n            <li [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n              <a [routerLink]=\"['/profile']\">\n                <i class=\"fa fa-user fa-fw\"></i> User Profile\n              </a>\n            </li>\n            <li><a href=\"#\"><i class=\"fa fa-gear fa-fw\"></i> Settings</a></li>\n            <li class=\"divider\"></li>\n            <li><a (click)=\"onLogoutClick()\" href=\"#\"><i class=\"fa fa-sign-out fa-fw\"></i> Logout</a></li>\n          </ul>\n        </li>\n      </ul>\n      <ul class=\"nav navbar-nav navbar-left\">\n        <li *ngIf=\"isHome()\"><a href=\"#services\">Servicios</a></li>\n        <li *ngIf=\"isHome()\"><a href=\"#about\">Contacto</a></li>\n      </ul>\n    </div>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -1223,20 +1242,20 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/users/register', user, { headers: headers })
+        return this.http.post('users/register', user, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.deleteUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.delete('http://localhost:8080/users/deleteuser', { headers: headers, body: user })
+        return this.http.delete('users/deleteuser', { headers: headers, body: user })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://localhost:8080/users/authenticate', user, { headers: headers })
+        return this.http.post('users/authenticate', user, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.getProfile = function () {
@@ -1244,7 +1263,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/users/profile', { headers: headers })
+        return this.http.get('users/profile', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.storeUserData = function (token, user) {
@@ -1258,7 +1277,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/users/admin', { headers: headers })
+        return this.http.get('users/admin', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.loadToken = function () {
@@ -1287,7 +1306,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:8080/users/logout', { headers: headers })
+        return this.http.get('users/logout', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     return AuthService;

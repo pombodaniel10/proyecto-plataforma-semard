@@ -9,13 +9,17 @@ const port = require('../app');
 const ws = new WebSocket('ws://127.0.0.1:'+port);
 const Blackout = require('../models/blackout');
 
+
+
 ws.on('message', function incoming(message) {
   var json = JSON.parse(message);
   if(json.type=="blackout"){
-    var stepper = {"sentido":json.message.vueltas,"vueltas":json.message.sentido};
-    clientMQTT.publish('inStepper',stepper, (err) => {
+    var stepper = {
+        "sentido":json.message.vueltas,
+        "vueltas":json.message.sentido
+      };
+    clientMQTT.publish('inStepper',JSON.stringify(stepper), (err) => {
       if(err){
-        console.log("error");
         let dataError = {
           'type': "error",
           'message': err
@@ -23,19 +27,29 @@ ws.on('message', function incoming(message) {
         ws.send(JSON.stringify(dataError));
       }
     });
-  }
-  if(json.type=="luces"){
+
+    clientMQTT.on('offline', function () {
+      let dataError = {
+        'type': "error",
+        'message':  "No se pudo establecer conexión con el dispostivo."
+      }
+      ws.send(JSON.stringify(dataError));
+    });
+  }else if(json.type=="luces"){
     var luces = {"status":json.message.status};
-    clientMQTT.publish('encenderFoco',luces, (err) => {
+    clientMQTT.publish('encenderFoco',JSON.stringify(luces), (err) => {
       if(err){
-        console.log("error");
         let dataError = {
           'type': "error",
           'message': err
         }
         ws.send(JSON.stringify(dataError));
+      } else {
+        console.log("enviado.");
       }
     });
+  }else if(json.type="error"){
+  
   }
 });
 
@@ -44,7 +58,7 @@ clientMQTT.on('message', function (topic, message) {
     try{
       if(topic="outStepper"){
         let data = {
-          'type': "blackout",
+          'type': "blackoutOut",
           'message': JSON.parse(message.toString())
         }
         ws.send(JSON.stringify(data));

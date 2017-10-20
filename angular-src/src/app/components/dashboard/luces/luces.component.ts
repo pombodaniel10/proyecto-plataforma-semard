@@ -49,11 +49,11 @@ export class LucesComponent implements OnInit {
 
     focoOn(){
       this.link = "https://www.w3schools.com/js/pic_bulbon.gif";
-      this.estado = "encedido";
+      this.estado = "Encedido";
     }
     focoOff(){
       this.link = "https://www.w3schools.com/js/pic_bulboff.gif";
-      this.estado = "apagado";
+      this.estado = "Apagado";
     }
 
 }

@@ -14,13 +14,16 @@ export class BlackoutComponent implements OnInit {
   sentidoGiro: string;
   messages: any = {};
   progress: number = 0;
+  error: boolean = false;
+  link: string = "https://www.tenvinilo.com/vinilos-decorativos/img/preview/vinilo-decorativo-ventana-comic-cerrada-4631.png"
 
   constructor(
     private flashMessage: FlashMessagesService,
     private wsService: WsService
   ) {
     wsService.messages.subscribe(msg => {
-      if(msg.type=="blackout"){
+      if(msg.type=="blackoutOut"){
+        this.error = false;
         this.messages = msg;
         this.progress = msg.message.progreso;
         if(msg.message.estado=="finalizado"){
@@ -28,15 +31,35 @@ export class BlackoutComponent implements OnInit {
           this.progress = 0;
         }
       }else if(msg.type=="error"){
-        this.flashMessage.show("Error al comunicarse con el dispostivo", {
-          cssClass: 'alert-warning',
-          timeout:5000});
+        this.error = true;
       }
 		});
   }
 
 
   ngOnInit() {
+  }
+
+  subirPersiana(){
+
+    this.link = "https://www.tenvinilo.com/vinilos-decorativos/img/preview/vinilo-decorativo-ventana-comic-abierta-4630.png";
+
+    let blackout:IBlackout = {
+      type: "blackout",
+      message: {vueltas:12,sentido:"clockwise"}
+    }
+    this.wsService.messages.next(blackout);
+  }
+
+  bajarPersiana(){
+
+    this.link = "https://www.tenvinilo.com/vinilos-decorativos/img/preview/vinilo-decorativo-ventana-comic-cerrada-4631.png";
+
+    let blackout:IBlackout = {
+      type: "blackout",
+      message: {vueltas:12,sentido:"counterclockwise"}
+    }
+    this.wsService.messages.next(blackout);
   }
 
   onBlackoutSubmit(){
@@ -46,4 +69,8 @@ export class BlackoutComponent implements OnInit {
     }
     this.wsService.messages.next(blackout);
   }
+
+  refresh(): void {
+    window.location.reload();
+}
 }

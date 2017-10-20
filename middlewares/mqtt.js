@@ -1,15 +1,23 @@
 var mqtt = require('mqtt');
 
-var client  = mqtt.connect('mqtt://192.168.0.200',{
+var client  = mqtt.connect('mqtt://test.mosquitto.or',{
   port: 1883,
   clientId: "Severo perro pirobo",
-  username: "semard",
-  password: "semard2017"
 });
 
 client.on('connect', function () {
+  console.log("conectado al broker.");
   client.subscribe('outStepper');
   client.subscribe('inStepper');
 });
+
+client.on('error', function () {
+  console.log("error");
+});
+
+client.on('offline', function () {
+  console.log("offline");
+});
+
 
 module.exports = client;
