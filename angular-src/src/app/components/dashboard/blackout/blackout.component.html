@@ -5,8 +5,8 @@
     <div class="panel-body">
       <strong>Presione el botón para realizar la acción.</strong><br><br>
       <img type="image" id="myImage" (click)="changeImage()" src="{{link}}" width="100" height="180"><br><br>
-      <button type="buton" (click)="bajarPersiana()" class="btn btn-primary">Bajar la persiana</button>
-      <button type="buton" (click)="subirPersiana()" class="btn btn-primary">Subir la persiana</button><br>
+      <button [disabled]="!arriba" type="buton" (click)="bajarPersiana()" class="btn btn-primary">Bajar la persiana</button>
+      <button [disabled]="arriba" type="buton" (click)="subirPersiana()" class="btn btn-primary">Subir la persiana</button><br>
       <button type="button" data-toggle="collapse" data-target="#formAvanzado" class="btn btn-danger top-space">Avanzado</button>
       <div id="formAvanzado" class="collapse">
         <form  class="top-space" (submit)="onBlackoutSubmit()">

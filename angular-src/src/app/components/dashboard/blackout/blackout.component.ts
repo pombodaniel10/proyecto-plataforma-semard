@@ -15,8 +15,8 @@ export class BlackoutComponent implements OnInit {
   messages: any = {};
   progress: number = 0;
   error: boolean = false;
-  link: string = "https://www.tenvinilo.com/vinilos-decorativos/img/preview/vinilo-decorativo-ventana-comic-cerrada-4631.png"
-
+  arriba: boolean = true;
+  link: string = "../../../../assets/images/ventana1.png"
   constructor(
     private flashMessage: FlashMessagesService,
     private wsService: WsService
@@ -42,8 +42,8 @@ export class BlackoutComponent implements OnInit {
 
   subirPersiana(){
 
-    this.link = "https://www.tenvinilo.com/vinilos-decorativos/img/preview/vinilo-decorativo-ventana-comic-abierta-4630.png";
-
+    this.link = "../../../../assets/images/ventana1.png";
+    this.arriba = true;
     let blackout:IBlackout = {
       type: "blackout",
       message: {vueltas:12,sentido:"clockwise"}
@@ -53,8 +53,8 @@ export class BlackoutComponent implements OnInit {
 
   bajarPersiana(){
 
-    this.link = "https://www.tenvinilo.com/vinilos-decorativos/img/preview/vinilo-decorativo-ventana-comic-cerrada-4631.png";
-
+    this.link = "../../../../assets/images/ventana3.png";
+    this.arriba = false;
     let blackout:IBlackout = {
       type: "blackout",
       message: {vueltas:12,sentido:"counterclockwise"}
