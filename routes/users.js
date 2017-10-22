@@ -22,7 +22,7 @@ router.post('/authenticate', (req,res,next) => {
     User.comparePassword(password, user.password, (err,isMatch) => {
       if(err) throw err;
       if(isMatch){
-        const token = jwt.sign(user,config.secret, { expiresIn: "12h" });
+        const token = jwt.sign(user,config.secret, { expiresIn: "1h" });
         res.json({
           "success":true,
           "token":'JWT '+token,

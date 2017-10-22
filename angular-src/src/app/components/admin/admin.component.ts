@@ -18,9 +18,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getUsers().then((users: User[]) =>{
-      this.users = users.map((user) => {
-          return user;
-        });
+      this.users = users
     },
       err => {
       console.log(err);
@@ -44,4 +42,5 @@ export class AdminComponent implements OnInit {
   editUser(user){
 
   }
+
 }

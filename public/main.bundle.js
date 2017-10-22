@@ -198,7 +198,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/admin/admin.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"pacifico big blue text-center\">Panel de administración</h1>\n<hr>\n<div class=\"table-responsive\">\n  <table class=\"table table table-striped table-hover\">\n    <caption><strong>Cuentas activas</strong></caption>\n      <thead>\n        <tr>\n          <th>Nombre</th>\n          <th>Nombre de usuario</th>\n          <th>Email</th>\n          <th>Admin</th>\n          <th>Acciones</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor = 'let user of users.user'>\n          <td>{{user.name}}</td>\n          <td>{{user.username}}</td>\n          <td>{{user.email}}</td>\n          <td>{{user.isAdmin | yesNo }}</td>\n          <td>\n            <button class=\"btn btn-primary btn-xs\" (click)=\"editUser(user)\">Editar</button>\n            {{\" - \"}}\n            <button class=\"btn btn-primary btn-xs\"  (click)=\"temporal(user)\" data-toggle=\"modal\" data-target=\"#myModal\">Eliminar</button>\n            <div class=\"modal fade\" id=\"myModal\" role=\"dialog\">\n              <div class=\"modal-dialog\">\n                <div class=\"modal-content\">\n                  <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>\n                    <h4 class=\"modal-title\">Eliminar</h4>\n                  </div>\n                  <div class=\"modal-body\">\n                    <p>¿Está seguro de eliminar al usuario <strong>{{usert.username}}</strong>?</p>\n                  </div>\n                  <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancelar</button>\n                    <button (click)=\"deleteUser(usert)\" type=\"button\" class=\"btn btn-primary\">Eliminar usuario</button>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n</div>\n<div class=\"col-md-8 remove-float center-block text-center top-space\">\n    <a [routerLink]=\"['/register']\" class=\"right-spacer btn btn-primary\"> Agregar nuevo usuario </a>\n</div>\n<div class=\"top-space\"></div>\n"
+module.exports = "<h1 class=\"pacifico big blue text-center\">Panel de administración</h1>\n<hr>\n<div class=\"table-responsive\">\n  <table class=\"table table table-striped table-hover\">\n    <caption><strong>Cuentas activas</strong></caption>\n      <thead>\n        <tr>\n          <th>Nombre</th>\n          <th>Nombre de usuario</th>\n          <th>Email</th>\n          <th>Admin</th>\n          <th>Acciones</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor = 'let user of users.users'>\n          <td>{{user.name}}</td>\n          <td>{{user.username}}</td>\n          <td>{{user.email}}</td>\n          <td>{{user.isAdmin | yesNo }}</td>\n          <td>\n            <button class=\"btn btn-primary btn-xs\" (click)=\"editUser(user)\">Editar</button>\n            {{\" - \"}}\n            <button class=\"btn btn-primary btn-xs\"  (click)=\"temporal(user)\" data-toggle=\"modal\" data-target=\"#myModal\">Eliminar</button>\n            <div class=\"modal fade\" id=\"myModal\" role=\"dialog\">\n              <div class=\"modal-dialog\">\n                <div class=\"modal-content\">\n                  <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>\n                    <h4 class=\"modal-title\">Eliminar</h4>\n                  </div>\n                  <div class=\"modal-body\">\n                    <p>¿Está seguro de eliminar al usuario <strong>{{usert.username}}</strong>?</p>\n                  </div>\n                  <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancelar</button>\n                    <button (click)=\"deleteUser(usert)\" type=\"button\" class=\"btn btn-primary\">Eliminar usuario</button>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n</div>\n<div class=\"col-md-8 remove-float center-block text-center top-space\">\n    <a [routerLink]=\"['/register']\" class=\"right-spacer btn btn-primary\"> Agregar nuevo usuario </a>\n</div>\n<div class=\"top-space\"></div>\n"
 
 /***/ }),
 
@@ -235,9 +235,7 @@ var AdminComponent = (function () {
     AdminComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.authService.getUsers().then(function (users) {
-            _this.users = users.map(function (user) {
-                return user;
-            });
+            _this.users = users;
         }, function (err) {
             console.log(err);
             return false;
@@ -1100,9 +1098,7 @@ var ProfileComponent = (function () {
         this.authService
             .getUser()
             .then(function (user) {
-            console.log(user);
             _this.user = user;
-            console.log(_this.user);
         });
     };
     return ProfileComponent;
