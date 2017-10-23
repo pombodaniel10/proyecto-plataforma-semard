@@ -10,6 +10,7 @@ module.exports = PORT;
 const server = app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 const users = require("./routes/users");
+const angularFiles = require("./routes/angularFiles");
 const mqtt =  require("./routes/mqttAPI");
 const mongodb = require("./middlewares/mongodb");
 
@@ -44,6 +45,7 @@ require('./config/passport')(passport);
 
 app.use('/users', users);
 app.use('/dashboard',mqtt);
+app.use('/app',angularFiles)
 
 //Index page
 app.get('/', (req,res) => {

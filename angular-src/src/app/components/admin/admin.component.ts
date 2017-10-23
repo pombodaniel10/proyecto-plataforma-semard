@@ -11,14 +11,14 @@ import {User} from '../../../app/components/admin/register/user';
 })
 export class AdminComponent implements OnInit {
 
-  users:Object;
-  usert: Object = {name: String, username:String, email:String, password:String, isAdmin: Boolean};
+  users:User[];
+  usert: User = new User('','','','',false);
 
   constructor(private authService: AuthService, private router:Router,private flashMessage: FlashMessagesService,) { }
 
   ngOnInit() {
-    this.authService.getUsers().then((users: User[]) =>{
-      this.users = users
+    this.authService.getUsers().then((users: any) =>{
+      this.users = users.users;
     },
       err => {
       console.log(err);
@@ -34,7 +34,7 @@ export class AdminComponent implements OnInit {
     this.authService.deleteUser(user).then((data: any) => {
       if(data.success){
         this.flashMessage.show(data.msg,{cssClass: 'alert-success', timeout:3000});
-        this.router.navigate(['admin']);
+         this.router.navigate(['admin']);
       }
     });
   }

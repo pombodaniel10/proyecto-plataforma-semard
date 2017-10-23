@@ -9,7 +9,7 @@ import {User} from  '../.././app/components/admin/register/user';
 export class AuthService {
   authToken: any;
   user: User = JSON.parse(localStorage.getItem('user'));
-
+  link: string =  "http://localhost:8080/"
   constructor(private http:Http) { }
 
   getUser(): Promise<void | User> {
@@ -17,7 +17,7 @@ export class AuthService {
     this.loadToken();
     headers.append('Authorization',this.authToken);
     headers.append('Content-Type','application/json');
-    return this.http.get('users/profile',{headers:headers})
+    return this.http.get(this.link+'users/profile',{headers:headers})
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);
@@ -28,7 +28,7 @@ export class AuthService {
     this.loadToken();
     headers.append('Authorization',this.authToken);
     headers.append('Content-Type','application/json');
-    return this.http.post('users/register', newUser,{headers:headers})
+    return this.http.post(this.link+'users/register', newUser,{headers:headers})
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -38,7 +38,7 @@ export class AuthService {
     let headers = new Headers();
     headers.append('Authorization',this.authToken);
     headers.append('Content-Type','application/json');
-    return this.http.delete('users/deleteuser',{headers:headers,body:deleteUser})
+    return this.http.delete(this.link+'users/deleteuser',{headers:headers,body:deleteUser})
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -47,7 +47,7 @@ export class AuthService {
   authenticateUser(user){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('users/authenticate', user,{headers:headers})
+    return this.http.post(this.link+'users/authenticate', user,{headers:headers})
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -65,7 +65,7 @@ export class AuthService {
     this.loadToken();
     headers.append('Authorization',this.authToken);
     headers.append('Content-Type','application/json');
-    return this.http.get('users/admin',{headers:headers})
+    return this.http.get(this.link+'users/admin',{headers:headers})
     .toPromise()
     .then(response => response.json() as User[])
     .catch(this.handleError);
@@ -100,7 +100,7 @@ export class AuthService {
     this.loadToken();
     headers.append('Authorization',this.authToken);
     headers.append('Content-Type','application/json');
-    return this.http.get('users/logout',{headers:headers})
+    return this.http.get(this.link+'users/logout',{headers:headers})
       .map(res => res.json());
   }
 

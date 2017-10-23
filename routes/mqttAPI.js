@@ -9,8 +9,6 @@ const port = require('../app');
 const ws = new WebSocket('ws://127.0.0.1:'+port);
 const Blackout = require('../models/blackout');
 
-
-
 ws.on('message', function incoming(message) {
   var json = JSON.parse(message);
   if(json.type=="blackout"){
@@ -49,7 +47,7 @@ ws.on('message', function incoming(message) {
       }
     });
   }else if(json.type="error"){
-  
+
   }
 });
 

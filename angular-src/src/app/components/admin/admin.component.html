@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor = 'let user of users.users'>
+        <tr *ngFor = 'let user of users'>
           <td>{{user.name}}</td>
           <td>{{user.username}}</td>
           <td>{{user.email}}</td>
@@ -34,7 +34,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button (click)="deleteUser(usert)" type="button" class="btn btn-primary">Eliminar usuario</button>
+                    <button (click)="deleteUser(usert)"  data-dismiss="modal" type="button" class="btn btn-primary">Eliminar usuario</button>
                   </div>
                 </div>
               </div>

@@ -164,6 +164,7 @@ AppModule = __decorate([
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* ReactiveFormsModule */],
             __WEBPACK_IMPORTED_MODULE_3__angular_http__["HttpModule"],
             __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* RouterModule */].forRoot(appRoutes),
             __WEBPACK_IMPORTED_MODULE_5_angular2_flash_messages__["FlashMessagesModule"]
@@ -198,7 +199,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/admin/admin.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"pacifico big blue text-center\">Panel de administración</h1>\n<hr>\n<div class=\"table-responsive\">\n  <table class=\"table table table-striped table-hover\">\n    <caption><strong>Cuentas activas</strong></caption>\n      <thead>\n        <tr>\n          <th>Nombre</th>\n          <th>Nombre de usuario</th>\n          <th>Email</th>\n          <th>Admin</th>\n          <th>Acciones</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor = 'let user of users.users'>\n          <td>{{user.name}}</td>\n          <td>{{user.username}}</td>\n          <td>{{user.email}}</td>\n          <td>{{user.isAdmin | yesNo }}</td>\n          <td>\n            <button class=\"btn btn-primary btn-xs\" (click)=\"editUser(user)\">Editar</button>\n            {{\" - \"}}\n            <button class=\"btn btn-primary btn-xs\"  (click)=\"temporal(user)\" data-toggle=\"modal\" data-target=\"#myModal\">Eliminar</button>\n            <div class=\"modal fade\" id=\"myModal\" role=\"dialog\">\n              <div class=\"modal-dialog\">\n                <div class=\"modal-content\">\n                  <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>\n                    <h4 class=\"modal-title\">Eliminar</h4>\n                  </div>\n                  <div class=\"modal-body\">\n                    <p>¿Está seguro de eliminar al usuario <strong>{{usert.username}}</strong>?</p>\n                  </div>\n                  <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancelar</button>\n                    <button (click)=\"deleteUser(usert)\" type=\"button\" class=\"btn btn-primary\">Eliminar usuario</button>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n</div>\n<div class=\"col-md-8 remove-float center-block text-center top-space\">\n    <a [routerLink]=\"['/register']\" class=\"right-spacer btn btn-primary\"> Agregar nuevo usuario </a>\n</div>\n<div class=\"top-space\"></div>\n"
+module.exports = "<h1 class=\"pacifico big blue text-center\">Panel de administración</h1>\n<hr>\n<div class=\"table-responsive\">\n  <table class=\"table table table-striped table-hover\">\n    <caption><strong>Cuentas activas</strong></caption>\n      <thead>\n        <tr>\n          <th>Nombre</th>\n          <th>Nombre de usuario</th>\n          <th>Email</th>\n          <th>Admin</th>\n          <th>Acciones</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor = 'let user of users'>\n          <td>{{user.name}}</td>\n          <td>{{user.username}}</td>\n          <td>{{user.email}}</td>\n          <td>{{user.isAdmin | yesNo }}</td>\n          <td>\n            <button class=\"btn btn-primary btn-xs\" (click)=\"editUser(user)\">Editar</button>\n            {{\" - \"}}\n            <button class=\"btn btn-primary btn-xs\"  (click)=\"temporal(user)\" data-toggle=\"modal\" data-target=\"#myModal\">Eliminar</button>\n            <div class=\"modal fade\" id=\"myModal\" role=\"dialog\">\n              <div class=\"modal-dialog\">\n                <div class=\"modal-content\">\n                  <div class=\"modal-header\">\n                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\">&times;</button>\n                    <h4 class=\"modal-title\">Eliminar</h4>\n                  </div>\n                  <div class=\"modal-body\">\n                    <p>¿Está seguro de eliminar al usuario <strong>{{usert.username}}</strong>?</p>\n                  </div>\n                  <div class=\"modal-footer\">\n                    <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Cancelar</button>\n                    <button (click)=\"deleteUser(usert)\"  data-dismiss=\"modal\" type=\"button\" class=\"btn btn-primary\">Eliminar usuario</button>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </td>\n        </tr>\n      </tbody>\n    </table>\n</div>\n<div class=\"col-md-8 remove-float center-block text-center top-space\">\n    <a [routerLink]=\"['/register']\" class=\"right-spacer btn btn-primary\"> Agregar nuevo usuario </a>\n</div>\n<div class=\"top-space\"></div>\n"
 
 /***/ }),
 
@@ -211,6 +212,7 @@ module.exports = "<h1 class=\"pacifico big blue text-center\">Panel de administr
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__("../../../../angular2-flash-messages/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_components_admin_register_user__ = __webpack_require__("../../../../../src/app/components/admin/register/user.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -225,17 +227,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AdminComponent = (function () {
     function AdminComponent(authService, router, flashMessage) {
         this.authService = authService;
         this.router = router;
         this.flashMessage = flashMessage;
-        this.usert = { name: String, username: String, email: String, password: String, isAdmin: Boolean };
+        this.usert = new __WEBPACK_IMPORTED_MODULE_4__app_components_admin_register_user__["a" /* User */]('', '', '', '', false);
     }
     AdminComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.authService.getUsers().then(function (users) {
-            _this.users = users;
+            _this.users = users.users;
         }, function (err) {
             console.log(err);
             return false;
@@ -315,7 +318,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".ng-valid[required], .ng-valid.required  {\n  border-left: 5px solid #42A948; /* green */\n}\n\n.ng-invalid:not(form)  {\n  border-left: 5px solid #a94442; /* red */\n}\n", ""]);
+exports.push([module.i, "\n", ""]);
 
 // exports
 
@@ -328,7 +331,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/admin/register/register.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 class=\"page-header text-center\">Registrar usuario</h2>\n<div class=\"col-md-4 col-md-offset-4 remove-float center-block form-horizontal top-space\">\n  <div class=\"login-panel panel panel-primary\">\n    <div class=\"panel-body\">\n      <form (ngSubmit)=\"onRegisterSubmit()\" #userForm=\"ngForm\">\n        <fieldset>\n          <div class=\"form-group\">\n            <label for=\"name\">Nombre completo</label>\n            <input class=\"form-control\" [(ngModel)]=\"user.name\" name=\"name\" required  required minlength=\"4\" forbiddenName=\"bob\"  placeholder=\"Ingrese el nombre completo\" #name=\"ngModel\">\n            <div *ngIf=\"name.invalid && (name.dirty || name.touched)\" class=\"alert alert-danger\">\n               <div *ngIf=\"name.errors.required\">\n                 Debe ingresar un nombre\n               </div>\n               <div *ngIf=\"name.errors.minlength\">\n                 Minimo 4 caracteres\n               </div>\n               <div *ngIf=\"name.errors.forbiddenName\">\n                 Name cannot be Bob.\n               </div>\n             </div>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"username\">Nombre de usuario</label>\n            <input id=\"name\" name=\"username\" type=\"text\" class=\"form-control\" [(ngModel)]=\"user.username\" (keyup)=\"usuarioExiste()\" required minlength=\"8\" forbiddenName=\"bob\" placeholder=\"Ingrese el nombre de usuario\" #username=\"ngModel\"/>\n            <div *ngIf=\"username.invalid && (username.dirty || username.touched)\" class=\"alert alert-danger\">\n              <div *ngIf=\"username.errors.required\">\n                El nombre de usuario es requerido\n              </div>\n              <div *ngIf=\"username.errors.minlength\">\n                Debe contener al menos 8 caracteres\n              </div>\n              <div *ngIf=\"username.errors.forbiddenName\">\n                Name cannot be Bob.\n              </div>\n            </div>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"email\">Email</label>\n            <input class=\"form-control\" [(ngModel)]=\"user.email\" name=\"email\" required type=\"text\" placeholder=\"Ingrese el email\" #email=\"ngModel\">\n            <div [hidden]=\"email.valid || email.pristine\" class=\"alert alert-danger\">Debe ingresar un correo</div>\n          </div>\n          <div class=\"form-group\">\n            <label for=\"password\">Contraseña</label>\n            <input class=\"form-control\" [(ngModel)]=\"user.password\" name=\"password\" type=\"password\" required  placeholder=\"Contraseña \"#password=\"ngModel\">\n            <div [hidden]=\"password.valid || password.pristine\" class=\"alert alert-danger\">Debe ingresar una contraseña</div>\n          </div>\n          <div class=\"form-group text-center\">\n            <label for=\"admin\">Permisos de administrador</label>\n            <input type=\"checkbox\" [(ngModel)]=\"user.isAdmin\"name=\"isAdmin\"/>\n          </div>\n          <div class=\"top-space form-group text-center\">\n            <input [disabled]=\"!userForm.form.valid\" class=\"btn btn-primary\" type=\"submit\" value=\"Agregar usuario\"/>\n          </div>\n        </fieldset>\n      </form>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<h2 class=\"page-header text-center\">Registrar usuario</h2>\n<div class=\"col-md-4 col-md-offset-4 remove-float center-block form-horizontal top-space\">\n  <div class=\"login-panel panel panel-primary\">\n    <div class=\"panel-body\">\n      <form (ngSubmit)=\"onRegisterSubmit()\" [formGroup]=\"form\">\n        <fieldset>\n          <div class=\"form-group row\" [ngClass]=\"{'has-error':form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)}\">\n            <label for=\"name\">Nombre completo</label>\n            <input class=\"form-control\" name=\"name\" placeholder=\"Ingrese el nombre completo\" formControlName=\"name\">\n            <div *ngIf=\"form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)\">\n              <div *ngIf=\"form.controls['name'].errors?.required\">\n                El nombre es requerido.\n              </div>\n              <div *ngIf=\"form.controls['name'].errors?.minlength\">\n                El nombre debe tener minimo 3 caracteres.\n              </div>\n            </div>\n          </div>\n          <div class=\"form-group\" [ngClass]=\"{'has-error':form.controls['username'].invalid && (form.controls['username'].dirty || form.controls['username'].touched)}\">\n            <label for=\"username\">Nombre de usuario</label>\n            <input name=\"username\" type=\"text\" class=\"form-control\" placeholder=\"Ingrese el nombre de usuario\" formControlName=\"username\">\n            <div *ngIf=\"form.controls['username'].invalid && (form.controls['username'].dirty || form.controls['username'].touched)\">\n              <div *ngIf=\"form.controls['username'].errors?.required\">\n                El nombre de usuario es requerido.\n              </div>\n              <div *ngIf=\"form.controls['username'].errors?.minlength\">\n                El nombre de usuario  debe tener minimo 5 caracteres.\n              </div>\n            </div>\n          </div>\n          <div class=\"form-group\" [ngClass]=\"{'has-error':form.controls['email'].invalid && (form.controls['email'].dirty || form.controls['email'].touched)}\">\n            <label for=\"email\">Email</label>\n            <input class=\"form-control\"  name=\"email\" type=\"text\" placeholder=\"Ingrese el email\" formControlName=\"email\">\n            <div *ngIf=\"form.controls['email'].invalid && (form.controls['email'].dirty || form.controls['email'].touched)\">\n              <div *ngIf=\"form.controls['email'].errors?.required\">\n                El correo es requerido.\n              </div>\n            </div>\n          </div>\n          <div class=\"form-group\" [ngClass]=\"{'has-error':form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)}\">\n            <label for=\"password\">Contraseña</label>\n            <input class=\"form-control\" name=\"password\" type=\"password\"  placeholder=\"Contraseña \" formControlName=\"password\">\n            <div *ngIf=\"form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)\">\n              <div *ngIf=\"form.controls['password'].errors?.required\">\n                La contraseña es requerida.\n              </div>\n              <div *ngIf=\"form.controls['password'].errors?.minlength\">\n                La contraseña debe contener minimo 8 caracteres.\n              </div>\n            </div>\n          </div>\n          <div class=\"form-group\" [ngClass]=\"{'has-error':form.controls['password2'].invalid && (form.controls['password2'].dirty || form.controls['password2'].touched)}\">\n            <label for=\"password2\">Repetir contraseña</label>\n            <input class=\"form-control\" name=\"password2\" type=\"password\"  placeholder=\"Repetir contraseña\" formControlName=\"password2\">\n            <div *ngIf=\"form.controls['password2'].invalid && (form.controls['password2'].dirty || form.controls['password2'].touched)\">\n              <div *ngIf=\"form.controls['password2'].errors?.required\">\n                La contraseña es requerida.\n              </div>\n              <div *ngIf=\"form.controls['password2'].errors?.noIguales\">\n                Las contraseñas no coinciden.\n              </div>\n            </div>\n          </div>\n          <div class=\"form-group text-center\">\n            <label for=\"admin\">Permisos de administrador</label>\n            <input type=\"checkbox\" name=\"isAdmin\" formControlName=\"isAdmin\"/>\n          </div>\n          <div class=\"top-space form-group text-center\">\n            <input [disabled]=\"!form.valid\" class=\"btn btn-primary\" type=\"submit\" value=\"Agregar usuario\"/>\n          </div>\n        </fieldset>\n      </form>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -337,12 +340,13 @@ module.exports = "<h2 class=\"page-header text-center\">Registrar usuario</h2>\n
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_services_validate_service__ = __webpack_require__("../../../../../src/app/services/validate.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__ = __webpack_require__("../../../../angular2-flash-messages/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__user__ = __webpack_require__("../../../../../src/app/components/admin/register/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_services_validate_service__ = __webpack_require__("../../../../../src/app/services/validate.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_flash_messages__ = __webpack_require__("../../../../angular2-flash-messages/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angular2_flash_messages___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angular2_flash_messages__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__user__ = __webpack_require__("../../../../../src/app/components/admin/register/user.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -359,41 +363,52 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var RegisterComponent = (function () {
     function RegisterComponent(validateService, flashMessage, authService, router) {
         this.validateService = validateService;
         this.flashMessage = flashMessage;
         this.authService = authService;
         this.router = router;
-        this.isAdmin = false;
-        this.form_usuario = "form-group";
-        this.user = new __WEBPACK_IMPORTED_MODULE_5__user__["a" /* User */]('', '', '', '', false);
+        this.user = new __WEBPACK_IMPORTED_MODULE_6__user__["a" /* User */]('', '', '', '', false);
+        this.form = new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormGroup */]({
+            'name': new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */]('', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].minLength(3)]),
+            'username': new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */]('', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].minLength(5)]),
+            'email': new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required),
+            'password': new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */]('', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].minLength(8)]),
+            'password2': new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */](),
+            'isAdmin': new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */](false)
+        });
+        this.form.controls['password2'].setValidators([__WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required,
+            this.noIguales.bind(this.form)]);
     }
     RegisterComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.authService.getUsers().then(function (users) {
-            _this.users = users.map(function (user) {
-                return user;
-            });
+            if (users.succes) {
+                _this.users = users.users;
+            }
+            else {
+            }
         }, function (err) {
             console.log(err);
             return false;
         });
     };
     RegisterComponent.prototype.usuarioExiste = function () {
-        for (var _i = 0, _a = this.users; _i < _a.length; _i++) {
-            var user = _a[_i];
-            if (user.username == this.username) {
-                console.log("found");
-                //this.form_usuario = "form-group has-error";
-            }
-            else {
-                //this.form_usuario = "form-group";
-            }
+    };
+    RegisterComponent.prototype.noIguales = function (control) {
+        var forma = this;
+        if (control.value !== forma.controls['password'].value) {
+            return {
+                noIguales: true
+            };
         }
+        return null;
     };
     RegisterComponent.prototype.onRegisterSubmit = function () {
         var _this = this;
+        this.user = this.form.value;
         //Validate Email
         if (!this.validateService.validateEmail(this.user.email)) {
             this.flashMessage.show("Por favor, ingrese un correo valido", { cssClass: 'alert-danger', timeout: 3000 });
@@ -420,7 +435,7 @@ RegisterComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/admin/register/register.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/admin/register/register.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__app_services_validate_service__["a" /* ValidateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_services_validate_service__["a" /* ValidateService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angular2_flash_messages__["FlashMessagesService"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__app_services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_services_auth_service__["a" /* AuthService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__app_services_validate_service__["a" /* ValidateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_services_validate_service__["a" /* ValidateService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4_angular2_flash_messages__["FlashMessagesService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angular2_flash_messages__["FlashMessagesService"]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__app_services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_services_auth_service__["a" /* AuthService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */]) === "function" && _d || Object])
 ], RegisterComponent);
 
 var _a, _b, _c, _d;
@@ -980,7 +995,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default navbar-fixed-*\" role=\"navigation\" style=\"margin-bottom: 0\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n      <a [routerLink]=\"['/']\" class=\"navbar-brand\">Smart home</a>\n    </div>\n    <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n      <ul class=\"nav navbar-nav navbar-right\">\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n          <a  [routerLink]=\"['/dashboard']\">Dashboard</a>\n        </li>\n        <li *ngIf=\"authService.adminAccess() && authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n          <a  [routerLink]=\"['/admin']\">Admin</a>\n        </li>\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\"><a  [routerLink]=\"['/login']\">Login</a></li>\n        <li *ngIf=\"authService.loggedIn()\" class=\"dropdown\">\n          <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n            <i class=\"fa fa-user fa-fw\"></i> <i class=\"fa fa-caret-down\"></i>\n          </a>\n          <ul class=\"dropdown-menu dropdown-user\">\n            <li [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n              <a [routerLink]=\"['/profile']\">\n                <i class=\"fa fa-user fa-fw\"></i> User Profile\n              </a>\n            </li>\n            <li ><a href=\"#\"><i class=\"fa fa-gear fa-fw\"></i> Settings</a></li>\n            <li class=\"divider\"></li>\n            <li ><a (click)=\"onLogoutClick()\" href=\"#\"><i class=\"fa fa-sign-out fa-fw\"></i> Logout</a></li>\n          </ul>\n        </li>\n      </ul>\n      <ul class=\"nav navbar-nav navbar-left\">\n        <li data-toggle=\"collapse\" data-target=\".navbar-collapse\" *ngIf=\"isHome()\"><a href=\"#services\">Servicios</a></li>\n        <li data-toggle=\"collapse\" data-target=\".navbar-collapse\" *ngIf=\"isHome()\"><a href=\"#about\">Contacto</a></li>\n      </ul>\n    </div>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-default navbar-fixed-*\" role=\"navigation\" style=\"margin-bottom: 0\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\" aria-expanded=\"false\">\n        <span class=\"sr-only\">Toggle navigation</span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n      <a [routerLink]=\"['/']\" class=\"navbar-brand\"><img src=\".././assets/images/logo-smart.png\"></a>\n    </div>\n    <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n      <ul class=\"nav navbar-nav navbar-right\">\n        <li *ngIf=\"authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n          <a  [routerLink]=\"['/dashboard']\">Dashboard</a>\n        </li>\n        <li *ngIf=\"authService.adminAccess() && authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n          <a  [routerLink]=\"['/admin']\">Admin</a>\n        </li>\n        <li *ngIf=\"!authService.loggedIn()\" [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\"><a  [routerLink]=\"['/login']\">Login</a></li>\n        <li *ngIf=\"authService.loggedIn()\" class=\"dropdown\">\n          <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n            <i class=\"fa fa-user fa-fw\"></i> <i class=\"fa fa-caret-down\"></i>\n          </a>\n          <ul class=\"dropdown-menu dropdown-user\">\n            <li [routerLinkActive]= \"['active']\" [routerLinkActiveOptions] = \"{exact:true}\">\n              <a [routerLink]=\"['/profile']\">\n                <i class=\"fa fa-user fa-fw\"></i> User Profile\n              </a>\n            </li>\n            <li ><a href=\"#\"><i class=\"fa fa-gear fa-fw\"></i> Settings</a></li>\n            <li class=\"divider\"></li>\n            <li ><a (click)=\"onLogoutClick()\" href=\"#\"><i class=\"fa fa-sign-out fa-fw\"></i> Logout</a></li>\n          </ul>\n        </li>\n      </ul>\n      <ul class=\"nav navbar-nav navbar-left\">\n        <li data-toggle=\"collapse\" data-target=\".navbar-collapse\" *ngIf=\"isHome()\"><a href=\"#services\">Servicios</a></li>\n        <li data-toggle=\"collapse\" data-target=\".navbar-collapse\" *ngIf=\"isHome()\"><a href=\"#about\">Contacto</a></li>\n      </ul>\n    </div>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -1244,13 +1259,14 @@ var AuthService = (function () {
     function AuthService(http) {
         this.http = http;
         this.user = JSON.parse(localStorage.getItem('user'));
+        this.link = "http://localhost:8080/";
     }
     AuthService.prototype.getUser = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('users/profile', { headers: headers })
+        return this.http.get(this.link + 'users/profile', { headers: headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -1260,7 +1276,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.post('users/register', newUser, { headers: headers })
+        return this.http.post(this.link + 'users/register', newUser, { headers: headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -1269,7 +1285,7 @@ var AuthService = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.delete('users/deleteuser', { headers: headers, body: deleteUser })
+        return this.http.delete(this.link + 'users/deleteuser', { headers: headers, body: deleteUser })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -1277,7 +1293,7 @@ var AuthService = (function () {
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('users/authenticate', user, { headers: headers })
+        return this.http.post(this.link + 'users/authenticate', user, { headers: headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -1293,7 +1309,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('users/admin', { headers: headers })
+        return this.http.get(this.link + 'users/admin', { headers: headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -1324,7 +1340,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('users/logout', { headers: headers })
+        return this.http.get(this.link + 'users/logout', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.handleError = function (error) {
