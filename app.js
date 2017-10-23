@@ -45,7 +45,7 @@ require('./config/passport')(passport);
 
 app.use('/users', users);
 app.use('/dashboard',mqtt);
-app.use('/app',angularFiles)
+app.use('/',angularFiles)
 
 //Index page
 app.get('/', (req,res) => {

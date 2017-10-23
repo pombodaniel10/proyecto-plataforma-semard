@@ -1266,7 +1266,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get(this.link + 'users/profile', { headers: headers })
+        return this.http.get('users/profile', { headers: headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -1276,7 +1276,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.post(this.link + 'users/register', newUser, { headers: headers })
+        return this.http.post('users/register', newUser, { headers: headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -1285,7 +1285,7 @@ var AuthService = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.delete(this.link + 'users/deleteuser', { headers: headers, body: deleteUser })
+        return this.http.delete('users/deleteuser', { headers: headers, body: deleteUser })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -1293,7 +1293,7 @@ var AuthService = (function () {
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post(this.link + 'users/authenticate', user, { headers: headers })
+        return this.http.post('users/authenticate', user, { headers: headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -1309,7 +1309,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get(this.link + 'users/admin', { headers: headers })
+        return this.http.get('users/admin', { headers: headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
@@ -1340,7 +1340,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get(this.link + 'users/logout', { headers: headers })
+        return this.http.get('users/logout', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.handleError = function (error) {
