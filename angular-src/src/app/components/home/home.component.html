@@ -2,7 +2,7 @@
   <h1>Smart Home</h1>
   <p class="lead">Controle sus dispostivos desde cualquier lugar, con solo un click.</p>
   <a *ngIf="!authService.loggedIn()" class="btn btn-default btn-lg text-center" [routerLink]="['/login']">Iniciar sesión</a>
-  <a *ngIf="authService.loggedIn()" class="btn btn-default btn-lg text-center" [routerLink]="['/dashboard']">Ingresar al dashboard</a>
+  <a *ngIf="authService.loggedIn()" class="btn btn-default btn-lg text-center" [routerLink]="['/dashboard']">Ingresar al pandel de control</a>
 </div>
 <div id="services" class="container-fluid text-center">
   <h2>Servicios</h2>
