@@ -51,7 +51,7 @@ router.get('/admin',  passport.authenticate('jwt',{ session: false }), (req,res,
   User.getUsers((err,users) => {
       if(err) throw err;
       if(!users){
-        return res.json({"success":false, "msg": 'Users not found'});
+        return res.json({"success":false, "msg": 'Usuarios no encontrados.'});
       } else {
         return res.json({"success":true, "users": users});
       }

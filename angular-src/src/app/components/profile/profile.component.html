@@ -5,9 +5,15 @@
   </div>
   <div class="panel-body">
     <h2 class="page-header"> {{user.user.name}}</h2>
+    <img src=".././assets/images/avatar.jpeg" class="img-circle person" alt="Random Name" width="150" height="150">
     <ul class="list-group">
       <li class="list-group-item">Nombre de usario: {{user.user.username}}</li>
       <li class="list-group-item">Email: {{user.user.email}}</li>
+      <li class="list-group-item">
+        <button class="btn btn-primary btn-xs">Editar</button>
+        {{" - "}}
+        <button class="btn btn-primary btn-xs">Eliminar</button>
+      </li>
     </ul>
   </div>
   </div>

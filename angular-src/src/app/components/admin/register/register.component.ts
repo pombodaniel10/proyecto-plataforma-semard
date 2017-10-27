@@ -5,6 +5,7 @@ import {AuthService} from '../../../../app/services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {Router} from '@angular/router';
 import {User} from './user';
+import{Observable} from 'rxjs/Rx';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +25,7 @@ export class RegisterComponent implements OnInit {
   ) {
     this.form = new FormGroup({
       'name': new FormControl('', [Validators.required,Validators.minLength(3)]),
-      'username': new FormControl('', [Validators.required,Validators.minLength(5)]),
+      'username': new FormControl('',[Validators.required,Validators.minLength(5)],this.usuarioExiste),
       'email': new FormControl('', Validators.required),
       'password': new FormControl('', [Validators.required,Validators.minLength(8)]),
       'password2': new FormControl(),
@@ -35,24 +36,35 @@ export class RegisterComponent implements OnInit {
     [  Validators.required,
       this.noIguales.bind(this.form)]
     )
+
    }
 
   ngOnInit() {
     this.authService.getUsers().then((users: any) =>{
-      if(users.succes){
-        this.users = users.users;
-      }else{
-
-      }
+      this.users = users.users;
     },
       err => {
       console.log(err);
       return false;
-      } );
+      });
   }
 
-  usuarioExiste(){
+  usuarioExiste(control:FormControl):Promise<any>|Observable<any>{
+    
+    let promise = new Promise((resolve,reject)=>{
+      setTimeout(()=>{
 
+            if(control.value==="pombo"){
+              console.log("error");
+              resolve({existe:true});
+            }else {
+              console.log("ok");
+              resolve(null);
+            }
+
+      },3000)
+    })
+    return promise;
   }
 
   noIguales(control:FormControl):{[s:string]:boolean}{

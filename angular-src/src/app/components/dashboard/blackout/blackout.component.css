@@ -1,3 +1,7 @@
 .remove-float{
   float: none;
 }
+
+.mat-slider{
+  height: 150px;
+}

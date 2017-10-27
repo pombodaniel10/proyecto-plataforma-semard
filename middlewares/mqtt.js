@@ -1,14 +1,17 @@
 var mqtt = require('mqtt');
 
-var client  = mqtt.connect('mqtt://test.mosquitto.or',{
-  port: 1883,
+var client  = mqtt.connect('mqtt://m12.cloudmqtt.com',{
+  port: 12489,
   clientId: "Severo perro pirobo",
+  username:"xbvmyoxh",
+  password:"nJzjyl5r-7GD"
 });
 
 client.on('connect', function () {
-  console.log("conectado al broker.");
+  console.log("Conectado al broker.");
   client.subscribe('outStepper');
   client.subscribe('inStepper');
+  client.subscribe('prrito');
 });
 
 client.on('error', function () {

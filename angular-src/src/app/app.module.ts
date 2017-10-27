@@ -5,7 +5,8 @@ import {HttpModule} from '@angular/http';
 import {RouterModule, Routes} from '@angular/router';
 import {FlashMessagesModule} from 'angular2-flash-messages';
 import { Observable, Subject } from 'rxjs/Rx';
-
+import { ChartsModule } from 'ng2-charts';
+import {MatSliderModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -64,7 +65,12 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    FlashMessagesModule
+    FlashMessagesModule,
+    ChartsModule,
+    MatSliderModule
+  ],
+  exports: [
+    MatSliderModule
   ],
   providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,WebsocketService, WsService],
   bootstrap: [AppComponent]

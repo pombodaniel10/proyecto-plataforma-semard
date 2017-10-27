@@ -1,58 +1,82 @@
 <h1 class="pacifico big blue text-center">Persianas</h1>
 <hr>
-<div class="col-md-5 col-md-offset-6 remove-float center-block top-space text-center">
-  <div class="panel panel-primary">
-    <div class="panel-body">
-      <strong>Presione el botón para realizar la acción.</strong><br><br>
-      <img type="image" id="myImage" (click)="changeImage()" src="{{link}}" width="100" height="180"><br><br>
-      <button [disabled]="!arriba" type="buton" (click)="bajarPersiana()" class="btn btn-primary">Bajar la persiana</button>
-      <button [disabled]="arriba" type="buton" (click)="subirPersiana()" class="btn btn-primary">Subir la persiana</button><br>
-      <button type="button" data-toggle="collapse" data-target="#formAvanzado" class="btn btn-danger top-space">Avanzado</button>
-      <div id="formAvanzado" class="collapse">
-        <form  class="top-space" (submit)="onBlackoutSubmit()">
-          <div class="form-group">
-              <label for="vueltas">Número de vueltas</label>
+<ul class="nav nav-tabs nav-justified">
+  <li class="active"><a data-toggle="tab" href="#home">Control persianas</a></li>
+  <li><a data-toggle="tab" href="#menu1">Estadisticas</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <div class="row remove-float center-block top-space text-center">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+          <div *ngIf="error" class="alert alert-dismissible alert-danger">
+             <button type="button" class="close" data-dismiss="alert">&times;</button>
+             <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.
+             </strong>
+          </div>
+          <div *ngIf="success" class="alert alert-dismissible alert-succes">
+             <button type="button" class="close" data-dismiss="alert">&times;</button>
+             <strong>La persiana fue movida con exito.
+             </strong>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-body">
+              <strong>{{estadoPersiana}}</strong>
+              <br><br>
               <div class="row">
-                <div class="col-md-4 col-sm-offset-4">
-                  <input class="form-control" [(ngModel)]="vueltas" type="number" name="vueltas" placeholder="Vueltas"/>
+                <div class="col-sm-8">
+                  <img type="image" id="myImage" (click)="changeImage()" src="{{link}}" width="180" height="200"><br><br>
+                </div>
+                <div class="col-sm-2 top-space">
+                  <mat-slider vertical invert min="0" max="20" step="5" [disabled]="estadoMovimiento" (change)="onValueChange()" value="0" [(ngModel)]="vslider" tickInterval="5" thumb-label></mat-slider>
                 </div>
               </div>
+              <strong>Mueva el control deslizante y presione enviar para mover la persiana.</strong>
+              <br><br>
+              <button [disabled]="estadoMovimiento" (click)="enviarTarea()" class="btn btn-primary">Enviar</button>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="sentidoGiro">Sentido del giro</label>
-            <br>
-            <input type="radio" value="clockwise" name="sentidoGiro" [(ngModel)]="sentidoGiro"> Manecillas del reloj
-            <br>
-            <input type="radio" value="counterclockwise" name="sentidoGiro" [(ngModel)]="sentidoGiro"> Contrario de las manecillas del reloj
-            <br>
-            <br>
-            <input class="btn btn-primary" type="submit" value="Enviar"/>
-          </div>
-        </form>
+        </div>
+        <div class="col-sm-4">
+          <div *ngIf="messages.sentido" class="panel panel-primary messages big-top-space">
+            <div class="panel-heading">
+              <h3 class="panel-title">Información del dispostivo</h3>
+            </div>
+            <div class="panel-body">
+              <h3>Estado</h3>
+            	<strong>Sentido: {{messages.sentido}}</strong>
+              <br>
+              <strong>Vueltas: {{messages.vueltas}}</strong>
+              <br>
+              <strong>Progeso: {{messages.progreso}}%</strong>
+              <br>
+              <strong>Estado: {{messages.estado}}</strong>
+              <div class="progress progress-striped active">
+                <div class="progress-bar" [style.width.%]="progress"></div>
+              </div>
+            </div>
+        	</div>
+        </div>
+
+    </div>
+  </div>
+  <div id="menu1" class="tab-pane fade">
+    <div class="col-sm-4 col-sm-offset-4">
+      <div style="display: block" class="big-top-space">
+        <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [colors]="barChartColors"
+                [legend]="barChartLegend"
+                [chartType]="barChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+      </div>
+      <div class="text-center">
+        <button (click)="randomize()" class="btn btn-primary">Actualizar</button>
       </div>
     </div>
   </div>
-  <div *ngIf="messages.message" class="panel panel-primary messages">
-        <div class="panel-heading">
-          <h3 class="panel-title">Información del dispostivo</h3>
-        </div>
-        <div class="panel-body">
-        <div *ngIf="error" class="alert alert-dismissible alert-danger">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.
-          </strong>
-        </div>
-			  <h3 *ngIf="messages.message">Estado</h3>
-  			<strong *ngIf="messages.message">Sentido: {{messages.message.sentido}}</strong>
-        <br>
-        <strong *ngIf="messages.message">Vueltas: {{messages.message.vueltas}}</strong>
-        <br>
-        <strong *ngIf="messages.message">progeso: {{messages.message.progreso}}</strong>
-        <br>
-        <strong *ngIf="messages.message">estado: {{messages.message.estado}}</strong>
-        <div *ngIf="messages.message" class="progress progress-striped active">
-          <div class="progress-bar" [style.width.%]="progress"></div>
-        </div>
-      </div>
-	</div>
 </div>

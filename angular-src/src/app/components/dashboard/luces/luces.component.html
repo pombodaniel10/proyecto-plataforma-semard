@@ -1,23 +1,56 @@
 <h1 class="pacifico big text-center">Control de luces</h1>
 <hr>
-<div class="remove-float col-sm-4 col-sm-4-offset center-block big-top-space text-center">
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">Bombillo 1</h3>
-    </div>
-    <div class="panel-body">
-      <button data-toggle="tooltip" data-placement="top" title="" data-original-title="Tooltip on top" aria-describedby="tooltip858235">
-      <img type="image" id="myImage" (click)="changeImage()" src="{{link}}" width="100" height="180">
-    </button>
-      <div class="tooltip fade top" role="tooltip" id="tooltip858235" style="top: -34px; left: 44.7969px; display: block;">
-        <div class="tooltip-arrow" style="left: 50%;"></div>
-        <div class="tooltip-inner">Tooltip on top</div>
+<ul class="nav nav-tabs nav-justified">
+  <li class="active"><a data-toggle="tab" href="#home">Control luces</a></li>
+  <li><a data-toggle="tab" href="#menu1">Estadisticas</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+    <div class="remove-float center-block big-top-space text-center">
+      <div class="col-sm-5">
       </div>
-      <div class="tooltip fade top" role="tooltip" id="tooltip858235" style="top: -34px; left: 44.7969px; display: block;">
-        <div class="tooltip-arrow" style="left: 50%;"></div>
-        <div class="tooltip-inner">Tooltip on top</div>
+      <div class="col-sm-2">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Bombillo 1</h3>
+          </div>
+          <div class="panel-body">
+            <button data-toggle="tooltip" data-placement="top" title="" data-original-title="Tooltip on top" aria-describedby="tooltip858235">
+            <img type="image" id="myImage" (click)="changeImage()" src="{{link}}" width="100" height="180">
+          </button>
+            <div class="tooltip fade top" role="tooltip" id="tooltip858235" style="top: -34px; left: 44.7969px; display: block;">
+              <div class="tooltip-arrow" style="left: 50%;"></div>
+              <div class="tooltip-inner">Tooltip on top</div>
+            </div>
+            <div class="tooltip fade top" role="tooltip" id="tooltip858235" style="top: -34px; left: 44.7969px; display: block;">
+              <div class="tooltip-arrow" style="left: 50%;"></div>
+              <div class="tooltip-inner">Tooltip on top</div>
+            </div>
+          </div>
+          <div class="panel-footer">{{estado}}</div>
+        </div>
+      </div>
+      <div class="col-sm-5">
       </div>
     </div>
-    <div class="panel-footer">{{estado}}</div>
   </div>
+  <div id="menu1" class="tab-pane fade">
+    <div class="col-sm-4 col-sm-offset-4">
+    <div style="display: block" class="big-top-space">
+      <canvas baseChart
+              [datasets]="barChartData"
+              [labels]="barChartLabels"
+              [options]="barChartOptions"
+              [colors]="barChartColors"
+              [legend]="barChartLegend"
+              [chartType]="barChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+    </div>
+    <div class="text-center">
+      <button (click)="randomize()" class="btn btn-primary">Actualizar</button>
+    </div>
+  </div>
+</div>
 </div>
