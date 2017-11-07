@@ -3,9 +3,10 @@ const express = require('express');
 const router = express.Router();
 const clientMQTT = require('../middlewares/mqtt');
 const WebSocket = require('ws');
-const port = require('../app');
-const ws = new WebSocket('ws://127.0.0.1:'+port);
+const PORT = process.env.PORT || 8080;
+const ws = new WebSocket('ws://127.0.0.1:'+PORT);
 const Blackout = require('../models/blackout');
+
 
 ws.on('message', function incoming(message) {
   var json = JSON.parse(message);
@@ -41,6 +42,8 @@ ws.on('message', function incoming(message) {
     });
   }else if(json.type="error"){
 
+  } else {
+    console.log(json);
   }
 });
 
