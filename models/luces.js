@@ -9,7 +9,7 @@ const lucesSchema = new mongoose.Schema({
   },
   username:{
     type: String
-  }
+  },
   time:{
     type: String
   }
