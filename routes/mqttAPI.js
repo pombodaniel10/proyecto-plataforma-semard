@@ -6,7 +6,7 @@ const WebSocket = require('ws');
 const PORT = process.env.PORT || 8080;
 const ws = new WebSocket('ws://127.0.0.1:'+PORT);
 const Blackout = require('../models/blackout');
-const Blackout = require('../models/luces');
+const Luces = require('../models/luces');
 
 ws.on('message', function incoming(message) {
   var json = JSON.parse(message);
@@ -83,7 +83,7 @@ clientMQTT.on('message', function (topic, message) {
         }, 10000);
       }else if(topic=="foco_estado"){
         clearTimeout(timer2);
-        let luces = new luces({
+        let luces = new Luces({
           'foco': "foco 1",
           'estado': "foco up/down",
           'username': "default",
