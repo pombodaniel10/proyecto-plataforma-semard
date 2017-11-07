@@ -75,19 +75,27 @@ export class LucesComponent implements OnInit {
   link: string = "https://www.w3schools.com/js/pic_bulboff.gif";
   estado: string = "apagado";
   status: boolean = false;
+  error: boolean = false;
+  success: boolean = false;
 
   constructor(private flashMessage: FlashMessagesService,private wsService: WsService) {
     wsService.messages.subscribe(msg => {
-    if(msg.type=="luces"){
+    if(msg.type=="lucesOut"){
+      this.error = false;
       if(msg.message.status==true){
         this.focoOn();
-      }else {
+      }else if(msg.message.status==false){
         this.focoOff();
       }
-    }else if(msg.type=="error"){
-      this.flashMessage.show("Error al comunicarse con el dispostivo", {
-      cssClass: 'alert-warning',
-      timeout:5000});
+      this.success = true;
+      setTimeout(() => {
+        this.success = false;
+      }, 5000);
+    }else if(msg.type=="error"&&msg.message==null){
+      this.error = true;
+      setTimeout(() => {
+        this.error = false;
+      }, 10000);
     }
     });}
 
