@@ -12,6 +12,7 @@ client.on('connect', function () {
   client.subscribe('outStepper');
   client.subscribe('inStepper');
   client.subscribe('prrito');
+  client.subscribe('foco_estado');
 });
 
 client.on('error', function () {

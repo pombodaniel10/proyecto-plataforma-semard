@@ -6,7 +6,7 @@ const WebSocket = require('ws');
 const PORT = process.env.PORT || 8080;
 const ws = new WebSocket('ws://127.0.0.1:'+PORT);
 const Blackout = require('../models/blackout');
-
+const Blackout = require('../models/luces');
 
 ws.on('message', function incoming(message) {
   var json = JSON.parse(message);
@@ -36,14 +36,10 @@ ws.on('message', function incoming(message) {
           'message': err
         }
         ws.send(JSON.stringify(dataError));
-      } else {
-        console.log("enviado.");
       }
     });
   }else if(json.type="error"){
 
-  } else {
-    console.log(json);
   }
 });
 
@@ -52,7 +48,6 @@ clientMQTT.on('message', function (topic, message) {
     var timer = null;
     try{
       if(topic=="inStepper"){
-        console.log("mensaje recibido");
         timer = setTimeout(function () {
           console.log("El dispositivo no funciona.");
           let dataError = {
@@ -63,7 +58,6 @@ clientMQTT.on('message', function (topic, message) {
         }, 10000);
       }else if(topic=="prrito"){
         clearTimeout(timer);
-        console.log("mensaje enviado");
         let blackout = new Blackout({
           'username': "default",
           'estado': "Blackout en movimiento",
@@ -79,7 +73,31 @@ clientMQTT.on('message', function (topic, message) {
         }
         ws.send(JSON.stringify(data));
       }else if(topic=="encenderFoco"){
+        timer2 = setTimeout(function () {
+          console.log("El dispositivo no funciona.");
+          let dataError = {
+            'type': "error",
+            'message': "El dispositivo no responde."
+          }
+          ws.send(JSON.stringify(dataError));
+        }, 10000);
+      }else if(topic=="foco_estado"){
+        clearTimeout(timer2);
+        let luces = new luces({
+          'foco': "foco 1",
+          'estado': "foco up/down",
+          'username': "default",
+          'time': new Date()
+        });
+        luces.save(function (err){
+          if (err) return handleError(err);  // saved!
+        });
 
+        let data = {
+          'type': "lucesOut",
+          'message': JSON.parse(message.toString())
+        }
+        ws.send(JSON.stringify(data));
       }
     } catch (e) {
       if(e instanceof SyntaxError){
