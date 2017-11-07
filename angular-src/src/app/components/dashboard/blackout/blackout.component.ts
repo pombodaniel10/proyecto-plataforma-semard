@@ -95,7 +95,7 @@ export class BlackoutComponent implements OnInit {
           this.estadoMovimiento = false;
           this.messages = {};
           this.progress = 0;
-          this.error = true;
+          this.success = true;
           setTimeout(() => {
             this.success = false;
           }, 5000);
