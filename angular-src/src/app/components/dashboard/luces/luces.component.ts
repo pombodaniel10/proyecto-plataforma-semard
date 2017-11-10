@@ -8,7 +8,7 @@ import {FlashMessagesService} from 'angular2-flash-messages';
   templateUrl: './luces.component.html',
   styleUrls: ['./luces.component.css']
 })
-export class LucesComponent implements OnInit {
+export class LucesComponent{
 
   public barChartOptions:any = {
     scaleShowVerticalLines: false,
@@ -73,7 +73,7 @@ export class LucesComponent implements OnInit {
   }
 
   link: string = "https://www.w3schools.com/js/pic_bulboff.gif";
-  estado: string = "apagado";
+  estado: string = "Apagado";
   status: boolean = false;
   error: boolean = false;
   success: boolean = false;
@@ -90,18 +90,25 @@ export class LucesComponent implements OnInit {
       this.success = true;
       setTimeout(() => {
         this.success = false;
-      }, 5000);
-    }else if(msg.type=="error"&&msg.message==null){
+      }, 8000);
+    }else if(msg.type=="lucesESTADO"){
+      if(msg.message.status==true){
+        this.focoOn();
+      }else if(msg.message.status==false){
+        this.focoOff();
+      }
+    }else if(msg.type=="errorLuces"&&this.success==false){
       this.error = true;
+      if (this.status==false) {
+          this.focoOn();
+      } else {
+          this.focoOff();
+      }
       setTimeout(() => {
         this.error = false;
-      }, 10000);
+      }, 8000);
     }
     });}
-
-    ngOnInit(){
-
-    }
 
     changeImage(){
       if (this.status==false) {
@@ -109,7 +116,6 @@ export class LucesComponent implements OnInit {
       } else {
           this.focoOff();
       }
-      this.status = !this.status;
       let luces:ILuces = {
         type: "luces",
         message: {status:this.status}
@@ -118,10 +124,12 @@ export class LucesComponent implements OnInit {
     }
 
     focoOn(){
+      this.status = true;
       this.link = "https://www.w3schools.com/js/pic_bulbon.gif";
       this.estado = "Encedido";
     }
     focoOff(){
+      this.status = false;
       this.link = "https://www.w3schools.com/js/pic_bulboff.gif";
       this.estado = "Apagado";
     }
