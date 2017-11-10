@@ -507,7 +507,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/dashboard/blackout/blackout.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"nav nav-pills nav-justified\">\n  <li class=\"active\"><a data-toggle=\"tab\" href=\"#home\">Control persianas</a></li>\n  <li><a data-toggle=\"tab\" href=\"#menu1\">Estadisticas</a></li>\n</ul>\n\n<div class=\"tab-content\">\n  <div id=\"home\" class=\"tab-pane fade in active\">\n    <div class=\"row remove-float center-block top-space text-center\">\n        <div class=\"col-sm-4\"></div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"error\" class=\"alert alert-dismissible alert-danger\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.\n             </strong>\n          </div>\n          <div *ngIf=\"success\" class=\"alert alert-dismissible alert-succes\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>La persiana fue movida con exito.\n             </strong>\n          </div>\n          <div class=\"panel panel-primary\">\n            <div class=\"panel-body\">\n              <strong>{{estadoPersiana}}</strong>\n              <br><br>\n              <div class=\"row\">\n                <div class=\"col-sm-8\">\n                  <img type=\"image\" id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"180\" height=\"200\"><br><br>\n                </div>\n                <div class=\"col-sm-2 top-space\">\n                  <mat-slider color=\"primary\" vertical invert min=\"0\" max=\"20\" step=\"5\" [disabled]=\"estadoMovimiento\" (change)=\"onValueChange()\" value=\"0\" [(ngModel)]=\"vslider\" tickInterval=\"5\" thumb-label></mat-slider>\n                </div>\n              </div>\n              <strong>Mueva el control deslizante y presione enviar para mover la persiana.</strong>\n              <br><br>\n              <button [disabled]=\"estadoMovimiento\" (click)=\"enviarTarea()\" class=\"btn btn-primary\">Enviar</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"messages.sentido\" class=\"panel panel-primary messages big-top-space\">\n            <div class=\"panel-heading\">\n              <h3 class=\"panel-title\">Información del dispostivo</h3>\n            </div>\n            <div class=\"panel-body\">\n              <h3>Estado</h3>\n            \t<strong>Sentido: {{messages.sentido}}</strong>\n              <br>\n              <strong>Vueltas: {{messages.vueltas}}</strong>\n              <br>\n              <strong>Progeso: {{messages.progreso}}%</strong>\n              <br>\n              <strong>Estado: {{messages.estado}}</strong>\n              <div class=\"progress progress-striped active\">\n                <div class=\"progress-bar\" [style.width.%]=\"progress\"></div>\n              </div>\n            </div>\n        \t</div>\n        </div>\n\n    </div>\n  </div>\n  <div id=\"menu1\" class=\"tab-pane fade\">\n    <div class=\"col-sm-4 col-sm-offset-4\">\n      <div style=\"display: block\" class=\"big-top-space\">\n        <canvas baseChart\n                [datasets]=\"barChartData\"\n                [labels]=\"barChartLabels\"\n                [options]=\"barChartOptions\"\n                [colors]=\"barChartColors\"\n                [legend]=\"barChartLegend\"\n                [chartType]=\"barChartType\"\n                (chartHover)=\"chartHovered($event)\"\n                (chartClick)=\"chartClicked($event)\"></canvas>\n      </div>\n      <div class=\"text-center\">\n        <button (click)=\"randomize()\" class=\"btn btn-primary\">Actualizar</button>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<ul class=\"nav nav-pills nav-justified\">\n  <li class=\"active\"><a data-toggle=\"tab\" href=\"#home\">Control persianas</a></li>\n  <li><a data-toggle=\"tab\" href=\"#menu1\">Estadisticas</a></li>\n</ul>\n\n<div class=\"tab-content\">\n  <div id=\"home\" class=\"tab-pane fade in active\">\n    <div class=\"row remove-float center-block top-space text-center\">\n        <div class=\"col-sm-4\"></div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"error\" class=\"alert alert-dismissible alert-danger\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.\n             </strong>\n          </div>\n          <div *ngIf=\"success\" class=\"alert alert-dismissible alert-success\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>La persiana fue movida con exito.\n             </strong>\n          </div>\n          <div class=\"panel panel-primary\">\n            <div class=\"panel-body\">\n              <strong>{{estadoPersiana}}</strong>\n              <br><br>\n              <div class=\"row\">\n                <div class=\"col-sm-8\">\n                  <img type=\"image\" id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"180\" height=\"200\"><br><br>\n                </div>\n                <div class=\"col-sm-2 top-space\">\n                  <mat-slider color=\"primary\" vertical invert min=\"0\" max=\"20\" step=\"5\" [disabled]=\"estadoMovimiento\" (change)=\"onValueChange()\" value=\"0\" [(ngModel)]=\"vslider\" tickInterval=\"5\" thumb-label></mat-slider>\n                </div>\n              </div>\n              <strong>Mueva el control deslizante y presione enviar para mover la persiana.</strong>\n              <br><br>\n              <button [disabled]=\"estadoMovimiento\" (click)=\"enviarTarea()\" class=\"btn btn-primary\">Enviar</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"messages.sentido\" class=\"panel panel-primary messages big-top-space\">\n            <div class=\"panel-heading\">\n              <h3 class=\"panel-title\">Información del dispostivo</h3>\n            </div>\n            <div class=\"panel-body\">\n              <h3>Estado</h3>\n            \t<strong>Sentido: {{messages.sentido}}</strong>\n              <br>\n              <strong>Vueltas: {{messages.vueltas}}</strong>\n              <br>\n              <strong>Progeso: {{messages.progreso}}%</strong>\n              <br>\n              <strong>Estado: {{messages.estado}}</strong>\n              <div class=\"progress progress-striped active\">\n                <div class=\"progress-bar\" [style.width.%]=\"progress\"></div>\n              </div>\n            </div>\n        \t</div>\n        </div>\n\n    </div>\n  </div>\n  <div id=\"menu1\" class=\"tab-pane fade\">\n    <div class=\"col-sm-4 col-sm-offset-4\">\n      <div style=\"display: block\" class=\"big-top-space\">\n        <canvas baseChart\n                [datasets]=\"barChartData\"\n                [labels]=\"barChartLabels\"\n                [options]=\"barChartOptions\"\n                [colors]=\"barChartColors\"\n                [legend]=\"barChartLegend\"\n                [chartType]=\"barChartType\"\n                (chartHover)=\"chartHovered($event)\"\n                (chartClick)=\"chartClicked($event)\"></canvas>\n      </div>\n      <div class=\"text-center\">\n        <button (click)=\"randomize()\" class=\"btn btn-primary\">Actualizar</button>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -538,10 +538,14 @@ var BlackoutComponent = /** @class */ (function () {
             responsive: true
         };
         this.barChartLabels = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
-        this.barChartType = 'bar';
+        this.barChartLabelsWeek = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
+        this.barChartType = 'line';
         this.barChartLegend = true;
         this.barChartData = [
-            { data: [65, 59, 80, 81, 56, 55, 40], label: 'Movimientos de la persina' }
+            { data: [0, 0, 0, 0, 0, 0, 0], label: 'Movimientos de la persina' }
+        ];
+        this.barChartDataWeek = [
+            { data: [0, 0, 0, 0], label: 'Movimientos de la persina' }
         ];
         this.barChartColors = [
             {
@@ -572,12 +576,18 @@ var BlackoutComponent = /** @class */ (function () {
         this.link = "../../../../assets/images/persiana0.png";
         wsService.messages.subscribe(function (msg) {
             if (msg.type == "blackoutOut") {
-                _this.vtemporal = _this.vslider;
-                _this.estadoMovimiento = true;
-                _this.error = false;
-                _this.messages = msg.message;
-                _this.progress = msg.message.progreso;
-                if (msg.message.estado == "finalizado") {
+                if (msg.message.estado == "Esperando orden") {
+                    _this.vslider = msg.message.vueltas;
+                    _this.onValueChange();
+                }
+                else if (msg.message.estado == "girando") {
+                    _this.vtemporal = _this.vslider;
+                    _this.estadoMovimiento = true;
+                    _this.error = false;
+                    _this.messages = msg.message;
+                    _this.progress = msg.message.progreso;
+                }
+                else if (msg.message.estado == "finalizado") {
                     _this.estadoMovimiento = false;
                     _this.messages = {};
                     _this.progress = 0;
@@ -587,14 +597,28 @@ var BlackoutComponent = /** @class */ (function () {
                     }, 5000);
                 }
             }
-            else if (msg.type == "error" && _this.messages.estado == null) {
+            else if (msg.type == "errorBlackout" && _this.messages.estado == null) {
                 _this.error = true;
                 _this.vslider = _this.vtemporal;
                 _this.onValueChange();
                 _this.estadoMovimiento = false;
                 setTimeout(function () {
                     _this.error = false;
-                }, 10000);
+                }, 8000);
+            }
+            else if (msg.type == "blackoutDATA") {
+                var data = [
+                    msg.message.lunes,
+                    msg.message.martes,
+                    msg.message.miercoles,
+                    msg.message.jueves,
+                    msg.message.viernes,
+                    msg.message.sabado,
+                    msg.message.domingo
+                ];
+                var clone = JSON.parse(JSON.stringify(_this.barChartData));
+                clone[0].data = data;
+                _this.barChartData = clone;
             }
         });
     }
@@ -606,27 +630,19 @@ var BlackoutComponent = /** @class */ (function () {
         console.log(e);
     };
     BlackoutComponent.prototype.randomize = function () {
-        // Only Change 3 values
-        var data = [
-            Math.round(Math.random() * 100),
-            59,
-            80,
-            (Math.random() * 100),
-            56,
-            (Math.random() * 100),
-            40
-        ];
-        var clone = JSON.parse(JSON.stringify(this.barChartData));
-        clone[0].data = data;
-        this.barChartData = clone;
-        /**
-         * (My guess), for Angular to recognize the change in the dataset
-         * it has to change the dataset variable directly,
-         * so one way around it, is to clone the data, change it and then
-         * assign it;
-         */
+        //this.barChartType = this.barChartType === 'bar' ? 'line' : 'bar';
+        var xd = {
+            type: "blackoutRDATA",
+            message: {}
+        };
+        this.wsService.messages.next(xd);
     };
     BlackoutComponent.prototype.ngOnInit = function () {
+        var xd = {
+            type: "blackoutRDATA",
+            message: {}
+        };
+        this.wsService.messages.next(xd);
     };
     BlackoutComponent.prototype.onValueChange = function () {
         switch (this.vslider) {
@@ -774,7 +790,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/dashboard/luces/luces.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"nav nav-pills nav-justified\">\n  <li class=\"active\"><a data-toggle=\"tab\" href=\"#home\">Control luces</a></li>\n  <li><a data-toggle=\"tab\" href=\"#menu1\">Estadisticas</a></li>\n</ul>\n\n<div class=\"tab-content\">\n  <div id=\"home\" class=\"tab-pane fade in active\">\n    <div class=\"remove-float center-block big-top-space text-center\">\n      <div class=\"col-sm-5\">\n      </div>\n      <div class=\"col-sm-2\">\n        <div *ngIf=\"error\" class=\"alert alert-dismissible alert-danger\">\n           <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n           <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.\n           </strong>\n        </div>\n        <div *ngIf=\"success\" class=\"alert alert-dismissible alert-succes\">\n           <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n           <strong>La persiana fue movida con exito.\n           </strong>\n        </div>\n        <div class=\"panel panel-primary\">\n          <div class=\"panel-heading\">\n            <h3 class=\"panel-title\">Bombillo 1</h3>\n          </div>\n          <div class=\"panel-body\">\n            <img type=\"image\" id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"100\" height=\"180\">\n            <div class=\"tooltip fade top\" role=\"tooltip\" id=\"tooltip858235\" style=\"top: -34px; left: 44.7969px; display: block;\">\n              <div class=\"tooltip-arrow\" style=\"left: 50%;\"></div>\n              <div class=\"tooltip-inner\">Tooltip on top</div>\n            </div>\n            <div class=\"tooltip fade top\" role=\"tooltip\" id=\"tooltip858235\" style=\"top: -34px; left: 44.7969px; display: block;\">\n              <div class=\"tooltip-arrow\" style=\"left: 50%;\"></div>\n              <div class=\"tooltip-inner\">Tooltip on top</div>\n            </div>\n          </div>\n          <div class=\"panel-footer\">{{estado}}</div>\n        </div>\n      </div>\n      <div class=\"col-sm-5\">\n      </div>\n    </div>\n  </div>\n  <div id=\"menu1\" class=\"tab-pane fade\">\n    <div class=\"col-sm-4 col-sm-offset-4\">\n    <div style=\"display: block\" class=\"big-top-space\">\n      <canvas baseChart\n              [datasets]=\"barChartData\"\n              [labels]=\"barChartLabels\"\n              [options]=\"barChartOptions\"\n              [colors]=\"barChartColors\"\n              [legend]=\"barChartLegend\"\n              [chartType]=\"barChartType\"\n              (chartHover)=\"chartHovered($event)\"\n              (chartClick)=\"chartClicked($event)\"></canvas>\n    </div>\n    <div class=\"text-center\">\n      <button (click)=\"randomize()\" class=\"btn btn-primary\">Actualizar</button>\n    </div>\n  </div>\n</div>\n</div>\n"
+module.exports = "<ul class=\"nav nav-pills nav-justified\">\n  <li class=\"active\"><a data-toggle=\"tab\" href=\"#home\">Control luces</a></li>\n  <li><a data-toggle=\"tab\" href=\"#menu1\">Estadisticas</a></li>\n</ul>\n\n<div class=\"tab-content\">\n  <div id=\"home\" class=\"tab-pane fade in active\">\n    <div class=\"remove-float center-block big-top-space text-center\">\n      <div class=\"col-sm-5\">\n      </div>\n      <div class=\"col-sm-2\">\n        <div *ngIf=\"error\" class=\"alert alert-dismissible alert-danger\">\n           <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n           <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.</strong>\n        </div>\n        <div *ngIf=\"success\" class=\"alert alert-dismissible alert-success\">\n           <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n           <strong>Foco {{estado}}.</strong>\n        </div>\n        <div class=\"panel panel-primary\">\n          <div class=\"panel-heading\">\n            <h3 class=\"panel-title\">Bombillo 1</h3>\n          </div>\n          <div class=\"panel-body\">\n            <img type=\"image\" id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"100\" height=\"180\">\n            <div class=\"tooltip fade top\" role=\"tooltip\" id=\"tooltip858235\" style=\"top: -34px; left: 44.7969px; display: block;\">\n              <div class=\"tooltip-arrow\" style=\"left: 50%;\"></div>\n              <div class=\"tooltip-inner\">Tooltip on top</div>\n            </div>\n            <div class=\"tooltip fade top\" role=\"tooltip\" id=\"tooltip858235\" style=\"top: -34px; left: 44.7969px; display: block;\">\n              <div class=\"tooltip-arrow\" style=\"left: 50%;\"></div>\n              <div class=\"tooltip-inner\">Tooltip on top</div>\n            </div>\n          </div>\n          <div class=\"panel-footer\">{{estado}}</div>\n        </div>\n      </div>\n      <div class=\"col-sm-5\">\n      </div>\n    </div>\n  </div>\n  <div id=\"menu1\" class=\"tab-pane fade\">\n    <div class=\"col-sm-4 col-sm-offset-4\">\n    <div style=\"display: block\" class=\"big-top-space\">\n      <canvas baseChart\n              [datasets]=\"barChartData\"\n              [labels]=\"barChartLabels\"\n              [options]=\"barChartOptions\"\n              [colors]=\"barChartColors\"\n              [legend]=\"barChartLegend\"\n              [chartType]=\"barChartType\"\n              (chartHover)=\"chartHovered($event)\"\n              (chartClick)=\"chartClicked($event)\"></canvas>\n    </div>\n    <div class=\"text-center\">\n      <button (click)=\"randomize()\" class=\"btn btn-primary\">Actualizar</button>\n    </div>\n  </div>\n</div>\n</div>\n"
 
 /***/ }),
 
@@ -834,7 +850,7 @@ var LucesComponent = /** @class */ (function () {
             }
         ];
         this.link = "https://www.w3schools.com/js/pic_bulboff.gif";
-        this.estado = "apagado";
+        this.estado = "Apagado";
         this.status = false;
         this.error = false;
         this.success = false;
@@ -850,13 +866,27 @@ var LucesComponent = /** @class */ (function () {
                 _this.success = true;
                 setTimeout(function () {
                     _this.success = false;
-                }, 5000);
+                }, 8000);
             }
-            else if (msg.type == "error" && msg.message == null) {
+            else if (msg.type == "lucesESTADO") {
+                if (msg.message.status == true) {
+                    _this.focoOn();
+                }
+                else if (msg.message.status == false) {
+                    _this.focoOff();
+                }
+            }
+            else if (msg.type == "errorLuces" && _this.success == false) {
                 _this.error = true;
+                if (_this.status == false) {
+                    _this.focoOn();
+                }
+                else {
+                    _this.focoOff();
+                }
                 setTimeout(function () {
                     _this.error = false;
-                }, 10000);
+                }, 8000);
             }
         });
     }
@@ -888,8 +918,6 @@ var LucesComponent = /** @class */ (function () {
          * assign it;
          */
     };
-    LucesComponent.prototype.ngOnInit = function () {
-    };
     LucesComponent.prototype.changeImage = function () {
         if (this.status == false) {
             this.focoOn();
@@ -897,7 +925,6 @@ var LucesComponent = /** @class */ (function () {
         else {
             this.focoOff();
         }
-        this.status = !this.status;
         var luces = {
             type: "luces",
             message: { status: this.status }
@@ -905,10 +932,12 @@ var LucesComponent = /** @class */ (function () {
         this.wsService.messages.next(luces);
     };
     LucesComponent.prototype.focoOn = function () {
+        this.status = true;
         this.link = "https://www.w3schools.com/js/pic_bulbon.gif";
         this.estado = "Encedido";
     };
     LucesComponent.prototype.focoOff = function () {
+        this.status = false;
         this.link = "https://www.w3schools.com/js/pic_bulboff.gif";
         this.estado = "Apagado";
     };
@@ -1010,7 +1039,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"jumbotron text-center\">\n  <h1>Smart Home</h1>\n  <p class=\"lead\">Controle sus dispostivos desde cualquier lugar, con solo un click.</p>\n  <a *ngIf=\"!authService.loggedIn()\" class=\"btn btn-default btn-lg text-center\" [routerLink]=\"['/login']\">Iniciar sesión</a>\n  <a *ngIf=\"authService.loggedIn()\" class=\"btn btn-default btn-lg text-center\" [routerLink]=\"['/dashboard']\">Ingresar al panel de control</a>\n</div>\n<div id=\"services\" class=\"container-fluid text-center\">\n  <h2>Servicios</h2>\n  <br>\n  <div class=\"row\">\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-off\"></span>\n      <h4>Control</h4>\n      <p>Desde el sitio web usted puede controlar sus dispostivos IoT.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-wrench\"></span>\n      <h4>Gestión</h4>\n      <p>Maneje los usuarios que pueden hacer a la plataforma.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-list-alt\"></span>\n      <h4>Informes</h4>\n      <p>Obtenga informes de uso de sus dispostivos en tiempo real.</p>\n    </div>\n    </div>\n    <br><br>\n  <div class=\"row\">\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-globe\"></span>\n      <h4>Multiplataforma</h4>\n      <p>Acceda a la plataforma desde su movil, tablet o ordenador.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-lock\"></span>\n      <h4>Seguro</h4>\n      <p>Solo personal autorizado podrá acceder a controlar los dispostivos.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-user\"></span>\n      <h4>Facil manejo</h4>\n      <p>Solo clique y acción a realizar y la plataforma hará todas las comunicaciones.</p>\n    </div>\n  </div>\n</div>\n<div id=\"about\" class=\"container-fluid bg-grey\">\n  <h2 class=\"text-center\">Contacto</h2>\n  <div class=\"row\">\n    <div class=\"col-sm-5\">\n      <p>Contactenos y en menos de 24 horas, estaremos dandole soporte.</p>\n      <p><span class=\"glyphicon glyphicon-map-marker\"></span> Cartagena, CO</p>\n      <p><span class=\"glyphicon glyphicon-phone\"></span> +57 1234567890</p>\n      <p><span class=\"glyphicon glyphicon-envelope\"></span> soporteiotctg@iotcartagena.com</p>\n    </div>\n    <div class=\"col-sm-7\">\n      <div class=\"row\">\n        <div class=\"col-sm-6 form-group\">\n          <input class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"Nombre\" type=\"text\" required>\n        </div>\n        <div class=\"col-sm-6 form-group\">\n          <input class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"Email\" type=\"email\" required>\n        </div>\n      </div>\n      <textarea class=\"form-control\" id=\"comments\" name=\"comments\" placeholder=\"Preguntas\" rows=\"5\"></textarea><br>\n      <div class=\"row\">\n        <div class=\"col-sm-12 form-group\">\n          <button class=\"btn btn-default pull-right\" type=\"submit\">Send</button>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<footer class=\"container-fluid text-center\">\n  <a href=\"#top\" title=\"To Top\">\n    <span class=\"glyphicon glyphicon-chevron-up\"></span>\n  </a>\n  <p>Bootstrap Theme Made By <a href=\"https://www.w3schools.com\" title=\"Visit w3schools\">www.w3schools.com</a></p>\n</footer>\n"
+module.exports = "<div class=\"jumbotron text-center\">\n  <h1>Smart Home</h1>\n  <p class=\"lead\">Controle sus dispostivos desde cualquier lugar, con solo un click.</p>\n  <a *ngIf=\"!authService.loggedIn()\" class=\"btn btn-default btn-lg text-center\" [routerLink]=\"['/login']\">Iniciar sesión</a>\n  <a *ngIf=\"authService.loggedIn()\" class=\"btn btn-default btn-lg text-center\" [routerLink]=\"['/dashboard']\">Ingresar al panel de control</a>\n</div>\n<div id=\"services\" class=\"container-fluid text-center\">\n  <h2>Servicios</h2>\n  <br>\n  <div class=\"row\">\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-off\"></span>\n      <h4>Control</h4>\n      <p>Desde el sitio web usted puede controlar sus dispostivos IoT.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-wrench\"></span>\n      <h4>Gestión</h4>\n      <p>Maneje los usuarios que pueden hacer a la plataforma.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-list-alt\"></span>\n      <h4>Informes</h4>\n      <p>Obtenga informes de uso de sus dispostivos en tiempo real.</p>\n    </div>\n    </div>\n    <br><br>\n  <div class=\"row\">\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-globe\"></span>\n      <h4>Multiplataforma</h4>\n      <p>Acceda a la plataforma desde su movil, tablet o ordenador.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-lock\"></span>\n      <h4>Seguro</h4>\n      <p>Solo personal autorizado podrá acceder a controlar los dispostivos.</p>\n    </div>\n    <div class=\"col-sm-4\">\n      <span class=\"glyphicon glyphicon-user\"></span>\n      <h4>Facil manejo</h4>\n      <p>Solo clique y acción a realizar y la plataforma hará todas las comunicaciones.</p>\n    </div>\n  </div>\n</div>\n<div id=\"about\" class=\"container-fluid bg-grey\">\n  <h2 class=\"text-center\">Contacto</h2>\n  <div class=\"row\">\n    <div class=\"col-sm-5\">\n      <p>Contactenos y en menos de 24 horas, estaremos dandole soporte.</p>\n      <p><span class=\"glyphicon glyphicon-map-marker\"></span> Cartagena, CO</p>\n      <p><span class=\"glyphicon glyphicon-phone\"></span> +57 1234567890</p>\n      <p><span class=\"glyphicon glyphicon-envelope\"></span> soporteiotctg@iotcartagena.com</p>\n    </div>\n    <div class=\"col-sm-7\">\n      <div class=\"row\">\n        <div class=\"col-sm-6 form-group\">\n          <input class=\"form-control\" id=\"name\" name=\"name\" placeholder=\"Nombre\" type=\"text\" required>\n        </div>\n        <div class=\"col-sm-6 form-group\">\n          <input class=\"form-control\" id=\"email\" name=\"email\" placeholder=\"Email\" type=\"email\" required>\n        </div>\n      </div>\n      <textarea class=\"form-control\" id=\"comments\" name=\"comments\" placeholder=\"Preguntas\" rows=\"5\"></textarea><br>\n      <div class=\"row\">\n        <div class=\"col-sm-12 form-group\">\n          <button class=\"btn btn-default pull-right\" type=\"submit\">Send</button>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<footer class=\"container-fluid text-center\">\n  <a href=\"#top\" title=\"To Top\">\n    <span class=\"glyphicon glyphicon-chevron-up\"></span>\n  </a>\n  <p>Smart HOME - 2017</p>\n</footer>\n"
 
 /***/ }),
 
