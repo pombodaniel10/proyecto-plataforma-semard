@@ -14,12 +14,18 @@ export class BlackoutComponent implements OnInit {
     responsive: true
   };
   public barChartLabels:string[] = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
-  public barChartType:string = 'bar';
+  public barChartLabelsWeek:string[] = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
+  public barChartType:string = 'line';
   public barChartLegend:boolean = true;
 
   public barChartData:any[] = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Movimientos de la persina'}
+    {data: [0,0,0,0,0,0,0], label: 'Movimientos de la persina'}
   ];
+
+  public barChartDataWeek:any[] = [
+    {data: [0,0,0,0], label: 'Movimientos de la persina'}
+  ];
+
 
   public barChartColors: Array<any> = [
     { // dark grey
@@ -50,24 +56,17 @@ export class BlackoutComponent implements OnInit {
   }
 
   public randomize():void {
-    // Only Change 3 values
-    let data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      (Math.random() * 100),
-      56,
-      (Math.random() * 100),
-      40];
-    let clone = JSON.parse(JSON.stringify(this.barChartData));
-    clone[0].data = data;
-    this.barChartData = clone;
-    /**
-     * (My guess), for Angular to recognize the change in the dataset
-     * it has to change the dataset variable directly,
-     * so one way around it, is to clone the data, change it and then
-     * assign it;
-     */
+
+    //this.barChartType = this.barChartType === 'bar' ? 'line' : 'bar';
+
+    let xd = {
+      type: "blackoutRDATA",
+      message: {}
+    }
+
+    this.wsService.messages.next(xd);
+
+
   }
 
 
@@ -81,17 +80,23 @@ export class BlackoutComponent implements OnInit {
   estadoPersiana: string = "Persiana arriba"
   estadoMovimiento: boolean = false;
   link: string = "../../../../assets/images/persiana0.png"
+
+
   constructor(
     private wsService: WsService
   ) {
     wsService.messages.subscribe(msg => {
       if(msg.type=="blackoutOut"){
-        this.vtemporal = this.vslider;
-        this.estadoMovimiento = true;
-        this.error = false;
-        this.messages = msg.message;
-        this.progress = msg.message.progreso;
-        if(msg.message.estado=="finalizado"){
+        if(msg.message.estado=="Esperando orden"){
+          this.vslider = msg.message.vueltas;
+          this.onValueChange();
+        }else if(msg.message.estado=="girando"){
+          this.vtemporal = this.vslider;
+          this.estadoMovimiento = true;
+          this.error = false;
+          this.messages = msg.message;
+          this.progress = msg.message.progreso;
+        }else if(msg.message.estado=="finalizado"){
           this.estadoMovimiento = false;
           this.messages = {};
           this.progress = 0;
@@ -100,19 +105,39 @@ export class BlackoutComponent implements OnInit {
             this.success = false;
           }, 5000);
         }
-      }else if(msg.type=="error"&&this.messages.estado==null){
+      }else if(msg.type=="errorBlackout"&&this.messages.estado==null){
         this.error = true;
         this.vslider = this.vtemporal;
         this.onValueChange();
         this.estadoMovimiento = false;
         setTimeout(() => {
           this.error = false;
-        }, 10000);
+        }, 8000);
+      } else if(msg.type=="blackoutDATA"){
+
+        let data = [
+          msg.message.lunes,
+          msg.message.martes,
+          msg.message.miercoles,
+          msg.message.jueves,
+          msg.message.viernes,
+          msg.message.sabado,
+          msg.message.domingo];
+
+        let clone = JSON.parse(JSON.stringify(this.barChartData));
+        clone[0].data = data;
+        this.barChartData = clone;
       }
 		});
   }
 
   ngOnInit() {
+    let xd = {
+      type: "blackoutRDATA",
+      message: {}
+    }
+
+    this.wsService.messages.next(xd);
   }
 
     onValueChange(){

@@ -13,3 +13,7 @@ const blackoutSchema = new mongoose.Schema({
 });
 
 const Blackout = module.exports = mongoose.model('Blackout',blackoutSchema);
+
+module.exports.getALLData = function(callback){
+  Blackout.find(callback);
+}
