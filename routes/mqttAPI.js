@@ -154,12 +154,10 @@ clientMQTT.on('message', function (topic, message) {
           ws.send(JSON.stringify(lucesOut));
         break;
         case "foco_estado":
-
           let lucesESTADO = {
             'type': "lucesESTADO",
             'message': JSON.parse(message.toString())
           }
-          console.log(lucesESTADO);
           ws.send(JSON.stringify(lucesESTADO));
         break;
       }
