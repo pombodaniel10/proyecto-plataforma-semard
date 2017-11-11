@@ -77,6 +77,7 @@ export class LucesComponent{
   status: boolean = false;
   error: boolean = false;
   success: boolean = false;
+  exito: boolean = false;
 
   constructor(private flashMessage: FlashMessagesService,private wsService: WsService) {
     wsService.messages.subscribe(msg => {
@@ -87,6 +88,7 @@ export class LucesComponent{
       }else if(msg.message.status==false){
         this.focoOff();
       }
+      this.exito = true;
       this.success = true;
       setTimeout(() => {
         this.success = false;
@@ -97,8 +99,9 @@ export class LucesComponent{
       }else if(msg.message.status==false){
         this.focoOff();
       }
-    }else if(msg.type=="errorLuces"&&this.success==false){
+    }else if(msg.type=="errorLuces"&&this.exito==false){
       this.error = true;
+      this.exito = false;
       if (this.status==false) {
           this.focoOn();
       } else {
