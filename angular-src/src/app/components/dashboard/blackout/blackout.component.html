@@ -10,13 +10,11 @@
         <div class="col-sm-4">
           <div *ngIf="error" class="alert alert-dismissible alert-danger">
              <button type="button" class="close" data-dismiss="alert">&times;</button>
-             <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.
-             </strong>
+             <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.</strong>
           </div>
           <div *ngIf="success" class="alert alert-dismissible alert-success">
              <button type="button" class="close" data-dismiss="alert">&times;</button>
-             <strong>La persiana fue movida con exito.
-             </strong>
+             <strong>La persiana fue movida con exito.</strong>
           </div>
           <div class="panel panel-primary">
             <div class="panel-body">
@@ -27,12 +25,12 @@
                   <img type="image" id="myImage" (click)="changeImage()" src="{{link}}" width="180" height="200"><br><br>
                 </div>
                 <div class="col-sm-2 top-space">
-                  <mat-slider color="primary" vertical invert min="0" max="20" step="5" [disabled]="estadoMovimiento" (change)="onValueChange()" value="0" [(ngModel)]="vslider" tickInterval="5" thumb-label></mat-slider>
+                  <mat-slider color="primary" (mouseleave)="ocurrioUnEvento($event)"  (mouseenter)="ocurrioUnEvento($event)" vertical invert min="0" max="20" step="5" [disabled]="estadoMovimiento" (change)="onValueChange()" value="0" [(ngModel)]="vslider" tickInterval="5" thumb-label></mat-slider>
                 </div>
               </div>
               <strong>Mueva el control deslizante y presione enviar para mover la persiana.</strong>
               <br><br>
-              <button [disabled]="estadoMovimiento" (click)="enviarTarea()" class="btn btn-primary">Enviar</button>
+              <button [disabled]="estadoMovimientoBTN" (click)="enviarTarea()" class="btn btn-primary">Enviar</button>
             </div>
           </div>
         </div>

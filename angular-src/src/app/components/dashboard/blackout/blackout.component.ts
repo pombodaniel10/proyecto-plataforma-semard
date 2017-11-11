@@ -72,6 +72,7 @@ export class BlackoutComponent implements OnInit {
 
   sentidoGiro: string;
   messages: any = {};
+  sliderA: boolean = false;
   progress: number = 0;
   vslider: number = 0;
   vtemporal: number = 0;
@@ -79,6 +80,7 @@ export class BlackoutComponent implements OnInit {
   success: boolean = false;
   estadoPersiana: string = "Persiana arriba"
   estadoMovimiento: boolean = false;
+  estadoMovimientoBTN: boolean = true;
   link: string = "../../../../assets/images/persiana0.png"
 
 
@@ -87,25 +89,31 @@ export class BlackoutComponent implements OnInit {
   ) {
     wsService.messages.subscribe(msg => {
       if(msg.type=="blackoutOut"){
-        if(msg.message.estado=="Esperando orden"){
-          this.vslider = msg.message.vueltas;
-          this.onValueChange();
+        if(msg.message.estado=="Esperando orden"&&this.sliderA==false){
+          if(this.vtemporal!=msg.message.vueltas){
+            this.vtemporal = msg.message.vueltas;
+            this.vslider = msg.message.vueltas;
+            this.onValueChange();
+          }
         }else if(msg.message.estado=="girando"){
           this.vtemporal = this.vslider;
           this.estadoMovimiento = true;
+          this.estadoMovimientoBTN = true;
           this.error = false;
           this.messages = msg.message;
           this.progress = msg.message.progreso;
         }else if(msg.message.estado=="finalizado"){
           this.estadoMovimiento = false;
+          this.estadoMovimientoBTN = false;
           this.messages = {};
           this.progress = 0;
           this.success = true;
+          this.onValueChange();
           setTimeout(() => {
             this.success = false;
           }, 5000);
         }
-      }else if(msg.type=="errorBlackout"&&this.messages.estado==null){
+      }else if(msg.type=="errorBlackout"&&this.messages.estado==null&&this.success==false){
         this.error = true;
         this.vslider = this.vtemporal;
         this.onValueChange();
@@ -140,7 +148,20 @@ export class BlackoutComponent implements OnInit {
     this.wsService.messages.next(xd);
   }
 
+  private ocurrioUnEvento(event: MouseEvent): void {
+       if(event.type=="mouseenter"){
+         this.sliderA = true;
+       }else if(event.type=="mouseleave"){
+         this.sliderA = false;
+       }
+    }
+
     onValueChange(){
+      if(this.vslider==this.vtemporal){
+        this.estadoMovimientoBTN = true;
+      } else {
+        this.estadoMovimientoBTN = false;
+      }
     switch(this.vslider){
       case 0:
       {
@@ -182,10 +203,16 @@ export class BlackoutComponent implements OnInit {
     }else{
       this.sentidoGiro = "counterclockwise";
     }
+    let vueltas = 0;
+    if(Math.abs(this.vslider-this.vtemporal)==0){
+      vueltas = this.vtemporal;
+    }else {
+      vueltas = Math.abs(this.vslider-this.vtemporal);
+    }
     this.estadoMovimiento = true;
     let blackout:IBlackout = {
       type: "blackout",
-      message: {vueltas:this.vslider,sentido:this.sentidoGiro}
+      message: {vueltas:vueltas,sentido:this.sentidoGiro}
     }
     this.wsService.messages.next(blackout);
   }
