@@ -507,7 +507,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/dashboard/blackout/blackout.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"nav nav-pills nav-justified\">\n  <li class=\"active\"><a data-toggle=\"tab\" href=\"#home\">Control persianas</a></li>\n  <li><a data-toggle=\"tab\" href=\"#menu1\">Estadisticas</a></li>\n</ul>\n\n<div class=\"tab-content\">\n  <div id=\"home\" class=\"tab-pane fade in active\">\n    <div class=\"row remove-float center-block top-space text-center\">\n        <div class=\"col-sm-4\"></div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"error\" class=\"alert alert-dismissible alert-danger\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.\n             </strong>\n          </div>\n          <div *ngIf=\"success\" class=\"alert alert-dismissible alert-success\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>La persiana fue movida con exito.\n             </strong>\n          </div>\n          <div class=\"panel panel-primary\">\n            <div class=\"panel-body\">\n              <strong>{{estadoPersiana}}</strong>\n              <br><br>\n              <div class=\"row\">\n                <div class=\"col-sm-8\">\n                  <img type=\"image\" id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"180\" height=\"200\"><br><br>\n                </div>\n                <div class=\"col-sm-2 top-space\">\n                  <mat-slider color=\"primary\" vertical invert min=\"0\" max=\"20\" step=\"5\" [disabled]=\"estadoMovimiento\" (change)=\"onValueChange()\" value=\"0\" [(ngModel)]=\"vslider\" tickInterval=\"5\" thumb-label></mat-slider>\n                </div>\n              </div>\n              <strong>Mueva el control deslizante y presione enviar para mover la persiana.</strong>\n              <br><br>\n              <button [disabled]=\"estadoMovimiento\" (click)=\"enviarTarea()\" class=\"btn btn-primary\">Enviar</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"messages.sentido\" class=\"panel panel-primary messages big-top-space\">\n            <div class=\"panel-heading\">\n              <h3 class=\"panel-title\">Información del dispostivo</h3>\n            </div>\n            <div class=\"panel-body\">\n              <h3>Estado</h3>\n            \t<strong>Sentido: {{messages.sentido}}</strong>\n              <br>\n              <strong>Vueltas: {{messages.vueltas}}</strong>\n              <br>\n              <strong>Progeso: {{messages.progreso}}%</strong>\n              <br>\n              <strong>Estado: {{messages.estado}}</strong>\n              <div class=\"progress progress-striped active\">\n                <div class=\"progress-bar\" [style.width.%]=\"progress\"></div>\n              </div>\n            </div>\n        \t</div>\n        </div>\n\n    </div>\n  </div>\n  <div id=\"menu1\" class=\"tab-pane fade\">\n    <div class=\"col-sm-4 col-sm-offset-4\">\n      <div style=\"display: block\" class=\"big-top-space\">\n        <canvas baseChart\n                [datasets]=\"barChartData\"\n                [labels]=\"barChartLabels\"\n                [options]=\"barChartOptions\"\n                [colors]=\"barChartColors\"\n                [legend]=\"barChartLegend\"\n                [chartType]=\"barChartType\"\n                (chartHover)=\"chartHovered($event)\"\n                (chartClick)=\"chartClicked($event)\"></canvas>\n      </div>\n      <div class=\"text-center\">\n        <button (click)=\"randomize()\" class=\"btn btn-primary\">Actualizar</button>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<ul class=\"nav nav-pills nav-justified\">\n  <li class=\"active\"><a data-toggle=\"tab\" href=\"#home\">Control persianas</a></li>\n  <li><a data-toggle=\"tab\" href=\"#menu1\">Estadisticas</a></li>\n</ul>\n\n<div class=\"tab-content\">\n  <div id=\"home\" class=\"tab-pane fade in active\">\n    <div class=\"row remove-float center-block top-space text-center\">\n        <div class=\"col-sm-4\"></div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"error\" class=\"alert alert-dismissible alert-danger\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.</strong>\n          </div>\n          <div *ngIf=\"success\" class=\"alert alert-dismissible alert-success\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>La persiana fue movida con exito.</strong>\n          </div>\n          <div class=\"panel panel-primary\">\n            <div class=\"panel-body\">\n              <strong>{{estadoPersiana}}</strong>\n              <br><br>\n              <div class=\"row\">\n                <div class=\"col-sm-8\">\n                  <img type=\"image\" id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"180\" height=\"200\"><br><br>\n                </div>\n                <div class=\"col-sm-2 top-space\">\n                  <mat-slider color=\"primary\" (mouseleave)=\"ocurrioUnEvento($event)\"  (mouseenter)=\"ocurrioUnEvento($event)\" vertical invert min=\"0\" max=\"20\" step=\"5\" [disabled]=\"estadoMovimiento\" (change)=\"onValueChange()\" value=\"0\" [(ngModel)]=\"vslider\" tickInterval=\"5\" thumb-label></mat-slider>\n                </div>\n              </div>\n              <strong>Mueva el control deslizante y presione enviar para mover la persiana.</strong>\n              <br><br>\n              <button [disabled]=\"estadoMovimientoBTN\" (click)=\"enviarTarea()\" class=\"btn btn-primary\">Enviar</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"messages.sentido\" class=\"panel panel-primary messages big-top-space\">\n            <div class=\"panel-heading\">\n              <h3 class=\"panel-title\">Información del dispostivo</h3>\n            </div>\n            <div class=\"panel-body\">\n              <h3>Estado</h3>\n            \t<strong>Sentido: {{messages.sentido}}</strong>\n              <br>\n              <strong>Vueltas: {{messages.vueltas}}</strong>\n              <br>\n              <strong>Progeso: {{messages.progreso}}%</strong>\n              <br>\n              <strong>Estado: {{messages.estado}}</strong>\n              <div class=\"progress progress-striped active\">\n                <div class=\"progress-bar\" [style.width.%]=\"progress\"></div>\n              </div>\n            </div>\n        \t</div>\n        </div>\n\n    </div>\n  </div>\n  <div id=\"menu1\" class=\"tab-pane fade\">\n    <div class=\"col-sm-4 col-sm-offset-4\">\n      <div style=\"display: block\" class=\"big-top-space\">\n        <canvas baseChart\n                [datasets]=\"barChartData\"\n                [labels]=\"barChartLabels\"\n                [options]=\"barChartOptions\"\n                [colors]=\"barChartColors\"\n                [legend]=\"barChartLegend\"\n                [chartType]=\"barChartType\"\n                (chartHover)=\"chartHovered($event)\"\n                (chartClick)=\"chartClicked($event)\"></canvas>\n      </div>\n      <div class=\"text-center\">\n        <button (click)=\"randomize()\" class=\"btn btn-primary\">Actualizar</button>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -566,6 +566,7 @@ var BlackoutComponent = /** @class */ (function () {
             }
         ];
         this.messages = {};
+        this.sliderA = false;
         this.progress = 0;
         this.vslider = 0;
         this.vtemporal = 0;
@@ -573,31 +574,38 @@ var BlackoutComponent = /** @class */ (function () {
         this.success = false;
         this.estadoPersiana = "Persiana arriba";
         this.estadoMovimiento = false;
+        this.estadoMovimientoBTN = true;
         this.link = "../../../../assets/images/persiana0.png";
         wsService.messages.subscribe(function (msg) {
             if (msg.type == "blackoutOut") {
-                if (msg.message.estado == "Esperando orden") {
-                    _this.vslider = msg.message.vueltas;
-                    _this.onValueChange();
+                if (msg.message.estado == "Esperando orden" && _this.sliderA == false) {
+                    if (_this.vtemporal != msg.message.vueltas) {
+                        _this.vtemporal = msg.message.vueltas;
+                        _this.vslider = msg.message.vueltas;
+                        _this.onValueChange();
+                    }
                 }
                 else if (msg.message.estado == "girando") {
                     _this.vtemporal = _this.vslider;
                     _this.estadoMovimiento = true;
+                    _this.estadoMovimientoBTN = true;
                     _this.error = false;
                     _this.messages = msg.message;
                     _this.progress = msg.message.progreso;
                 }
                 else if (msg.message.estado == "finalizado") {
                     _this.estadoMovimiento = false;
+                    _this.estadoMovimientoBTN = false;
                     _this.messages = {};
                     _this.progress = 0;
                     _this.success = true;
+                    _this.onValueChange();
                     setTimeout(function () {
                         _this.success = false;
                     }, 5000);
                 }
             }
-            else if (msg.type == "errorBlackout" && _this.messages.estado == null) {
+            else if (msg.type == "errorBlackout" && _this.messages.estado == null && _this.success == false) {
                 _this.error = true;
                 _this.vslider = _this.vtemporal;
                 _this.onValueChange();
@@ -644,7 +652,21 @@ var BlackoutComponent = /** @class */ (function () {
         };
         this.wsService.messages.next(xd);
     };
+    BlackoutComponent.prototype.ocurrioUnEvento = function (event) {
+        if (event.type == "mouseenter") {
+            this.sliderA = true;
+        }
+        else if (event.type == "mouseleave") {
+            this.sliderA = false;
+        }
+    };
     BlackoutComponent.prototype.onValueChange = function () {
+        if (this.vslider == this.vtemporal) {
+            this.estadoMovimientoBTN = true;
+        }
+        else {
+            this.estadoMovimientoBTN = false;
+        }
         switch (this.vslider) {
             case 0:
                 {
@@ -685,10 +707,17 @@ var BlackoutComponent = /** @class */ (function () {
         else {
             this.sentidoGiro = "counterclockwise";
         }
+        var vueltas = 0;
+        if (Math.abs(this.vslider - this.vtemporal) == 0) {
+            vueltas = this.vtemporal;
+        }
+        else {
+            vueltas = Math.abs(this.vslider - this.vtemporal);
+        }
         this.estadoMovimiento = true;
         var blackout = {
             type: "blackout",
-            message: { vueltas: this.vslider, sentido: this.sentidoGiro }
+            message: { vueltas: vueltas, sentido: this.sentidoGiro }
         };
         this.wsService.messages.next(blackout);
     };
@@ -854,6 +883,7 @@ var LucesComponent = /** @class */ (function () {
         this.status = false;
         this.error = false;
         this.success = false;
+        this.exito = false;
         wsService.messages.subscribe(function (msg) {
             if (msg.type == "lucesOut") {
                 _this.error = false;
@@ -863,6 +893,7 @@ var LucesComponent = /** @class */ (function () {
                 else if (msg.message.status == false) {
                     _this.focoOff();
                 }
+                _this.exito = true;
                 _this.success = true;
                 setTimeout(function () {
                     _this.success = false;
@@ -876,8 +907,9 @@ var LucesComponent = /** @class */ (function () {
                     _this.focoOff();
                 }
             }
-            else if (msg.type == "errorLuces" && _this.success == false) {
+            else if (msg.type == "errorLuces" && _this.exito == false) {
                 _this.error = true;
+                _this.exito = false;
                 if (_this.status == false) {
                     _this.focoOn();
                 }
