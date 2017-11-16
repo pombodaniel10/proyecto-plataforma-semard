@@ -227,7 +227,7 @@ function respuestaDispositivo(topic,message){
       clearTimeout(timer);
       timer = null;
       var resBLACKOUT = JSON.parse(message.toString());
-      if(resBLACKOUT.estado=="girando"||resBLACKOUT.estado=="finalizado"){
+      if(resBLACKOUT.estado=="finalizado"){
         let blackout = new Blackout({
           'username': "default",
           'estado': resBLACKOUT.estado,
