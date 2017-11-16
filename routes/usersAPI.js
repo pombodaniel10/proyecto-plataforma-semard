@@ -8,7 +8,7 @@ const config = require('../config/database');
 const User = require('../models/user');
 
 
-//Authenticate
+//Autorizar
 router.post('/authenticate', (req,res,next) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -41,12 +41,12 @@ router.post('/authenticate', (req,res,next) => {
   });
 });
 
-//Profile
+//Obtener perfil
 router.get('/profile', passport.authenticate('jwt',{ session: false }),(req,res,next) => {
   res.json({user: req.user});
 });
 
-//Get users
+//Obtener Usuarios
 router.get('/admin',  passport.authenticate('jwt',{ session: false }), (req,res,next) => {
   User.getUsers((err,users) => {
       if(err) throw err;
@@ -58,12 +58,12 @@ router.get('/admin',  passport.authenticate('jwt',{ session: false }), (req,res,
   });
 });
 
-//logout
+//Salir
 router.get('/logout',  passport.authenticate('jwt',{ session: false }), (req,res,next) => {
   return res.json({"success":true, "msg": 'Logout'});
 });
 
-//Register
+//Registrar
 router.post('/register', passport.authenticate('jwt',{ session: false }),(req,res,next) => {
   if(req.user){
     if(req.user.isAdmin){
