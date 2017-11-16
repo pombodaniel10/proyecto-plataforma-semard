@@ -9,7 +9,7 @@ import {User} from  '../.././app/components/admin/register/user';
 export class AuthService {
   authToken: any;
   user: User = JSON.parse(localStorage.getItem('user'));
-  link: string =  "users/"
+  link: string =  "/users/"
   constructor(private http:Http) { }
 
   getUser(): Promise<void | User> {
