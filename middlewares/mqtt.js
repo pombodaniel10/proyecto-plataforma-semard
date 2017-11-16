@@ -26,4 +26,4 @@ client.on('offline', function () {
 });
 
 
-module.exports = client;
+const mqttclient = module.exports = client;
