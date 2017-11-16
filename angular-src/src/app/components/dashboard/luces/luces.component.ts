@@ -15,7 +15,7 @@ export class LucesComponent{
     responsive: true
   };
   public barChartLabels:string[] = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
-  public barChartType:string = 'bar';
+  public barChartType:string = 'line';
   public barChartLegend:boolean = true;
 
   public barChartData:any[] = [
@@ -51,25 +51,15 @@ export class LucesComponent{
     console.log(e);
   }
 
-  public randomize():void {
-    // Only Change 3 values
-    let data = [
-      Math.round(Math.random() * 100),
-      59,
-      80,
-      (Math.random() * 100),
-      56,
-      (Math.random() * 100),
-      40];
-    let clone = JSON.parse(JSON.stringify(this.barChartData));
-    clone[0].data = data;
-    this.barChartData = clone;
-    /**
-     * (My guess), for Angular to recognize the change in the dataset
-     * it has to change the dataset variable directly,
-     * so one way around it, is to clone the data, change it and then
-     * assign it;
-     */
+  public actualizar():void {
+
+    let request = {
+      type: "lucesRDATA",
+      message: {}
+    }
+
+    this.wsService.messages.next(request);
+
   }
 
   link: string = "https://www.w3schools.com/js/pic_bulboff.gif";
@@ -81,15 +71,47 @@ export class LucesComponent{
 
   constructor(private flashMessage: FlashMessagesService,private wsService: WsService) {
     wsService.messages.subscribe(msg => {
+      this.onmessageWS(msg);
+    });
+  }
+
+
+  enviarTarea(){
+    if (this.status==false) {
+      this.focoOn();
+    } else {
+      this.focoOff();
+    }
+    let luces:ILuces = {
+      type: "luces",
+      message: {status:this.status}
+    }
+    this.wsService.messages.next(luces);
+  }
+
+  focoOn(){
+    this.status = true;
+    this.link = "https://www.w3schools.com/js/pic_bulbon.gif";
+    this.estado = "Encedido";
+  }
+
+  focoOff(){
+    this.status = false;
+    this.link = "https://www.w3schools.com/js/pic_bulboff.gif";
+    this.estado = "Apagado";
+  }
+
+  onmessageWS(msg){
     if(msg.type=="lucesOut"){
+      console.log("out");
       this.error = false;
+      this.exito = true;
+      this.success = true;
       if(msg.message.status==true){
         this.focoOn();
       }else if(msg.message.status==false){
         this.focoOff();
       }
-      this.exito = true;
-      this.success = true;
       setTimeout(() => {
         this.success = false;
       }, 8000);
@@ -110,31 +132,31 @@ export class LucesComponent{
       setTimeout(() => {
         this.error = false;
       }, 8000);
-    }
-    });}
+    } else if(msg.type=="lucesDATA"){
 
-    changeImage(){
-      if (this.status==false) {
-          this.focoOn();
-      } else {
-          this.focoOff();
-      }
-      let luces:ILuces = {
-        type: "luces",
-        message: {status:this.status}
-      }
-      this.wsService.messages.next(luces);
-    }
+      let data = [
+        msg.message.on.lunes,
+        msg.message.on.martes,
+        msg.message.on.miercoles,
+        msg.message.on.jueves,
+        msg.message.on.viernes,
+        msg.message.on.sabado,
+        msg.message.on.domingo];
 
-    focoOn(){
-      this.status = true;
-      this.link = "https://www.w3schools.com/js/pic_bulbon.gif";
-      this.estado = "Encedido";
+        let dataoff = [
+          msg.message.off.lunes,
+          msg.message.off.martes,
+          msg.message.off.miercoles,
+          msg.message.off.jueves,
+          msg.message.off.viernes,
+          msg.message.off.sabado,
+          msg.message.off.domingo];
+
+      let clone = JSON.parse(JSON.stringify(this.barChartData));
+      clone[0].data = data;
+      clone[1].data = dataoff;
+      this.barChartData = clone;
     }
-    focoOff(){
-      this.status = false;
-      this.link = "https://www.w3schools.com/js/pic_bulboff.gif";
-      this.estado = "Apagado";
-    }
+  }
 
 }
