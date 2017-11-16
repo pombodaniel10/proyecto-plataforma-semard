@@ -8,14 +8,6 @@
     <div class="row remove-float center-block top-space text-center">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
-          <div *ngIf="error" class="alert alert-dismissible alert-danger">
-             <button type="button" class="close" data-dismiss="alert">&times;</button>
-             <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.</strong>
-          </div>
-          <div *ngIf="success" class="alert alert-dismissible alert-success">
-             <button type="button" class="close" data-dismiss="alert">&times;</button>
-             <strong>La persiana fue movida con exito.</strong>
-          </div>
           <div class="panel panel-primary">
             <div class="panel-body">
               <strong>{{estadoPersiana}}</strong>
@@ -32,6 +24,14 @@
               <br><br>
               <button [disabled]="estadoMovimientoBTN" (click)="enviarTarea()" class="btn btn-primary">Enviar</button>
             </div>
+          </div>
+          <div *ngIf="error" class="alert alert-dismissible alert-danger">
+             <button type="button" class="close" data-dismiss="alert">&times;</button>
+             <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.</strong>
+          </div>
+          <div *ngIf="success" class="alert alert-dismissible alert-success">
+             <button type="button" class="close" data-dismiss="alert">&times;</button>
+             <strong>La persiana fue movida con exito.</strong>
           </div>
         </div>
         <div class="col-sm-4">
