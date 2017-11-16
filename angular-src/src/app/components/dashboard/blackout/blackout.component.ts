@@ -7,7 +7,7 @@ import {IBlackout} from './blackout';
   templateUrl: './blackout.component.html',
   styleUrls: ['./blackout.component.css']
 })
-export class BlackoutComponent implements OnInit {
+export class BlackoutComponent{
 
   public barChartOptions:any = {
     scaleShowVerticalLines: false,
@@ -19,11 +19,11 @@ export class BlackoutComponent implements OnInit {
   public barChartLegend:boolean = true;
 
   public barChartData:any[] = [
-    {data: [0,0,0,0,0,0,0], label: 'Movimientos de la persina'}
+    {data: [0,0,0,0,0,0,0], label: 'Movimientos de la persiana'}
   ];
 
   public barChartDataWeek:any[] = [
-    {data: [0,0,0,0], label: 'Movimientos de la persina'}
+    {data: [0,0,0,0], label: 'Movimientos de la persiana'}
   ];
 
 
@@ -55,16 +55,14 @@ export class BlackoutComponent implements OnInit {
     console.log(e);
   }
 
-  public randomize():void {
+  public actualizar():void {
 
-    //this.barChartType = this.barChartType === 'bar' ? 'line' : 'bar';
-
-    let xd = {
+    let request = {
       type: "blackoutRDATA",
       message: {}
     }
 
-    this.wsService.messages.next(xd);
+    this.wsService.messages.next(request);
 
 
   }
@@ -88,64 +86,59 @@ export class BlackoutComponent implements OnInit {
     private wsService: WsService
   ) {
     wsService.messages.subscribe(msg => {
-      if(msg.type=="blackoutOut"){
-        if(msg.message.estado=="Esperando orden"&&this.sliderA==false){
-          if(this.vtemporal!=msg.message.vueltas){
-            this.vtemporal = msg.message.vueltas;
-            this.vslider = msg.message.vueltas;
-            this.onValueChange();
-          }
-        }else if(msg.message.estado=="girando"){
-          this.vtemporal = this.vslider;
-          this.estadoMovimiento = true;
-          this.estadoMovimientoBTN = true;
-          this.error = false;
-          this.messages = msg.message;
-          this.progress = msg.message.progreso;
-        }else if(msg.message.estado=="finalizado"){
-          this.estadoMovimiento = false;
-          this.estadoMovimientoBTN = false;
-          this.messages = {};
-          this.progress = 0;
-          this.success = true;
-          this.onValueChange();
-          setTimeout(() => {
-            this.success = false;
-          }, 5000);
-        }
-      }else if(msg.type=="errorBlackout"&&this.messages.estado==null&&this.success==false){
-        this.error = true;
-        this.vslider = this.vtemporal;
-        this.onValueChange();
-        this.estadoMovimiento = false;
-        setTimeout(() => {
-          this.error = false;
-        }, 8000);
-      } else if(msg.type=="blackoutDATA"){
-
-        let data = [
-          msg.message.lunes,
-          msg.message.martes,
-          msg.message.miercoles,
-          msg.message.jueves,
-          msg.message.viernes,
-          msg.message.sabado,
-          msg.message.domingo];
-
-        let clone = JSON.parse(JSON.stringify(this.barChartData));
-        clone[0].data = data;
-        this.barChartData = clone;
-      }
+      this.onMessageWS(msg);
 		});
   }
 
-  ngOnInit() {
-    let xd = {
-      type: "blackoutRDATA",
-      message: {}
-    }
+  onMessageWS(msg){
+    if(msg.type=="blackoutOut"){
+      if(msg.message.estado=="Esperando orden"&&this.sliderA==false){
+        if(this.vtemporal!=msg.message.vueltas){
+          this.vtemporal = msg.message.vueltas;
+          this.vslider = msg.message.vueltas;
+          this.onValueChange();
+        }
+      }else if(msg.message.estado=="girando"){
+        this.vtemporal = this.vslider;
+        this.estadoMovimiento = true;
+        this.estadoMovimientoBTN = true;
+        this.error = false;
+        this.messages = msg.message;
+        this.progress = msg.message.progreso;
+      }else if(msg.message.estado=="finalizado"){
+        this.estadoMovimiento = false;
+        this.estadoMovimientoBTN = false;
+        this.messages = {};
+        this.progress = 0;
+        this.success = true;
+        this.onValueChange();
+        setTimeout(() => {
+          this.success = false;
+        }, 5000);
+      }
+    }else if(msg.type=="errorBlackout"&&this.messages.estado==null&&this.success==false){
+      this.error = true;
+      this.vslider = this.vtemporal;
+      this.onValueChange();
+      this.estadoMovimiento = false;
+      setTimeout(() => {
+        this.error = false;
+      }, 8000);
+    } else if(msg.type=="blackoutDATA"){
 
-    this.wsService.messages.next(xd);
+      let data = [
+        msg.message.lunes,
+        msg.message.martes,
+        msg.message.miercoles,
+        msg.message.jueves,
+        msg.message.viernes,
+        msg.message.sabado,
+        msg.message.domingo];
+
+      let clone = JSON.parse(JSON.stringify(this.barChartData));
+      clone[0].data = data;
+      this.barChartData = clone;
+    }
   }
 
   private ocurrioUnEvento(event: MouseEvent): void {
@@ -198,6 +191,7 @@ export class BlackoutComponent implements OnInit {
   }
 
   enviarTarea(){
+
     if(this.vslider>this.vtemporal){
       this.sentidoGiro = "clockwise";
     }else{
@@ -210,6 +204,7 @@ export class BlackoutComponent implements OnInit {
       vueltas = Math.abs(this.vslider-this.vtemporal);
     }
     this.estadoMovimiento = true;
+    this.estadoMovimientoBTN = true;
     let blackout:IBlackout = {
       type: "blackout",
       message: {vueltas:vueltas,sentido:this.sentidoGiro}
