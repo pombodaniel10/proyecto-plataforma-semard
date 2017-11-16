@@ -5,7 +5,7 @@ const lucesSchema = new mongoose.Schema({
     type: String
   },
   estado:{
-    type: String
+    type: Boolean
   },
   username:{
     type: String
@@ -16,3 +16,7 @@ const lucesSchema = new mongoose.Schema({
 });
 
 const Luces = module.exports = mongoose.model('Luces',lucesSchema);
+
+module.exports.getALLData = function(callback){
+  Luces.find(callback);
+}
