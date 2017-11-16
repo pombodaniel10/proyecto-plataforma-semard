@@ -507,7 +507,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/dashboard/blackout/blackout.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"nav nav-pills nav-justified\">\n  <li class=\"active\"><a data-toggle=\"tab\" href=\"#home\">Control persianas</a></li>\n  <li><a data-toggle=\"tab\" href=\"#menu1\">Estadisticas</a></li>\n</ul>\n\n<div class=\"tab-content\">\n  <div id=\"home\" class=\"tab-pane fade in active\">\n    <div class=\"row remove-float center-block top-space text-center\">\n        <div class=\"col-sm-4\"></div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"error\" class=\"alert alert-dismissible alert-danger\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.</strong>\n          </div>\n          <div *ngIf=\"success\" class=\"alert alert-dismissible alert-success\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>La persiana fue movida con exito.</strong>\n          </div>\n          <div class=\"panel panel-primary\">\n            <div class=\"panel-body\">\n              <strong>{{estadoPersiana}}</strong>\n              <br><br>\n              <div class=\"row\">\n                <div class=\"col-sm-8\">\n                  <img type=\"image\" id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"180\" height=\"200\"><br><br>\n                </div>\n                <div class=\"col-sm-2 top-space\">\n                  <mat-slider color=\"primary\" (mouseleave)=\"ocurrioUnEvento($event)\"  (mouseenter)=\"ocurrioUnEvento($event)\" vertical invert min=\"0\" max=\"20\" step=\"5\" [disabled]=\"estadoMovimiento\" (change)=\"onValueChange()\" value=\"0\" [(ngModel)]=\"vslider\" tickInterval=\"5\" thumb-label></mat-slider>\n                </div>\n              </div>\n              <strong>Mueva el control deslizante y presione enviar para mover la persiana.</strong>\n              <br><br>\n              <button [disabled]=\"estadoMovimientoBTN\" (click)=\"enviarTarea()\" class=\"btn btn-primary\">Enviar</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"messages.sentido\" class=\"panel panel-primary messages big-top-space\">\n            <div class=\"panel-heading\">\n              <h3 class=\"panel-title\">Información del dispostivo</h3>\n            </div>\n            <div class=\"panel-body\">\n              <h3>Estado</h3>\n            \t<strong>Sentido: {{messages.sentido}}</strong>\n              <br>\n              <strong>Vueltas: {{messages.vueltas}}</strong>\n              <br>\n              <strong>Progeso: {{messages.progreso}}%</strong>\n              <br>\n              <strong>Estado: {{messages.estado}}</strong>\n              <div class=\"progress progress-striped active\">\n                <div class=\"progress-bar\" [style.width.%]=\"progress\"></div>\n              </div>\n            </div>\n        \t</div>\n        </div>\n\n    </div>\n  </div>\n  <div id=\"menu1\" class=\"tab-pane fade\">\n    <div class=\"col-sm-4 col-sm-offset-4\">\n      <div style=\"display: block\" class=\"big-top-space\">\n        <canvas baseChart\n                [datasets]=\"barChartData\"\n                [labels]=\"barChartLabels\"\n                [options]=\"barChartOptions\"\n                [colors]=\"barChartColors\"\n                [legend]=\"barChartLegend\"\n                [chartType]=\"barChartType\"\n                (chartHover)=\"chartHovered($event)\"\n                (chartClick)=\"chartClicked($event)\"></canvas>\n      </div>\n      <div class=\"text-center\">\n        <button (click)=\"randomize()\" class=\"btn btn-primary\">Actualizar</button>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<ul class=\"nav nav-pills nav-justified\">\n  <li class=\"active\"><a data-toggle=\"tab\" href=\"#home\">Control persianas</a></li>\n  <li><a (click)=\"actualizar()\" data-toggle=\"tab\" href=\"#menu1\">Estadisticas</a></li>\n</ul>\n\n<div class=\"tab-content\">\n  <div id=\"home\" class=\"tab-pane fade in active\">\n    <div class=\"row remove-float center-block top-space text-center\">\n        <div class=\"col-sm-4\"></div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"error\" class=\"alert alert-dismissible alert-danger\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.</strong>\n          </div>\n          <div *ngIf=\"success\" class=\"alert alert-dismissible alert-success\">\n             <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n             <strong>La persiana fue movida con exito.</strong>\n          </div>\n          <div class=\"panel panel-primary\">\n            <div class=\"panel-body\">\n              <strong>{{estadoPersiana}}</strong>\n              <br><br>\n              <div class=\"row\">\n                <div class=\"col-sm-8\">\n                  <img type=\"image\" id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"180\" height=\"200\"><br><br>\n                </div>\n                <div class=\"col-sm-2 top-space\">\n                  <mat-slider color=\"primary\" (mouseleave)=\"ocurrioUnEvento($event)\"  (mouseenter)=\"ocurrioUnEvento($event)\" vertical invert min=\"0\" max=\"20\" step=\"5\" [disabled]=\"estadoMovimiento\" (change)=\"onValueChange()\" value=\"0\" [(ngModel)]=\"vslider\" tickInterval=\"5\" thumb-label></mat-slider>\n                </div>\n              </div>\n              <strong>Mueva el control deslizante y presione enviar para mover la persiana.</strong>\n              <br><br>\n              <button [disabled]=\"estadoMovimientoBTN\" (click)=\"enviarTarea()\" class=\"btn btn-primary\">Enviar</button>\n            </div>\n          </div>\n        </div>\n        <div class=\"col-sm-4\">\n          <div *ngIf=\"messages.sentido\" class=\"panel panel-primary messages big-top-space\">\n            <div class=\"panel-heading\">\n              <h3 class=\"panel-title\">Información del dispostivo</h3>\n            </div>\n            <div class=\"panel-body\">\n              <h3>Estado</h3>\n            \t<strong>Sentido: {{messages.sentido}}</strong>\n              <br>\n              <strong>Vueltas: {{messages.vueltas}}</strong>\n              <br>\n              <strong>Progeso: {{messages.progreso}}%</strong>\n              <br>\n              <strong>Estado: {{messages.estado}}</strong>\n              <div class=\"progress progress-striped active\">\n                <div class=\"progress-bar\" [style.width.%]=\"progress\"></div>\n              </div>\n            </div>\n        \t</div>\n        </div>\n\n    </div>\n  </div>\n  <div id=\"menu1\" class=\"tab-pane fade\">\n    <div class=\"col-sm-4 col-sm-offset-4\">\n      <div style=\"display: block\" class=\"big-top-space\">\n        <canvas baseChart\n                [datasets]=\"barChartData\"\n                [labels]=\"barChartLabels\"\n                [options]=\"barChartOptions\"\n                [colors]=\"barChartColors\"\n                [legend]=\"barChartLegend\"\n                [chartType]=\"barChartType\"\n                (chartHover)=\"chartHovered($event)\"\n                (chartClick)=\"chartClicked($event)\"></canvas>\n      </div>\n      <div class=\"text-center\">\n        <button (click)=\"actualizar()\" class=\"btn btn-primary\">Actualizar</button>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -542,10 +542,10 @@ var BlackoutComponent = /** @class */ (function () {
         this.barChartType = 'line';
         this.barChartLegend = true;
         this.barChartData = [
-            { data: [0, 0, 0, 0, 0, 0, 0], label: 'Movimientos de la persina' }
+            { data: [0, 0, 0, 0, 0, 0, 0], label: 'Movimientos de la persiana' }
         ];
         this.barChartDataWeek = [
-            { data: [0, 0, 0, 0], label: 'Movimientos de la persina' }
+            { data: [0, 0, 0, 0], label: 'Movimientos de la persiana' }
         ];
         this.barChartColors = [
             {
@@ -577,57 +577,7 @@ var BlackoutComponent = /** @class */ (function () {
         this.estadoMovimientoBTN = true;
         this.link = "../../../../assets/images/persiana0.png";
         wsService.messages.subscribe(function (msg) {
-            if (msg.type == "blackoutOut") {
-                if (msg.message.estado == "Esperando orden" && _this.sliderA == false) {
-                    if (_this.vtemporal != msg.message.vueltas) {
-                        _this.vtemporal = msg.message.vueltas;
-                        _this.vslider = msg.message.vueltas;
-                        _this.onValueChange();
-                    }
-                }
-                else if (msg.message.estado == "girando") {
-                    _this.vtemporal = _this.vslider;
-                    _this.estadoMovimiento = true;
-                    _this.estadoMovimientoBTN = true;
-                    _this.error = false;
-                    _this.messages = msg.message;
-                    _this.progress = msg.message.progreso;
-                }
-                else if (msg.message.estado == "finalizado") {
-                    _this.estadoMovimiento = false;
-                    _this.estadoMovimientoBTN = false;
-                    _this.messages = {};
-                    _this.progress = 0;
-                    _this.success = true;
-                    _this.onValueChange();
-                    setTimeout(function () {
-                        _this.success = false;
-                    }, 5000);
-                }
-            }
-            else if (msg.type == "errorBlackout" && _this.messages.estado == null && _this.success == false) {
-                _this.error = true;
-                _this.vslider = _this.vtemporal;
-                _this.onValueChange();
-                _this.estadoMovimiento = false;
-                setTimeout(function () {
-                    _this.error = false;
-                }, 8000);
-            }
-            else if (msg.type == "blackoutDATA") {
-                var data = [
-                    msg.message.lunes,
-                    msg.message.martes,
-                    msg.message.miercoles,
-                    msg.message.jueves,
-                    msg.message.viernes,
-                    msg.message.sabado,
-                    msg.message.domingo
-                ];
-                var clone = JSON.parse(JSON.stringify(_this.barChartData));
-                clone[0].data = data;
-                _this.barChartData = clone;
-            }
+            _this.onMessageWS(msg);
         });
     }
     // events
@@ -637,20 +587,66 @@ var BlackoutComponent = /** @class */ (function () {
     BlackoutComponent.prototype.chartHovered = function (e) {
         console.log(e);
     };
-    BlackoutComponent.prototype.randomize = function () {
-        //this.barChartType = this.barChartType === 'bar' ? 'line' : 'bar';
-        var xd = {
+    BlackoutComponent.prototype.actualizar = function () {
+        var request = {
             type: "blackoutRDATA",
             message: {}
         };
-        this.wsService.messages.next(xd);
+        this.wsService.messages.next(request);
     };
-    BlackoutComponent.prototype.ngOnInit = function () {
-        var xd = {
-            type: "blackoutRDATA",
-            message: {}
-        };
-        this.wsService.messages.next(xd);
+    BlackoutComponent.prototype.onMessageWS = function (msg) {
+        var _this = this;
+        if (msg.type == "blackoutOut") {
+            if (msg.message.estado == "Esperando orden" && this.sliderA == false) {
+                if (this.vtemporal != msg.message.vueltas) {
+                    this.vtemporal = msg.message.vueltas;
+                    this.vslider = msg.message.vueltas;
+                    this.onValueChange();
+                }
+            }
+            else if (msg.message.estado == "girando") {
+                this.vtemporal = this.vslider;
+                this.estadoMovimiento = true;
+                this.estadoMovimientoBTN = true;
+                this.error = false;
+                this.messages = msg.message;
+                this.progress = msg.message.progreso;
+            }
+            else if (msg.message.estado == "finalizado") {
+                this.estadoMovimiento = false;
+                this.estadoMovimientoBTN = false;
+                this.messages = {};
+                this.progress = 0;
+                this.success = true;
+                this.onValueChange();
+                setTimeout(function () {
+                    _this.success = false;
+                }, 5000);
+            }
+        }
+        else if (msg.type == "errorBlackout" && this.messages.estado == null && this.success == false) {
+            this.error = true;
+            this.vslider = this.vtemporal;
+            this.onValueChange();
+            this.estadoMovimiento = false;
+            setTimeout(function () {
+                _this.error = false;
+            }, 8000);
+        }
+        else if (msg.type == "blackoutDATA") {
+            var data = [
+                msg.message.lunes,
+                msg.message.martes,
+                msg.message.miercoles,
+                msg.message.jueves,
+                msg.message.viernes,
+                msg.message.sabado,
+                msg.message.domingo
+            ];
+            var clone = JSON.parse(JSON.stringify(this.barChartData));
+            clone[0].data = data;
+            this.barChartData = clone;
+        }
     };
     BlackoutComponent.prototype.ocurrioUnEvento = function (event) {
         if (event.type == "mouseenter") {
@@ -715,6 +711,7 @@ var BlackoutComponent = /** @class */ (function () {
             vueltas = Math.abs(this.vslider - this.vtemporal);
         }
         this.estadoMovimiento = true;
+        this.estadoMovimientoBTN = true;
         var blackout = {
             type: "blackout",
             message: { vueltas: vueltas, sentido: this.sentidoGiro }
@@ -745,7 +742,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "\n", ""]);
+exports.push([module.i, ".nav-pills .nav-justified{\n  border-radius: 0px;\n}\n", ""]);
 
 // exports
 
@@ -819,7 +816,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/dashboard/luces/luces.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"nav nav-pills nav-justified\">\n  <li class=\"active\"><a data-toggle=\"tab\" href=\"#home\">Control luces</a></li>\n  <li><a data-toggle=\"tab\" href=\"#menu1\">Estadisticas</a></li>\n</ul>\n\n<div class=\"tab-content\">\n  <div id=\"home\" class=\"tab-pane fade in active\">\n    <div class=\"remove-float center-block big-top-space text-center\">\n      <div class=\"col-sm-5\">\n      </div>\n      <div class=\"col-sm-2\">\n        <div *ngIf=\"error\" class=\"alert alert-dismissible alert-danger\">\n           <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n           <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.</strong>\n        </div>\n        <div *ngIf=\"success\" class=\"alert alert-dismissible alert-success\">\n           <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n           <strong>Foco {{estado}}.</strong>\n        </div>\n        <div class=\"panel panel-primary\">\n          <div class=\"panel-heading\">\n            <h3 class=\"panel-title\">Bombillo 1</h3>\n          </div>\n          <div class=\"panel-body\">\n            <img type=\"image\" id=\"myImage\" (click)=\"changeImage()\" src=\"{{link}}\" width=\"100\" height=\"180\">\n            <div class=\"tooltip fade top\" role=\"tooltip\" id=\"tooltip858235\" style=\"top: -34px; left: 44.7969px; display: block;\">\n              <div class=\"tooltip-arrow\" style=\"left: 50%;\"></div>\n              <div class=\"tooltip-inner\">Tooltip on top</div>\n            </div>\n            <div class=\"tooltip fade top\" role=\"tooltip\" id=\"tooltip858235\" style=\"top: -34px; left: 44.7969px; display: block;\">\n              <div class=\"tooltip-arrow\" style=\"left: 50%;\"></div>\n              <div class=\"tooltip-inner\">Tooltip on top</div>\n            </div>\n          </div>\n          <div class=\"panel-footer\">{{estado}}</div>\n        </div>\n      </div>\n      <div class=\"col-sm-5\">\n      </div>\n    </div>\n  </div>\n  <div id=\"menu1\" class=\"tab-pane fade\">\n    <div class=\"col-sm-4 col-sm-offset-4\">\n    <div style=\"display: block\" class=\"big-top-space\">\n      <canvas baseChart\n              [datasets]=\"barChartData\"\n              [labels]=\"barChartLabels\"\n              [options]=\"barChartOptions\"\n              [colors]=\"barChartColors\"\n              [legend]=\"barChartLegend\"\n              [chartType]=\"barChartType\"\n              (chartHover)=\"chartHovered($event)\"\n              (chartClick)=\"chartClicked($event)\"></canvas>\n    </div>\n    <div class=\"text-center\">\n      <button (click)=\"randomize()\" class=\"btn btn-primary\">Actualizar</button>\n    </div>\n  </div>\n</div>\n</div>\n"
+module.exports = "<ul class=\"nav nav-pills nav-justified\">\n  <li class=\"active\"><a  data-toggle=\"pill\" href=\"#home\">Control luces</a></li>\n  <li><a  (click)=\"actualizar()\" data-toggle=\"pill\" href=\"#menu1\">Estadisticas</a></li>\n</ul>\n\n<div class=\"tab-content\">\n  <div id=\"home\" class=\"tab-pane fade in active\">\n    <div class=\"remove-float center-block big-top-space text-center\">\n      <div class=\"col-sm-5\">\n      </div>\n      <div class=\"col-sm-2\">\n        <div *ngIf=\"error\" class=\"alert alert-dismissible alert-danger\">\n           <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n           <strong>Rayos! Hubo un error al tratar de comunicarse con el dispostivo.</strong>\n        </div>\n        <div *ngIf=\"success\" class=\"alert alert-dismissible alert-success\">\n           <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n           <strong>Foco {{estado}}.</strong>\n        </div>\n        <div class=\"panel panel-primary\">\n          <div class=\"panel-heading\">\n            <h3 class=\"panel-title\">Bombillo 1</h3>\n          </div>\n          <div class=\"panel-body\">\n            <img type=\"image\" id=\"myImage\" (click)=\"enviarTarea()\" src=\"{{link}}\" width=\"100\" height=\"180\">\n            <div class=\"tooltip fade top\" role=\"tooltip\" id=\"tooltip858235\" style=\"top: -34px; left: 44.7969px; display: block;\">\n              <div class=\"tooltip-arrow\" style=\"left: 50%;\"></div>\n              <div class=\"tooltip-inner\">Tooltip on top</div>\n            </div>\n            <div class=\"tooltip fade top\" role=\"tooltip\" id=\"tooltip858235\" style=\"top: -34px; left: 44.7969px; display: block;\">\n              <div class=\"tooltip-arrow\" style=\"left: 50%;\"></div>\n              <div class=\"tooltip-inner\">Tooltip on top</div>\n            </div>\n          </div>\n          <div class=\"panel-footer\">{{estado}}</div>\n        </div>\n      </div>\n      <div class=\"col-sm-5\">\n      </div>\n    </div>\n  </div>\n  <div id=\"menu1\" class=\"tab-pane fade\">\n    <div class=\"col-sm-4 col-sm-offset-4\">\n    <div style=\"display: block\" class=\"big-top-space\">\n      <canvas baseChart\n              [datasets]=\"barChartData\"\n              [labels]=\"barChartLabels\"\n              [options]=\"barChartOptions\"\n              [colors]=\"barChartColors\"\n              [legend]=\"barChartLegend\"\n              [chartType]=\"barChartType\"\n              (chartHover)=\"chartHovered($event)\"\n              (chartClick)=\"chartClicked($event)\"></canvas>\n    </div>\n    <div class=\"text-center\">\n      <button (click)=\"actualizar()\" class=\"btn btn-primary\">Actualizar</button>\n    </div>\n  </div>\n</div>\n</div>\n"
 
 /***/ }),
 
@@ -854,7 +851,7 @@ var LucesComponent = /** @class */ (function () {
             responsive: true
         };
         this.barChartLabels = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
-        this.barChartType = 'bar';
+        this.barChartType = 'line';
         this.barChartLegend = true;
         this.barChartData = [
             { data: [65, 59, 80, 81, 56, 55, 40], label: 'Bombillo 1 Encedido' },
@@ -885,41 +882,7 @@ var LucesComponent = /** @class */ (function () {
         this.success = false;
         this.exito = false;
         wsService.messages.subscribe(function (msg) {
-            if (msg.type == "lucesOut") {
-                _this.error = false;
-                if (msg.message.status == true) {
-                    _this.focoOn();
-                }
-                else if (msg.message.status == false) {
-                    _this.focoOff();
-                }
-                _this.exito = true;
-                _this.success = true;
-                setTimeout(function () {
-                    _this.success = false;
-                }, 8000);
-            }
-            else if (msg.type == "lucesESTADO") {
-                if (msg.message.status == true) {
-                    _this.focoOn();
-                }
-                else if (msg.message.status == false) {
-                    _this.focoOff();
-                }
-            }
-            else if (msg.type == "errorLuces" && _this.exito == false) {
-                _this.error = true;
-                _this.exito = false;
-                if (_this.status == false) {
-                    _this.focoOn();
-                }
-                else {
-                    _this.focoOff();
-                }
-                setTimeout(function () {
-                    _this.error = false;
-                }, 8000);
-            }
+            _this.onmessageWS(msg);
         });
     }
     // events
@@ -929,28 +892,14 @@ var LucesComponent = /** @class */ (function () {
     LucesComponent.prototype.chartHovered = function (e) {
         console.log(e);
     };
-    LucesComponent.prototype.randomize = function () {
-        // Only Change 3 values
-        var data = [
-            Math.round(Math.random() * 100),
-            59,
-            80,
-            (Math.random() * 100),
-            56,
-            (Math.random() * 100),
-            40
-        ];
-        var clone = JSON.parse(JSON.stringify(this.barChartData));
-        clone[0].data = data;
-        this.barChartData = clone;
-        /**
-         * (My guess), for Angular to recognize the change in the dataset
-         * it has to change the dataset variable directly,
-         * so one way around it, is to clone the data, change it and then
-         * assign it;
-         */
+    LucesComponent.prototype.actualizar = function () {
+        var request = {
+            type: "lucesRDATA",
+            message: {}
+        };
+        this.wsService.messages.next(request);
     };
-    LucesComponent.prototype.changeImage = function () {
+    LucesComponent.prototype.enviarTarea = function () {
         if (this.status == false) {
             this.focoOn();
         }
@@ -972,6 +921,69 @@ var LucesComponent = /** @class */ (function () {
         this.status = false;
         this.link = "https://www.w3schools.com/js/pic_bulboff.gif";
         this.estado = "Apagado";
+    };
+    LucesComponent.prototype.onmessageWS = function (msg) {
+        var _this = this;
+        if (msg.type == "lucesOut") {
+            console.log("out");
+            this.error = false;
+            this.exito = true;
+            this.success = true;
+            if (msg.message.status == true) {
+                this.focoOn();
+            }
+            else if (msg.message.status == false) {
+                this.focoOff();
+            }
+            setTimeout(function () {
+                _this.success = false;
+            }, 8000);
+        }
+        else if (msg.type == "lucesESTADO") {
+            if (msg.message.status == true) {
+                this.focoOn();
+            }
+            else if (msg.message.status == false) {
+                this.focoOff();
+            }
+        }
+        else if (msg.type == "errorLuces" && this.exito == false) {
+            this.error = true;
+            this.exito = false;
+            if (this.status == false) {
+                this.focoOn();
+            }
+            else {
+                this.focoOff();
+            }
+            setTimeout(function () {
+                _this.error = false;
+            }, 8000);
+        }
+        else if (msg.type == "lucesDATA") {
+            var data = [
+                msg.message.on.lunes,
+                msg.message.on.martes,
+                msg.message.on.miercoles,
+                msg.message.on.jueves,
+                msg.message.on.viernes,
+                msg.message.on.sabado,
+                msg.message.on.domingo
+            ];
+            var dataoff = [
+                msg.message.off.lunes,
+                msg.message.off.martes,
+                msg.message.off.miercoles,
+                msg.message.off.jueves,
+                msg.message.off.viernes,
+                msg.message.off.sabado,
+                msg.message.off.domingo
+            ];
+            var clone = JSON.parse(JSON.stringify(this.barChartData));
+            clone[0].data = data;
+            clone[1].data = dataoff;
+            this.barChartData = clone;
+        }
     };
     LucesComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -1495,7 +1507,7 @@ var AuthService = /** @class */ (function () {
     function AuthService(http) {
         this.http = http;
         this.user = JSON.parse(localStorage.getItem('user'));
-        this.link = "users/";
+        this.link = "http://localhost:8080/users/";
     }
     AuthService.prototype.getUser = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
@@ -1706,7 +1718,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var WS_URL = location.origin.replace(/^http/, 'ws');
+//const WS_URL = location.origin.replace(/^http/, 'ws');
+var WS_URL = 'ws://localhost:8080';
 var WsService = /** @class */ (function () {
     function WsService(wsService) {
         this.messages = wsService
