@@ -50,10 +50,8 @@ export class RegisterComponent implements OnInit {
   }
 
   usuarioExiste(control:FormControl):Promise<any>|Observable<any>{
-    
     let promise = new Promise((resolve,reject)=>{
       setTimeout(()=>{
-
             if(control.value==="pombo"){
               console.log("error");
               resolve({existe:true});
