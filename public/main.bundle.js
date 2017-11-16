@@ -1148,7 +1148,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container big-top-space\">\n  <div class=\"row\">\n    <div class=\"col-md-4 col-md-offset-4\">\n      <div class=\"login-panel panel panel-primary\">\n        <div class=\"panel-heading\">\n          <h3 class=\"panel-title\">Iniciar sesión</h3>\n        </div>\n        <div class=\"panel-body\">\n          <form role=\"form\" (submit)=\"onLoginSubmit()\">\n            <fieldset>\n              <div class=\"form-group\">\n                <label for=\"username\">Nombre de usuario</label>\n                <input class=\"form-control\" [(ngModel)]=\"username\" name=\"username\" type=\"text\" placeholder=\"Ingrese su nombre de usuario\" autofocus>\n              </div>\n              <div class=\"form-group\">\n                <label for=\"password\">Contraseña</label>\n                <input class=\"form-control\" type=\"password\" [(ngModel)]=\"password\" name=\"password\" placeholder=\"Ingrese su contraseña\"/>\n              </div>\n              <input class=\"btn btn-lg btn-primary btn-block\" type=\"submit\" value=\"Entrar\"/>\n            </fieldset>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container big-top-space\">\n  <div class=\"row\">\n    <div class=\"col-md-4 col-md-offset-4\">\n      <div class=\"login-panel panel panel-primary\">\n        <div class=\"panel-heading\">\n          <h3 class=\"panel-title\">Iniciar sesión</h3>\n        </div>\n        <div class=\"panel-body\">\n          <form role=\"form\" (submit)=\"onLoginSubmit()\" > \n            <fieldset>\n              <div class=\"form-group\">\n                <label for=\"username\">Nombre de usuario</label>\n                <input class=\"form-control\" required [(ngModel)]=\"username\" name=\"username\" type=\"text\" placeholder=\"Ingrese su nombre de usuario\" autofocus>\n              </div>\n              <div class=\"form-group\">\n                <label for=\"password\">Contraseña</label>\n                <input class=\"form-control\" required type=\"password\" [(ngModel)]=\"password\" name=\"password\" placeholder=\"Ingrese su contraseña\"/>\n              </div>\n              <input class=\"btn btn-lg btn-primary btn-block\" type=\"submit\" value=\"Entrar\"/>\n            </fieldset>\n          </form>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1507,7 +1507,7 @@ var AuthService = /** @class */ (function () {
     function AuthService(http) {
         this.http = http;
         this.user = JSON.parse(localStorage.getItem('user'));
-        this.link = "http://localhost:8080/users/";
+        this.link = "/users/";
     }
     AuthService.prototype.getUser = function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
@@ -1718,8 +1718,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-//const WS_URL = location.origin.replace(/^http/, 'ws');
-var WS_URL = 'ws://localhost:8080';
+var WS_URL = location.origin.replace(/^http/, 'ws');
 var WsService = /** @class */ (function () {
     function WsService(wsService) {
         this.messages = wsService
