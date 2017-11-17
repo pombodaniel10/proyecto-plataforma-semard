@@ -1246,14 +1246,6 @@ var NavbarComponent = /** @class */ (function () {
         this.router = router;
         this.flashMessage = flashMessage;
     }
-    NavbarComponent.prototype.intervalFunc = function () {
-        if (!this.authService.loggedIn()) {
-            this.router.navigate(['login']);
-        }
-    };
-    NavbarComponent.prototype.ngOnInit = function () {
-        this.loop = setInterval(this.intervalFunc, 1000);
-    };
     NavbarComponent.prototype.onLogoutClick = function () {
         this.authService.logout();
         this.flashMessage.show("Sesión cerrada.", {
