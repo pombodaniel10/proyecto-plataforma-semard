@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    maxlength:[20,'Nombre usuario muy grande.']
+    maxlength:[20,'Nombre usuario muy grande.'],
+    index: { unique: true }
   },
   email: {
     type: String,
