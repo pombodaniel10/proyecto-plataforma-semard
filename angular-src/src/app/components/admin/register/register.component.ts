@@ -12,7 +12,7 @@ import{Observable} from 'rxjs/Rx';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent{
   users : User[];
   user: User = new User('','','','',false);
   form: FormGroup;
@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
   ) {
     this.form = new FormGroup({
       'name': new FormControl('', [Validators.required,Validators.minLength(3)]),
-      'username': new FormControl('',[Validators.required,Validators.minLength(5)],this.usuarioExiste),
+      'username': new FormControl('',[Validators.required,Validators.minLength(5)]),
       'email': new FormControl('', Validators.required),
       'password': new FormControl('', [Validators.required,Validators.minLength(8)]),
       'password2': new FormControl(),
@@ -38,32 +38,6 @@ export class RegisterComponent implements OnInit {
     )
 
    }
-
-  ngOnInit() {
-    this.authService.getUsers().then((users: any) =>{
-      this.users = users.users;
-    },
-      err => {
-      console.log(err);
-      return false;
-      });
-  }
-
-  usuarioExiste(control:FormControl):Promise<any>|Observable<any>{
-    let promise = new Promise((resolve,reject)=>{
-      setTimeout(()=>{
-            if(control.value==="pombo"){
-              console.log("error");
-              resolve({existe:true});
-            }else {
-              console.log("ok");
-              resolve(null);
-            }
-
-      },3000)
-    })
-    return promise;
-  }
 
   noIguales(control:FormControl):{[s:string]:boolean}{
     let forma:any= this;

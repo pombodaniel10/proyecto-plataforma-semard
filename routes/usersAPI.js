@@ -76,7 +76,13 @@ router.post('/register', passport.authenticate('jwt',{ session: false }),(req,re
       });
       User.addUser(newUser, (err,user) => {
         if(err){
-          res.json({"success":false, "msg":'Error al intentar registrar al usuario'});
+          var errorUser = err.toJSON();
+          console.log(errorUser);
+          if(errorUser.code==11000){
+            res.json({"success":false, "msg":'El nombre de usuario o el correo ya existe.'});
+          }else{
+              res.json({"success":false, "msg":'Error al intentar registrar al usuario'});
+          }
         }else{
           res.json({"success":true, "msg":'Registro exitoso!'});
         }

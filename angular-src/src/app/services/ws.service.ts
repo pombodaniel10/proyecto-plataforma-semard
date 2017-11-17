@@ -3,7 +3,6 @@ import { Observable, Subject } from 'rxjs/Rx';
 import { WebsocketService } from './websocket.service';
 
 const WS_URL = location.origin.replace(/^http/, 'ws');
-//const WS_URL = 'ws://localhost:8080';
 
 export interface Message {
 	type: string,

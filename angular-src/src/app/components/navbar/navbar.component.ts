@@ -11,14 +11,14 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 export class NavbarComponent implements OnInit {
   loop: any;
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private flashMessage: FlashMessagesService
   ) { }
 
   intervalFunc() {
     if(!this.authService.loggedIn()){
-
+      this.router.navigate(['login']);
     }
   }
 

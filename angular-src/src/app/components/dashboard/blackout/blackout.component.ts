@@ -141,7 +141,7 @@ export class BlackoutComponent{
     }
   }
 
-  private ocurrioUnEvento(event: MouseEvent): void {
+  ocurrioUnEvento(event: MouseEvent): void {
        if(event.type=="mouseenter"){
          this.sliderA = true;
        }else if(event.type=="mouseleave"){
