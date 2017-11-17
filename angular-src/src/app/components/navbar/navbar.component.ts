@@ -8,23 +8,13 @@ import {FlashMessagesService} from 'angular2-flash-messages';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent{
   loop: any;
   constructor(
     public authService: AuthService,
     private router: Router,
     private flashMessage: FlashMessagesService
   ) { }
-
-  intervalFunc() {
-    if(!this.authService.loggedIn()){
-      this.router.navigate(['login']);
-    }
-  }
-
-  ngOnInit() {
-    this.loop = setInterval(this.intervalFunc, 1000);
-  }
 
 
   onLogoutClick(){
