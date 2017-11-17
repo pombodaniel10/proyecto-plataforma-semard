@@ -105,6 +105,11 @@ export class BlackoutComponent{
         this.error = false;
         this.messages = msg.message;
         this.progress = msg.message.progreso;
+        if(this.messages.sentido=="clockwise"){
+          this.messages.sentido= "horario";
+        }else{
+          this.messages.sentido= "antihorario";
+        }
       }else if(msg.message.estado=="finalizado"){
         this.estadoMovimiento = false;
         this.estadoMovimientoBTN = false;
