@@ -191,6 +191,7 @@ function enviarTarea(topic,tarea){
 }
 
 function procesarTarea(tarea) {
+  tarea = JSON.parse(tarea);
   switch (tarea.type) {
     case "blackout":
       var stepper = {"sentido":tarea.message.sentido,"vueltas":tarea.message.vueltas};
@@ -211,70 +212,58 @@ function procesarTarea(tarea) {
   }
 }
 
-function onMessageWS(){
-  //Se procesa y se envia la tarea
-  ws.on('message', function incoming(message) {
-    var json = JSON.parse(message);
-    procesarTarea(json);
-  });
-}
-
 function respuestaDispositivo(topic,message){
   timer = null;
   timer2 = null;
-  switch (topic) {
-    case "outStepper":
-      clearTimeout(timer);
-      timer = null;
-      var resBLACKOUT = JSON.parse(message.toString());
-      if(resBLACKOUT.estado=="finalizado"){
-        let blackout = new Blackout({
+  try{
+    switch (topic) {
+      case "outStepper":
+        clearTimeout(timer);
+        timer = null;
+        var resBLACKOUT = JSON.parse(message.toString());
+        if(resBLACKOUT.estado=="finalizado"){
+          let blackout = new Blackout({
+            'username': "default",
+            'estado': resBLACKOUT.estado,
+            'time': new Date()
+          });
+          blackout.save(function (err){
+            if (err) return handleError(err);  // saved!
+          });
+        }
+        enviarEstado("blackoutOut",resBLACKOUT);
+      break;
+      case "foco_cambio":
+        clearTimeout(timer2);
+        timer2 = null;
+        var resLUCES = JSON.parse(message.toString());
+        let luces = new Luces({
+          'foco': "foco 1",
+          'estado': resLUCES.status,
           'username': "default",
-          'estado': resBLACKOUT.estado,
           'time': new Date()
         });
-        blackout.save(function (err){
+        luces.save(function (err){
           if (err) return handleError(err);  // saved!
         });
-      }
-      enviarEstado("blackoutOut",resBLACKOUT);
-    break;
-    case "foco_cambio":
-      clearTimeout(timer2);
-      timer2 = null;
-      var resLUCES = JSON.parse(message.toString());
-      let luces = new Luces({
-        'foco': "foco 1",
-        'estado': resLUCES.status,
-        'username': "default",
-        'time': new Date()
-      });
-      luces.save(function (err){
-        if (err) return handleError(err);  // saved!
-      });
-      enviarEstado("lucesOut",resLUCES);
-    break;
-    case "foco_estado":
-      var resfocoestado = JSON.parse(message.toString());
-      enviarEstado("lucesESTADO",resfocoestado);
-    break;
-  }
-}
-
-function onMessageMQTT(){
-  //Se procesa la respuesta del dispositivo
-  clientMQTT.on('message', function (topic, message) {
-      try{
-        respuestaDispositivo(topic,message);
-      } catch (e) {
-        if(e instanceof SyntaxError){
+        enviarEstado("lucesOut",resLUCES);
+      break;
+      case "foco_estado":
+        var resfocoestado = JSON.parse(message.toString());
+        enviarEstado("lucesESTADO",resfocoestado);
+      break;
+    }
+    } catch (e) {
+      if(e instanceof SyntaxError){
         console.log("Error al procesar el JSON.");
       }
     }
-  });
 }
 
-onMessageWS();
-onMessageMQTT();
+//Se procesa y se envia la tarea
+ws.on('message', function (message){procesarTarea(message);});
+
+//Se procesa la respuesta del dispositivo
+clientMQTT.on('message', function(topic,message){respuestaDispositivo(topic,message);});
 
 module.exports = router;
