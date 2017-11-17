@@ -103,7 +103,6 @@ export class LucesComponent{
 
   onmessageWS(msg){
     if(msg.type=="lucesOut"){
-      console.log("out");
       this.error = false;
       this.exito = true;
       this.success = true;
