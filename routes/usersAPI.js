@@ -96,17 +96,16 @@ router.post('/register', passport.authenticate('jwt',{ session: false }),(req,re
 });
 
 //Elminiar
-router.delete('/deleteuser', passport.authenticate('jwt',{ session: false }),(req,res,next) => {
+router.delete('/deleteuser/:id', passport.authenticate('jwt',{ session: false }),(req,res,next) => {
   if(req.user){
     if(req.user.isAdmin){
-      User.deleteUser(req.body._id,(err,user) => {
+      User.deleteUser(req.params.id,(err,user) => {
         if(err){
           res.json({"success":false, "msg":'Error al intentar eliminar al usuario'});
         }if(user){
           res.json({"success":true,"msg":"Usuario eliminado."});
         }
       });
-
     } else {
       res.json({"success":false, "msg":'Acción no autorizada para el usuario actual'});
     }
