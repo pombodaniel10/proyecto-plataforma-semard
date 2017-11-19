@@ -11,13 +11,13 @@ import {User} from '../../../app/components/admin/register/user';
 })
 export class AdminComponent implements OnInit {
 
-  users:User[];
-  usert: User = new User('','','','',false);
+  users: User[];
+  usert: User = new User('', '', '', '', '', false);
 
-  constructor(private authService: AuthService, private router:Router,private flashMessage: FlashMessagesService,) { }
+  constructor(private authService: AuthService, private router: Router, private flashMessage: FlashMessagesService) { }
 
   ngOnInit() {
-    this.authService.getUsers().then((users: any) =>{
+    this.authService.getUsers().then((users: any) => {
       this.users = users.users;
     },
       err => {
@@ -26,21 +26,17 @@ export class AdminComponent implements OnInit {
       } );
   }
 
-  temporal(user){
+  temporal(user) {
     this.usert = user;
   }
 
-  deleteUser(user){
-    this.authService.deleteUser(user).then((data: any) => {
-      if(data.success){
-        this.flashMessage.show(data.msg,{cssClass: 'alert-success', timeout:3000});
+  deleteUser(id: string) {
+    this.authService.deleteUser(id).then((data: any) => {
+      if (data.success) {
+        this.flashMessage.show(data.msg, {cssClass: 'alert-success', timeout: 3000});
         window.location.reload();
       }
     });
-  }
-
-  editUser(user){
-
   }
 
 }
