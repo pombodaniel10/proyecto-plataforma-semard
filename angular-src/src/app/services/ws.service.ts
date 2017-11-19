@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs/Rx';
 import { WebsocketService } from './websocket.service';
 
 const WS_URL = location.origin.replace(/^http/, 'ws');
+// const WS_URL = "http://localhost:4200";
 
 export interface Message {
 	type: string,
@@ -17,11 +18,11 @@ export class WsService {
 		this.messages = <Subject<Message>>wsService
 			.connect(WS_URL)
 			.map((response: MessageEvent): Message => {
-				let data = JSON.parse(response.data);
+				const data = JSON.parse(response.data);
 				return {
 					type: data.type,
 					message: data.message
-				}
+				};
 			});
 	}
 }
