@@ -16,7 +16,7 @@ export class AuthService {
     this.authToken = token;
   }
 
-  getToken(){
+  getToken() {
     return this.authToken;
   }
 
@@ -84,8 +84,8 @@ export class AuthService {
     return tokenNotExpired('id_token');
   }
 
-  adminAccess(){
-    if (this.user){
+  adminAccess() {
+    if (this.user) {
       return this.user.isAdmin;
     } else {
       return false;
