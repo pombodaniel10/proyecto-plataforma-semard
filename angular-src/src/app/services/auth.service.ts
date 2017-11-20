@@ -69,7 +69,7 @@ export class AuthService {
     this.user = user;
   }
 
-  getUsers(): Promise<void | User[]>{
+  getUsers(): Promise<void | User[]> {
     this.loadToken();
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
