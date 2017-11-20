@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import {HttpClient,HttpHeaders, HttpResponse,HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse, HttpParams} from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import {tokenNotExpired} from 'angular2-jwt';
-import {User} from  '../.././app/components/admin/register/user';
+import {User} from '../.././app/components/admin/register/user';
 
 @Injectable()
 export class AuthService {
   authToken: any;
   user: User = JSON.parse(localStorage.getItem('user'));
-  link: string =  "/users/"
-  constructor(private http:HttpClient) { }
+  link: string = '/users/';
+  constructor(private http: HttpClient) { }
 
-  loadToken(){
+  loadToken() {
     const token = localStorage.getItem('id_token');
     this.authToken = token;
   }
@@ -23,48 +23,48 @@ export class AuthService {
   getUser(): Promise<void | User> {
     this.loadToken();
     const headers = new HttpHeaders()
-      .set('Content-Type','application/json')
-      .set('Authorization',this.authToken);
-    return this.http.get(this.link+'profile',{headers:headers})
+      .set('Content-Type', 'application/json')
+      .set('Authorization', this.authToken);
+    return this.http.get(this.link + 'profile', {headers: headers})
       .toPromise()
       .then(HttpResponse => HttpResponse as User)
       .catch(this.handleError);
   }
 
-  registerUser(newUser: User){
+  registerUser(newUser: User) {
     this.loadToken();
     const headers = new HttpHeaders()
-      .set('Content-Type','application/json')
-      .set('Authorization',this.authToken);
-    return this.http.post(this.link+'register', newUser,{headers:headers})
+      .set('Content-Type', 'application/json')
+      .set('Authorization', this.authToken);
+    return this.http.post(this.link + 'register', newUser, {headers: headers})
       .toPromise()
       .then(HttpResponse => HttpResponse)
       .catch(this.handleError);
   }
 
-  deleteUser(id:string){
+  deleteUser(id: string) {
     this.loadToken();
     const headers = new HttpHeaders()
-      .set('Content-Type','application/json')
-      .set('Authorization',this.authToken);
-    return this.http.delete(this.link+'deleteuser'+'/'+id,{headers: headers})
+      .set('Content-Type', 'application/json')
+      .set('Authorization', this.authToken);
+    return this.http.delete(this.link + 'deleteuser' + '/' + id, {headers: headers})
       .toPromise()
       .then(HttpResponse => HttpResponse)
       .catch(this.handleError);
   }
 
-  authenticateUser(user){
+  authenticateUser(user) {
     const headers = new HttpHeaders()
-      .set('Content-Type','application/json')
-    return this.http.post(this.link+'authenticate', user,{headers:headers})
+      .set('Content-Type', 'application/json');
+    return this.http.post(this.link + 'authenticate', user, {headers: headers})
       .toPromise()
       .then(HttpResponse => HttpResponse)
       .catch(this.handleError);
   }
 
-  storeUserData(token,user){
+  storeUserData(token, user) {
     localStorage.setItem('id_token', token);
-    localStorage.setItem('user',JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
     this.authToken = token;
     this.user = user;
   }
@@ -72,9 +72,9 @@ export class AuthService {
   getUsers(): Promise<void | User[]>{
     this.loadToken();
     const headers = new HttpHeaders()
-      .set('Content-Type','application/json')
-      .set('Authorization',this.authToken);
-    return this.http.get(this.link+'admin',{headers:headers})
+      .set('Content-Type', 'application/json')
+      .set('Authorization', this.authToken);
+    return this.http.get(this.link + 'admin', {headers: headers})
     .toPromise()
     .then(HttpResponse => HttpResponse as User[])
     .catch(this.handleError);
@@ -85,24 +85,24 @@ export class AuthService {
   }
 
   adminAccess(){
-    if(this.user){
+    if (this.user){
       return this.user.isAdmin;
     } else {
       return false;
     }
   }
 
-  logout(){
+  logout() {
     this.loadToken();
     const headers = new HttpHeaders()
-      .set('Content-Type','application/json')
-      .set('Authorization',this.authToken);
-    
+      .set('Content-Type', 'application/json')
+      .set('Authorization', this.authToken);
+
     this.authToken = null;
     this.user = null;
     localStorage.clear();
 
-    return this.http.get(this.link+'logout',{headers:headers})
+    return this.http.get(this.link + 'logout', {headers: headers})
       .toPromise()
       .then(HttpResponse => HttpResponse)
       .catch(this.handleError);
@@ -110,7 +110,7 @@ export class AuthService {
   }
 
   private handleError (error: any) {
-      let errMsg = (error.message) ? error.message :
+      const errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
       console.error(errMsg); // log to console instead
     }
