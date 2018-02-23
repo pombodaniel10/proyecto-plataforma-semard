@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
-import {FlashMessagesModule} from 'angular2-flash-messages';
+import {FlashMessagesModule,FlashMessagesService} from 'angular2-flash-messages';
 import { Observable, Subject } from 'rxjs/Rx';
 import { ChartsModule } from 'ng2-charts';
 import {MatSliderModule} from '@angular/material';
@@ -72,7 +72,7 @@ const appRoutes: Routes = [
   exports: [
     MatSliderModule
   ],
-  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,WebsocketService, WsService],
+  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,WebsocketService, WsService,FlashMessagesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
