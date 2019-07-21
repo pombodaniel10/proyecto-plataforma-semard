@@ -17,11 +17,11 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "jsonwebtoken": "^8.1.1",
-    "mongoose": "^4.13.11",
-    "mqtt": "^2.15.3",
+    "mongoose": "^5.2.13",
+    "mqtt": "^3.0.0",
     "passport": "^0.4.0",
-    "passport-jwt": "^3.0.1",
-    "ws": "^3.3.3"
+    "passport-jwt": "^4.0.0",
+    "ws": "^7.1.1"
   },
   "keywords": [
     "platform",
@@ -40,6 +40,6 @@
   },
   "homepage": "https://github.com/pombodaniel10/proyecto-plataforma-semard#readme",
   "devDependencies": {
-    "@angular/cli": "^1.7.1"
+    "@angular/cli": "^8.1.2"
   }
 }

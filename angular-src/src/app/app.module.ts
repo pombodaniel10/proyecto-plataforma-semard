@@ -4,9 +4,9 @@ import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
 import {FlashMessagesModule,FlashMessagesService} from 'angular2-flash-messages';
-import { Observable, Subject } from 'rxjs/Rx';
 import { ChartsModule } from 'ng2-charts';
 import {MatSliderModule} from '@angular/material';
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -22,8 +22,6 @@ import { LucesComponent } from './components/dashboard/luces/luces.component';
 
 import {AuthService} from './services/auth.service';
 import {ValidateService} from '../app/services/validate.service';
-import { WebsocketService } from '../app/services/websocket.service';
-import { WsService } from '../app/services/ws.service';
 
 import {AuthGuard} from './guards/auth.guard';
 import {AuthAdminGuard} from './guards/auth-admin.guard';
@@ -31,6 +29,9 @@ import {AuthAdminGuard} from './guards/auth-admin.guard';
 
 import {YesNoPipe} from './components/admin/admin.pipe';
 
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -67,12 +68,17 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule,
     ChartsModule,
-    MatSliderModule
+    MatSliderModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter
+      }
+    })
   ],
   exports: [
     MatSliderModule
   ],
-  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,WebsocketService, WsService,FlashMessagesService],
+  providers: [ValidateService,AuthService,AuthGuard,AuthAdminGuard,FlashMessagesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

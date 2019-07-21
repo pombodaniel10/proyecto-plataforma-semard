@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse, HttpParams} from '@angular/common/http';
-import 'rxjs/add/operator/toPromise';
-import {tokenNotExpired} from 'angular2-jwt';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import {User} from '../.././app/components/admin/register/user';
 
 @Injectable()
 export class AuthService {
   authToken: any;
   user: User = JSON.parse(localStorage.getItem('user'));
-  link: string = '/users/';
-  constructor(private http: HttpClient) { }
+  link: string = 'http://localhost:8080/users/';
+  constructor(private http: HttpClient,public jwtHelper: JwtHelperService) { }
 
   loadToken() {
     const token = localStorage.getItem('id_token');
@@ -81,7 +80,7 @@ export class AuthService {
   }
 
   loggedIn() {
-    return tokenNotExpired('id_token');
+    return !this.jwtHelper.isTokenExpired(localStorage.getItem('id_token'));
   }
 
   adminAccess() {

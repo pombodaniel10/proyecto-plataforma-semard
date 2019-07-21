@@ -5,7 +5,7 @@ import {AuthService} from '../../../../app/services/auth.service';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {Router} from '@angular/router';
 import {User} from './user';
-import {Observable} from 'rxjs/Rx';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-register',

@@ -3,12 +3,12 @@ const config = require('../config/database');
 
 //Connect to database
 mongoose.connect(config.database, {
-  useMongoClient: true
+  useNewUrlParser: true
 });
 
 //On connection
 mongoose.connection.on('connected', () => {
-  console.log("Connected to database "+config.database);
+  console.log("Connected to database ");
 });
 
 //Error connection

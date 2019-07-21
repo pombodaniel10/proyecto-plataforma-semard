@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { WsService } from '../../../../app/services/ws.service';
+import { Component } from '@angular/core';
 import {ILuces} from './luces';
-import {FlashMessagesService} from 'angular2-flash-messages';
+import { WebSocketSubject } from 'rxjs/internal/observable/dom/WebSocketSubject';
 
 @Component({
   selector: 'app-luces',
@@ -55,10 +54,12 @@ export class LucesComponent{
 
     let request = {
       type: "lucesRDATA",
-      message: {}
+      message: {
+        status: false
+      }
     }
 
-    this.wsService.messages.next(request);
+    this.socket$.next(request);
 
   }
 
@@ -69,10 +70,16 @@ export class LucesComponent{
   success: boolean = false;
   exito: boolean = false;
 
-  constructor(private flashMessage: FlashMessagesService,private wsService: WsService) {
-    wsService.messages.subscribe(msg => {
-      this.onmessageWS(msg);
-    });
+  private socket$: WebSocketSubject<ILuces>;
+
+  constructor() {
+    this.socket$ = new WebSocketSubject(location.origin.replace(/^http/, 'ws'));
+    this.socket$.
+      subscribe( 
+      (message) => this.onmessageWS(message),
+      (err) => console.error(err),
+      () => console.warn('Completed!')
+      );
   }
 
 
@@ -86,7 +93,7 @@ export class LucesComponent{
       type: "luces",
       message: {status:this.status}
     }
-    this.wsService.messages.next(luces);
+    this.socket$.next(luces);
   }
 
   focoOn(){

@@ -1,6 +1,7 @@
-import { Component, OnInit} from '@angular/core';
-import { WsService } from '../../../../app/services/ws.service';
+import { Component} from '@angular/core';
 import {IBlackout} from './blackout';
+import { WebSocketSubject } from 'rxjs/internal/observable/dom/WebSocketSubject';
+
 
 @Component({
   selector: 'app-blackout',
@@ -59,10 +60,13 @@ export class BlackoutComponent{
 
     let request = {
       type: "blackoutRDATA",
-      message: {}
+      message: {
+        vueltas: 0,
+        sentido: "a"
+      }
     }
 
-    this.wsService.messages.next(request);
+    this.socket$.next(request);
 
 
   }
@@ -81,13 +85,16 @@ export class BlackoutComponent{
   estadoMovimientoBTN: boolean = true;
   link: string = "../../../../assets/images/persiana0.png"
 
+  private socket$: WebSocketSubject<IBlackout>;
 
-  constructor(
-    private wsService: WsService
-  ) {
-    wsService.messages.subscribe(msg => {
-      this.onMessageWS(msg);
-		});
+  constructor() {
+    this.socket$ = new WebSocketSubject("http://localhost:8080");
+    this.socket$.
+      subscribe( 
+      (message) => this.onMessageWS(message),
+      (err) => console.error(err),
+      () => console.warn('Completed!')
+      );
   }
 
   onMessageWS(msg){
@@ -214,7 +221,7 @@ export class BlackoutComponent{
       type: "blackout",
       message: {vueltas:vueltas,sentido:this.sentidoGiro}
     }
-    this.wsService.messages.next(blackout);
+    this.socket$.next(blackout);
   }
 
 }
