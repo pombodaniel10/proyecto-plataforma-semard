@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-const config = require('../config/database');
 
 //Connect to database
-mongoose.connect(config.database, {
+mongoose.connect(process.env.MONGO_HOST, {
   useNewUrlParser: true
 });
 

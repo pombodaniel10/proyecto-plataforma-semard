@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,7 +13,7 @@ const dashboardAPI =  require("./routes/dashboardAPI");
 const mongodb = require("./middlewares/mongodb");
 
 const app = express();
-const PORT = process.env.PORT || 4040;
+const PORT = process.env.PORT;
 const server = app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 const httpserver = module.exports = server;
