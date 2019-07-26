@@ -1,0 +1,17 @@
+version: '3' # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  frontend: #name of the first service
+    build: ./src # specify the directory of the Dockerfile
+    ports:
+      - "4200:4200" # specify port forewarding
+    container_name: front-container
+    restart: always
+
+  server: # name of the first service
+    build: . # specify the directory of the Dockerfile
+    ports:
+      - "4040:4040"
+    container_name: server-container
+    restart: always
