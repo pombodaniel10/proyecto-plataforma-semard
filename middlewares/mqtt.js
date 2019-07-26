@@ -1,9 +1,9 @@
 var mqtt = require('mqtt');
 
 var options = {
-    port: 12489,
-    username: 'xbvmyoxh',
-    password: 'nJzjyl5r-7GD',
+    port: process.env.MQTT_PORT,
+    username: process.env.MQTT_USERNAME,
+    password: process.env.MQTT_PASSWORD
 };
 var client = mqtt.connect('mqtt://m12.cloudmqtt.com', options);
 
