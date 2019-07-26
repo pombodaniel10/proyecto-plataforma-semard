@@ -7,7 +7,7 @@ import {User} from '../.././app/components/admin/register/user';
 export class AuthService {
   authToken: any;
   user: User = JSON.parse(localStorage.getItem('user'));
-  link: string = 'http://localhost:8080/users/';
+  link: string = '/users/';
   constructor(private http: HttpClient,public jwtHelper: JwtHelperService) { }
 
   loadToken() {
