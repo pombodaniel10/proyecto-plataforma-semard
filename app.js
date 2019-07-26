@@ -11,7 +11,7 @@ const dashboardAPI =  require("./routes/dashboardAPI");
 const mongodb = require("./middlewares/mongodb");
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 4040;
 const server = app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 const httpserver = module.exports = server;
